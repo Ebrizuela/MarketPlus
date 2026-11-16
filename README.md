@@ -1,6 +1,6 @@
 # MarketPlus
 
-Sistema web de comercio electrónico y gestión comercial **MarketPlus**, orientado al desarrollo colaborativo, pruebas de calidad (QA) y despliegue continuo en entornos contenerizados.
+Sistema web de gestión comercial y ventas **MarketPlus**, estructurado por roles de usuario (Administrador, Supervisor y Vendedor) y módulos operativos (Clientes, Productos y Ventas), orientado al desarrollo colaborativo, control de calidad (QA) y despliegue continuo.
 
 ---
 
@@ -18,33 +18,46 @@ Sistema web de comercio electrónico y gestión comercial **MarketPlus**, orient
 
 ## Descripción General
 
-**MarketPlus** centraliza la administración de catálogo de productos, inventario, usuarios, carrito de compras y procesamiento de pedidos en una arquitectura modular pensada para escalar hacia entornos de producción en contenedores.
+**MarketPlus** permite administrar el flujo comercial completo mediante vistas y permisos diferenciados por perfil:
+
+* **Administrador (`administrador/`):** Gestión global del sistema, usuarios, parámetros y reportes generales.
+* **Supervisor (`Supervisor/`):** Supervisión operativa, control de movimientos y validación de procesos.
+* **Vendedor (`vendedor/`):** Registro de operaciones comerciales, atención a clientes y gestión de ventas.
 
 ---
 
 ## Stack Tecnológico
 
-* **Frontend:** HTML5, CSS3, JavaScript (ES6+) / Bootstrap
-* **Backend:** PHP / API REST
-* **Base de Datos:** MySQL / PostgreSQL
-* **Control de Versiones:** Git & GitHub (`Ebrizuela/marketplus`)
-* **Infraestructura y Pruebas:** Docker / Kubernetes, pruebas funcionales y de integración (QA)
-
-*(Ajusta las versiones específicas del lenguaje o motor de base de datos según tu configuración local en `.env`).*
+* **Backend:** PHP
+* **Frontend:** HTML5, CSS3, JavaScript
+* **Base de Datos:** MySQL / MariaDB (scripts y conexión en `bd/`)
+* **Control de Versiones:** Git & GitHub (`Ebrizuela/MarketPlus`)
 
 ---
 
 ## Estructura del Proyecto
 
 ```text
-marketplus/
-├── public/              # Archivos públicos, punto de entrada (index.php) y assets
-├── src/                 # Lógica de negocio, controladores, modelos y servicios
-├── config/              # Archivos de configuración de la aplicación y base de datos
-├── database/            # Scripts SQL, migraciones y datos de prueba (seeders)
-├── tests/               # Pruebas automatizadas y casos de verificación QA
-├── .env.example         # Plantilla de variables de entorno
-├── .gitignore           # Exclusiones de Git (.env, vendor, node_modules, etc.)
+MarketPlus/
+├── administrador/       # Vistas, paneles y controladores del rol Administrador
+├── bd/                  # Conexión a base de datos y scripts SQL de estructura/datos
+├── clientes/            # Módulo de gestión y mantenimiento de clientes
+├── css/                 # Hojas de estilo del sistema
+├── funciones/           # Funciones auxiliares y lógica reutilizable en PHP
+├── img/                 # Recursos gráficos, logotipos e íconos
+├── includes/            # Componentes compartidos (cabeceras, menús, pie de página, sesión)
+├── js/                  # Scripts del lado del cliente y validaciones
+├── productos/           # Módulo de catálogo, stock y gestión de productos
+├── public/              # Recursos públicos accesibles del sistema
+├── Supervisor/          # Vistas y operaciones del rol Supervisor
+├── uploads/             # Archivos e imágenes cargadas por los usuarios
+├── vendedor/            # Vistas y operaciones del rol Vendedor
+├── ventas/              # Módulo de registro, detalle y seguimiento de ventas
+├── index.php            # Página principal / punto de entrada del sistema
+├── login.php            # Formulario de inicio de sesión
+├── logout.php           # Cierre de sesión y limpieza de variables
+├── procesar_login.php   # Validación de credenciales y autenticación de roles
+├── registro.php         # Registro de nuevos usuarios
 └── README.md            # Documentación principal del proyecto
 ```
 
@@ -54,22 +67,21 @@ marketplus/
 
 ### 1. Requisitos previos
 * Git instalado y configurado (`user.name` y `user.email`)
-* Servidor web local o entorno Docker operativo
-* Motor de base de datos relacional activo
+* Servidor web local con soporte PHP (Apache/Nginx, XAMPP, Laragon o contenedor Docker)
+* Motor de base de datos MySQL / MariaDB activo
 
 ### 2. Clonar el repositorio y cambiar a `dev`
 ```bash
-git clone [https://github.com/Ebrizuela/marketplus.git](https://github.com/Ebrizuela/marketplus.git)
-cd marketplus
+git clone [https://github.com/Ebrizuela/MarketPlus.git](https://github.com/Ebrizuela/MarketPlus.git)
+cd MarketPlus
 git checkout dev
 ```
 
-### 3. Configurar variables de entorno
-Crea tu archivo local a partir de la plantilla y completa las credenciales de tu entorno:
-```bash
-cp .env.example .env
-```
-> **Importante:** Nunca subas el archivo `.env` ni respaldos `.sql` con credenciales reales al repositorio.
+### 3. Configurar la base de datos
+1. Crea la base de datos local e importa el script SQL ubicado en la carpeta `bd/`.
+2. Configura las credenciales de conexión en el archivo correspondiente dentro de `bd/` (o `includes/`).
+
+> **Importante:** No subas credenciales reales de producción, archivos de registro (`error_log`) ni respaldos `.sql` con datos sensibles al repositorio.
 
 ---
 
@@ -111,8 +123,8 @@ El repositorio aplica reglas estrictas de protección de ramas para garantizar l
 
 Utiliza prefijos estándar para mantener un historial legible:
 
-* `feat:` Nueva funcionalidad o módulo (ej. `feat: agregar filtro por categoría en catálogo`)
-* `fix:` Corrección de errores (ej. `fix: validar stock antes de confirmar pedido`)
+* `feat:` Nueva funcionalidad o módulo (ej. `feat: agregar filtro de búsqueda en ventas`)
+* `fix:` Corrección de errores (ej. `fix: validar stock disponible al registrar venta`)
 * `refactor:` Mejora interna de código sin alterar funcionalidad
 * `docs:` Actualización de documentación
 * `test:` Incorporación o ajuste de pruebas de QA
@@ -122,4 +134,4 @@ Utiliza prefijos estándar para mantener un historial legible:
 ## Administración del Repositorio
 
 * **Mantenedor y Revisor Principal:** Eduardo Brizuela (`@Ebrizuela`)
-* **Repositorio Oficial:** [https://github.com/Ebrizuela/marketplus](https://github.com/Ebrizuela/marketplus)
+* **Repositorio Oficial:** [https://github.com/Ebrizuela/MarketPlus](https://github.com/Ebrizuela/MarketPlus)
