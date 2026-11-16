@@ -67,7 +67,7 @@ MarketPlus/
 
 ### 1. Requisitos previos
 * Git instalado y configurado (`user.name` y `user.email`)
-* Servidor web local con soporte PHP (Apache/Nginx, XAMPP, Laragon o contenedor Docker)
+* Servidor web local con soporte PHP (contenedor Docker)
 * Motor de base de datos MySQL / MariaDB activo
 
 ### 2. Clonar el repositorio y cambiar a `dev`
