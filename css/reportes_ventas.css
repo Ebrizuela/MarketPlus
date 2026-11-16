@@ -1,0 +1,182 @@
+/* ==========================================================================
+   src/css/reportes.css
+   Estilos principales del Panel Dashboard y Reportes
+   ========================================================================== */
+
+:root {
+    --card-radius: 12px;
+    --transition-fast: 0.2s ease-in-out;
+}
+
+body.reporte-ventas-body {
+    background-color: #f4f6f9 !important;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    color: #212529;
+}
+
+/* Tarjetas y Contenedores */
+.reporte-ventas .card {
+    border: none;
+    border-radius: var(--card-radius);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    background-color: #ffffff;
+}
+
+.reporte-ventas .card-header {
+    background-color: #ffffff;
+    border-bottom: 1px solid #edf2f7;
+    font-weight: 600;
+    padding: 1rem 1.25rem;
+    border-top-left-radius: var(--card-radius) !important;
+    border-top-right-radius: var(--card-radius) !important;
+}
+
+/* Tarjetas KPI */
+.reporte-ventas .row .card {
+    border: none;
+}
+
+.reporte-ventas .row .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+}
+
+.reporte-ventas .bg-success {
+    background: linear-gradient(135deg, #198754, #146c43) !important;
+}
+
+.reporte-ventas .bg-info {
+    background: linear-gradient(135deg, #0dcaf0, #0aa2c0) !important;
+}
+
+.reporte-ventas .bg-warning {
+    background: linear-gradient(135deg, #ffc107, #d39e00) !important;
+}
+
+/* Tabla de Resultados */
+.reporte-ventas .table {
+    margin-bottom: 0;
+    vertical-align: middle;
+}
+
+.reporte-ventas .table thead th {
+    background-color: #f8f9fa;
+    color: #495057;
+    font-size: 0.825rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid #dee2e6;
+    padding: 0.85rem;
+}
+
+.reporte-ventas .table tbody td {
+    padding: 0.85rem;
+    color: #212529;
+}
+
+.reporte-ventas .table-hover tbody tr:hover {
+    background-color: #f1f5f9;
+}
+
+/* Formularios y Botones */
+.reporte-ventas .form-label {
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: #495057;
+}
+
+.reporte-ventas .form-control, 
+.reporte-ventas .form-select {
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    padding: 0.5rem 0.75rem;
+}
+
+.reporte-ventas .form-control:focus, 
+.reporte-ventas .form-select:focus {
+    border-color: #86b7fe;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
+}
+
+.reporte-ventas .btn {
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all var(--transition-fast);
+}
+
+.reporte-ventas #contenedorGrafico .card-body {
+    height: 300px;
+}
+
+.reporte-ventas [hidden] {
+    display: none !important;
+}
+
+/* ==========================================================================
+   src/css/excel.css
+   Estilos compatibles con Microsoft Excel en exportaciones HTML
+   ========================================================================== */
+
+body.excel-report {
+    margin: 18px;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    color: #212529;
+}
+
+.excel-report .excel-title {
+    margin: 0 0 8px;
+    color: #198754;
+    font-size: 20px;
+}
+
+.excel-report .excel-generated {
+    margin: 0 0 18px;
+    color: #555555;
+    font-size: 12px;
+}
+
+.excel-report .excel-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    font-family: Arial, sans-serif;
+}
+
+.excel-report .excel-table th {
+    padding: 9px 7px;
+    border: 1px solid #146c43;
+    background-color: #198754;
+    color: #ffffff;
+    font-weight: bold;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.excel-report .excel-table td {
+    padding: 7px;
+    border: 1px solid #d5dce2;
+    text-align: left;
+    vertical-align: middle;
+    word-wrap: break-word;
+}
+
+.excel-report .excel-table .monto {
+    text-align: right; 
+}
+
+.excel-report .excel-table .centro {
+    text-align: center; 
+}
+
+.excel-report .excel-table .total-row td {
+    padding: 9px 7px;
+    border-top: 2px solid #198754;
+    background-color: #e9ecef;
+    font-weight: bold;
+}
+
+.excel-report .excel-table .total-row .monto {
+    color: #146c43;
+}

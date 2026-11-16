@@ -1,0 +1,122 @@
+body.supervisor-dashboard {
+    background: linear-gradient(180deg, #f3f7ff 0%, #eef4fb 100%);
+    color: #0f172a;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    scroll-behavior: smooth;
+}
+
+.supervisor-dashboard .navbar {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.18);
+}
+
+.supervisor-dashboard .nav-link,
+.supervisor-dashboard .navbar-brand,
+.supervisor-dashboard .nav-link.active {
+    color: rgba(255, 255, 255, 0.95) !important;
+}
+
+.supervisor-dashboard .nav-link.active {
+    background: rgba(59, 130, 246, 0.18);
+    border-radius: 10px;
+    padding-left: 0.85rem !important;
+    padding-right: 0.85rem !important;
+}
+
+.supervisor-dashboard .header-panel {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.10), rgba(20, 184, 166, 0.12));
+    border: 1px solid rgba(59, 130, 246, 0.10);
+    border-radius: 22px;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.10);
+    padding: 1.2rem 1.4rem;
+}
+
+.supervisor-dashboard .quick-card {
+    display: block;
+    height: 100%;
+    border: 1px solid rgba(148, 163, 184, 0.22);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 8px 18px rgba(15, 23, 42, 0.06);
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.supervisor-dashboard .quick-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 18px 28px rgba(59, 130, 246, 0.12);
+}
+
+.supervisor-dashboard .quick-card .card-body {
+    padding: 1.05rem 0.9rem;
+}
+
+.supervisor-dashboard .metric-card {
+    overflow: hidden;
+    border: 0;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #1d4ed8 0%, #1e3a8a 100%);
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.10);
+    color: #fff;
+}
+
+.supervisor-dashboard .panel-card {
+    overflow: hidden;
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    border-radius: 18px;
+    background: #fff;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.10);
+}
+
+.supervisor-dashboard #funciones,
+.supervisor-dashboard #usuarios {
+    scroll-margin-top: 1.5rem;
+}
+
+.supervisor-dashboard .module-card {
+    color: #0f172a;
+    text-decoration: none;
+}
+
+.supervisor-dashboard .module-card .module-icon {
+    display: inline-flex;
+    width: 48px;
+    height: 48px;
+    flex: 0 0 48px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    background: rgba(59, 130, 246, 0.1);
+    color: #2563eb;
+    font-size: 1.5rem;
+}
+
+.supervisor-dashboard .module-card p {
+    margin-bottom: 0;
+    color: #64748b;
+    font-size: 0.875rem;
+}
+
+.supervisor-dashboard .panel-card .card-header {
+    padding: 0.9rem 1rem;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+    background: linear-gradient(180deg, #fff 0%, #f8fbff 100%);
+    font-weight: 700;
+}
+
+.supervisor-dashboard .badge-soft {
+    border: 1px solid rgba(239, 68, 68, 0.18);
+    background: rgba(239, 68, 68, 0.12);
+    color: #dc2626;
+    font-weight: 600;
+}
+
+@media (max-width: 576px) {
+    .supervisor-dashboard .header-panel {
+        padding: 1rem;
+    }
+
+    .supervisor-dashboard .header-panel h2 {
+        font-size: 1.45rem;
+    }
+}

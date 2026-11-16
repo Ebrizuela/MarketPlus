@@ -1,0 +1,204 @@
+/* ===================================================
+   SUPERVISIÓN DE VENTAS - MARKETPLUS
+   =================================================== */
+
+:root {
+    --bg-body: #f4f6f9;
+    --table-header-bg: #1e293b;
+    --badge-id-bg: #e0e7ff;
+    --badge-id-color: #3730a3;
+    --shadow-sm: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+body {
+    background-color: var(--bg-body);
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+/* Tarjetas KPI de Resumen */
+.card-kpi {
+    border: none;
+    border-radius: 12px;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-kpi:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.kpi-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+.table-responsive {
+    border-radius: 12px;
+    box-shadow: var(--shadow-sm);
+    background: #ffffff;
+    overflow: hidden;
+}
+
+.table {
+    margin-bottom: 0;
+}
+
+.table th {
+    background-color: var(--table-header-bg) !important;
+    color: #ffffff !important;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 14px 16px;
+    border: none;
+    vertical-align: middle;
+}
+
+.table td {
+    padding: 14px 16px;
+    vertical-align: middle;
+    font-size: 14px;
+    border-color: #f1f5f9;
+}
+
+.table tbody tr:hover {
+    background-color: #f8fafc;
+}
+
+
+.badge-id {
+    background-color: var(--badge-id-bg);
+    color: var(--badge-id-color);
+    font-weight: 700;
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 13px;
+    display: inline-block;
+}
+
+/* Formulario de Filtros */
+.form-label {
+    letter-spacing: 0.5px;
+}
+
+/* ===================================================
+   ESTILOS PARA EXPORTACIÓN DE PDF
+   =================================================== */
+@media print {
+    .no-print {
+        display: none !important;
+    }
+
+    body {
+        background: #ffffff !important;
+        padding: 0 !important;
+    }
+
+    .container-fluid {
+        padding: 0 !important;
+    }
+
+    .card-kpi, 
+    .table-responsive {
+        box-shadow: none !important;
+        border: 1px solid #e2e8f0 !important;
+    }
+
+    .table th {
+        background-color: #e2e8f0 !important;
+        color: #000000 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .table td {
+        font-size: 11px !important;
+        padding: 8px 10px !important;
+    }
+
+    .badge-id {
+        background: transparent !important;
+        color: #000000 !important;
+        padding: 0 !important;
+    }
+}
+
+/* ===================================================
+   ESTILOS PARA EXPORTACIÓN DE EXCEL
+   =================================================== */
+
+body {
+    font-family: Arial, sans-serif;
+    font-size: 11pt;
+}
+
+.titulo {
+    font-size: 16pt;
+    font-weight: bold;
+    color: #1e293b;
+}
+
+.subtitulo {
+    font-size: 10pt;
+    color: #64748b;
+    margin-bottom: 15px;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th {
+    background-color: #1e293b;
+    color: #ffffff;
+    font-weight: bold;
+    padding: 10px;
+    border: 1px solid #334155;
+    text-align: center;
+    font-size: 10pt;
+}
+
+td {
+    padding: 8px 10px;
+    border: 1px solid #e2e8f0;
+    vertical-align: middle;
+    font-size: 10pt;
+}
+
+.bg-cebra {
+    background-color: #f8fafc;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.badge-id {
+    background-color: #e0e7ff;
+    color: #3730a3;
+    font-weight: bold;
+    padding: 3px 6px;
+}
+
+.fila-total {
+    background-color: #e0e7ff;
+    font-weight: bold;
+    color: #1e1b4b;
+    border-top: 2px solid #4338ca;
+    border-bottom: 3px double #4338ca;
+}

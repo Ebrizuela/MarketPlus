@@ -1,0 +1,353 @@
+/* C:\proyectos\src\marketplus\css\home.css */
+
+/* Reset base y variables de color */
+:root {
+    --primary-color: #0d6efd;
+    --primary-hover: #0b5ed7;
+    --accent-color: #ffc107;
+    --success-color: #198754;
+    --success-hover: #157347;
+    --bg-light: #f4f6f8;
+    --card-bg: #ffffff;
+    --text-color: #212529;
+    --border-color: #e0e0e0;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+body {
+    background-color: var(--bg-light);
+    color: var(--text-color);
+    display: block;
+    min-height: 100vh;
+    line-height: 1.5;
+    padding: 0;
+    font-size: 15px;
+}
+
+/* Header & Barra Superior */
+.mp-header {
+    width: 100%;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 12px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.mp-logo {
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: #fff;
+    text-decoration: none;
+}
+
+.mp-search-bar {
+    flex: 1;
+    max-width: 550px;
+    display: flex;
+    padding: 0;
+}
+
+.mp-search-bar input {
+    width: 100%;
+    padding: 10px 14px;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px 0 0 4px;
+    outline: none;
+}
+
+.mp-search-bar button {
+    padding: 10px 20px;
+    border: none;
+    background-color: var(--accent-color);
+    color: #000;
+    font-weight: 700;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.mp-search-bar button:hover {
+    background-color: #e0a800;
+}
+
+.mp-user-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.mp-action-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    padding: 8px 14px;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.18);
+    color: #fff;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background-color 0.2s ease;
+}
+
+.mp-action-button:hover,
+.mp-action-button:focus-visible {
+    background: rgba(255, 255, 255, 0.3);
+    color: #fff;
+}
+
+/* Hero Carousel / Banner Promocional */
+.hero-carousel {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+    color: white;
+    padding: 35px 20px;
+    text-align: center;
+    margin: 20px 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(13, 110, 253, 0.2);
+}
+
+.hero-carousel h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.hero-carousel p {
+    font-size: 16px;
+    opacity: 0.9;
+}
+
+/* Título de Sección */
+.section-title {
+    margin: 25px 30px 15px 30px;
+    font-size: 22px;
+    font-weight: 700;
+    color: #1a202c;
+    border-bottom: 3px solid var(--primary-color);
+    display: inline-block;
+    padding-bottom: 4px;
+}
+
+/* Cuadrícula (Grid) de Productos Responsiva */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 20px;
+    padding: 0 30px 40px 30px;
+}
+
+/* Tarjeta de Producto */
+.product-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 16px;
+    text-align: left;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: inherit;
+    text-decoration: none;
+}
+
+.product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+.product-img {
+    width: 100%;
+    height: 160px;
+    object-fit: contain;
+    margin-bottom: 12px;
+    border-radius: 4px;
+}
+
+.product-img-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f1f3f5;
+    color: #6c757d;
+    font-size: 15px;
+}
+
+.detalle-img-container .product-img-empty {
+    width: 100%;
+    min-height: 360px;
+    border-radius: 8px;
+}
+
+.badge-categoria {
+    background-color: #e2e8f0;
+    color: #4a5568;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 12px;
+    text-transform: uppercase;
+    display: inline-block;
+    margin-bottom: 6px;
+}
+
+.product-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #2d3748;
+    line-height: 1.3;
+    height: 40px;
+    overflow: hidden;
+    margin-bottom: 6px;
+}
+
+.product-description {
+    display: -webkit-box;
+    min-height: 38px;
+    overflow: hidden;
+    color: #687586;
+    font-size: 13px;
+    line-height: 1.45;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.price-tag {
+    margin: 8px 0;
+}
+
+.current-price {
+    font-size: 20px;
+    font-weight: 800;
+    color: #d9534f;
+}
+
+.stock-tag {
+    font-size: 12px;
+    color: #4a5568;
+    margin-bottom: 10px;
+}
+
+.product-link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border-color);
+    color: var(--primary-color);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.admin-product-form {
+    margin: 20px 30px;
+}
+
+.admin-product-form h3 {
+    margin-bottom: 18px;
+    color: #1a202c;
+}
+
+.search-summary,
+.catalog-message {
+    margin: 0 30px 18px;
+    color: #566273;
+}
+
+.catalog-error {
+    color: #991b1b;
+}
+
+.home-alert:empty {
+    display: none;
+}
+
+.home-alert {
+    margin: 16px 30px 0;
+}
+
+/* Botón "Agregar al Carro" */
+.btn-add-cart {
+    background-color: var(--success-color);
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.2s;
+}
+
+.btn-add-cart:hover {
+    background-color: var(--success-hover);
+}
+
+/* Responsive (Dispositivos Móviles) */
+@media (max-width: 768px) {
+    .mp-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+        padding: 15px;
+    }
+    
+    .mp-user-actions {
+        justify-content: space-between;
+    }
+
+    .hero-carousel, .section-title, .product-grid {
+        margin-left: 15px;
+        margin-right: 15px;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .product-grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 12px;
+    }
+
+    .admin-product-form {
+        margin: 15px;
+        padding: 20px;
+    }
+
+    .search-summary,
+    .catalog-message,
+    .home-alert {
+        margin-left: 15px;
+        margin-right: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .mp-user-actions {
+        gap: 8px;
+    }
+
+    .mp-action-button {
+        flex: 1;
+        padding: 8px;
+        font-size: 13px;
+    }
+}

@@ -1,0 +1,146 @@
+[20-Oct-2026 22:09:00 America/Santiago] PHP Warning:  require_once(/home2/cca92205/public_html/marketplus/ventas/../Funciones/conexion.php): Failed to open stream: No such file or directory in /home2/cca92205/public_html/marketplus/ventas/consultar_ventas.php on line 2
+[20-Oct-2026 22:09:00 America/Santiago] PHP Fatal error:  Uncaught Error: Failed opening required '/home2/cca92205/public_html/marketplus/ventas/../Funciones/conexion.php' (include_path='.:/opt/alt/php84/usr/share/pear:/opt/alt/php84/usr/share/php:/usr/share/pear:/usr/share/php') in /home2/cca92205/public_html/marketplus/ventas/consultar_ventas.php:2
+Stack trace:
+#0 {main}
+  thrown in /home2/cca92205/public_html/marketplus/ventas/consultar_ventas.php on line 2
+[20-Oct-2026 22:09:04 America/Santiago] PHP Warning:  require_once(/home2/cca92205/public_html/marketplus/ventas/../Funciones/conexion.php): Failed to open stream: No such file or directory in /home2/cca92205/public_html/marketplus/ventas/detalle_venta.php on line 2
+[20-Oct-2026 22:09:04 America/Santiago] PHP Fatal error:  Uncaught Error: Failed opening required '/home2/cca92205/public_html/marketplus/ventas/../Funciones/conexion.php' (include_path='.:/opt/alt/php84/usr/share/pear:/opt/alt/php84/usr/share/php:/usr/share/pear:/usr/share/php') in /home2/cca92205/public_html/marketplus/ventas/detalle_venta.php:2
+Stack trace:
+#0 {main}
+  thrown in /home2/cca92205/public_html/marketplus/ventas/detalle_venta.php on line 2
+[25-Oct-2026 21:57:34 America/Santiago] PHP Warning:  require_once(/home2/cca92205/public_html/marketplus/ventas/../Funciones/conexion.php): Failed to open stream: No such file or directory in /home2/cca92205/public_html/marketplus/ventas/consultar_ventas.php on line 2
+[25-Oct-2026 21:57:34 America/Santiago] PHP Fatal error:  Uncaught Error: Failed opening required '/home2/cca92205/public_html/marketplus/ventas/../Funciones/conexion.php' (include_path='.:/opt/alt/php84/usr/share/pear:/opt/alt/php84/usr/share/php:/usr/share/pear:/usr/share/php') in /home2/cca92205/public_html/marketplus/ventas/consultar_ventas.php:2
+Stack trace:
+#0 {main}
+  thrown in /home2/cca92205/public_html/marketplus/ventas/consultar_ventas.php on line 2
+[25-Oct-2026 21:57:37 America/Santiago] PHP Warning:  require_once(/home2/cca92205/public_html/marketplus/ventas/../Funciones/conexion.php): Failed to open stream: No such file or directory in /home2/cca92205/public_html/marketplus/ventas/detalle_venta.php on line 2
+[25-Oct-2026 21:57:37 America/Santiago] PHP Fatal error:  Uncaught Error: Failed opening required '/home2/cca92205/public_html/marketplus/ventas/../Funciones/conexion.php' (include_path='.:/opt/alt/php84/usr/share/pear:/opt/alt/php84/usr/share/php:/usr/share/pear:/usr/share/php') in /home2/cca92205/public_html/marketplus/ventas/detalle_venta.php:2
+Stack trace:
+#0 {main}
+  thrown in /home2/cca92205/public_html/marketplus/ventas/detalle_venta.php on line 2
+[25-Oct-2026 21:57:50 America/Santiago] PHP Warning:  require_once(/home2/cca92205/public_html/marketplus/ventas/../Funciones/conexion.php): Failed to open stream: No such file or directory in /home2/cca92205/public_html/marketplus/ventas/consultar_ventas.php on line 2
+[25-Oct-2026 21:57:50 America/Santiago] PHP Fatal error:  Uncaught Error: Failed opening required '/home2/cca92205/public_html/marketplus/ventas/../Funciones/conexion.php' (include_path='.:/opt/alt/php84/usr/share/pear:/opt/alt/php84/usr/share/php:/usr/share/pear:/usr/share/php') in /home2/cca92205/public_html/marketplus/ventas/consultar_ventas.php:2
+Stack trace:
+#0 {main}
+  thrown in /home2/cca92205/public_html/marketplus/ventas/consultar_ventas.php on line 2
+[25-Oct-2026 21:57:56 America/Santiago] PHP Warning:  require_once(/home2/cca92205/public_html/marketplus/ventas/../Funciones/conexion.php): Failed to open stream: No such file or directory in /home2/cca92205/public_html/marketplus/ventas/detalle_venta.php on line 2
+[25-Oct-2026 21:57:56 America/Santiago] PHP Fatal error:  Uncaught Error: Failed opening required '/home2/cca92205/public_html/marketplus/ventas/../Funciones/conexion.php' (include_path='.:/opt/alt/php84/usr/share/pear:/opt/alt/php84/usr/share/php:/usr/share/pear:/usr/share/php') in /home2/cca92205/public_html/marketplus/ventas/detalle_venta.php:2
+Stack trace:
+#0 {main}
+  thrown in /home2/cca92205/public_html/marketplus/ventas/detalle_venta.php on line 2
+[25-Oct-2026 21:58:32 America/Santiago] PHP Warning:  require_once(/home2/cca92205/public_html/marketplus/ventas/../Funciones/conexion.php): Failed to open stream: No such file or directory in /home2/cca92205/public_html/marketplus/ventas/detalle_venta.php on line 2
+[25-Oct-2026 21:58:32 America/Santiago] PHP Fatal error:  Uncaught Error: Failed opening required '/home2/cca92205/public_html/marketplus/ventas/../Funciones/conexion.php' (include_path='.:/opt/alt/php84/usr/share/pear:/opt/alt/php84/usr/share/php:/usr/share/pear:/usr/share/php') in /home2/cca92205/public_html/marketplus/ventas/detalle_venta.php:2
+Stack trace:
+#0 {main}
+  thrown in /home2/cca92205/public_html/marketplus/ventas/detalle_venta.php on line 2
+[25-Oct-2026 22:01:49 America/Santiago] PHP Warning:  require_once(/home2/cca92205/public_html/marketplus/ventas/../Funciones/conexion.php): Failed to open stream: No such file or directory in /home2/cca92205/public_html/marketplus/ventas/consultar_ventas.php on line 2
+[25-Oct-2026 22:01:49 America/Santiago] PHP Fatal error:  Uncaught Error: Failed opening required '/home2/cca92205/public_html/marketplus/ventas/../Funciones/conexion.php' (include_path='.:/opt/alt/php84/usr/share/pear:/opt/alt/php84/usr/share/php:/usr/share/pear:/usr/share/php') in /home2/cca92205/public_html/marketplus/ventas/consultar_ventas.php:2
+Stack trace:
+#0 {main}
+  thrown in /home2/cca92205/public_html/marketplus/ventas/consultar_ventas.php on line 2
+[25-Oct-2026 22:07:56 America/Santiago] PHP Warning:  require_once(/home2/cca92205/public_html/marketplus/ventas/../Funciones/conexion.php): Failed to open stream: No such file or directory in /home2/cca92205/public_html/marketplus/ventas/detalle_venta.php on line 2
+[25-Oct-2026 22:07:56 America/Santiago] PHP Fatal error:  Uncaught Error: Failed opening required '/home2/cca92205/public_html/marketplus/ventas/../Funciones/conexion.php' (include_path='.:/opt/alt/php84/usr/share/pear:/opt/alt/php84/usr/share/php:/usr/share/pear:/usr/share/php') in /home2/cca92205/public_html/marketplus/ventas/detalle_venta.php:2
+Stack trace:
+#0 {main}
+  thrown in /home2/cca92205/public_html/marketplus/ventas/detalle_venta.php on line 2
+[25-Oct-2026 22:09:15 America/Santiago] PHP Warning:  require_once(/home2/cca92205/public_html/marketplus/ventas/../Funciones/conexion.php): Failed to open stream: No such file or directory in /home2/cca92205/public_html/marketplus/ventas/detalle_venta.php on line 2
+[25-Oct-2026 22:09:15 America/Santiago] PHP Fatal error:  Uncaught Error: Failed opening required '/home2/cca92205/public_html/marketplus/ventas/../Funciones/conexion.php' (include_path='.:/opt/alt/php84/usr/share/pear:/opt/alt/php84/usr/share/php:/usr/share/pear:/usr/share/php') in /home2/cca92205/public_html/marketplus/ventas/detalle_venta.php:2
+Stack trace:
+#0 {main}
+  thrown in /home2/cca92205/public_html/marketplus/ventas/detalle_venta.php on line 2
+[25-Oct-2026 22:11:42 America/Santiago] PHP Warning:  require_once(/home2/cca92205/public_html/marketplus/ventas/../Funciones/conexion.php): Failed to open stream: No such file or directory in /home2/cca92205/public_html/marketplus/ventas/detalle_venta.php on line 2
+[25-Oct-2026 22:11:42 America/Santiago] PHP Fatal error:  Uncaught Error: Failed opening required '/home2/cca92205/public_html/marketplus/ventas/../Funciones/conexion.php' (include_path='.:/opt/alt/php84/usr/share/pear:/opt/alt/php84/usr/share/php:/usr/share/pear:/usr/share/php') in /home2/cca92205/public_html/marketplus/ventas/detalle_venta.php:2
+Stack trace:
+#0 {main}
+  thrown in /home2/cca92205/public_html/marketplus/ventas/detalle_venta.php on line 2
+[28-Oct-2026 20:12:35 America/Santiago] PHP Warning:  require_once(/home2/cca92205/public_html/marketplus/ventas/../Funciones/conexion.php): Failed to open stream: No such file or directory in /home2/cca92205/public_html/marketplus/ventas/consultar_ventas.php on line 2
+[28-Oct-2026 20:12:35 America/Santiago] PHP Fatal error:  Uncaught Error: Failed opening required '/home2/cca92205/public_html/marketplus/ventas/../Funciones/conexion.php' (include_path='.:/opt/alt/php84/usr/share/pear:/opt/alt/php84/usr/share/php:/usr/share/pear:/usr/share/php') in /home2/cca92205/public_html/marketplus/ventas/consultar_ventas.php:2
+Stack trace:
+#0 {main}
+  thrown in /home2/cca92205/public_html/marketplus/ventas/consultar_ventas.php on line 2
+[28-Oct-2026 20:12:37 America/Santiago] PHP Warning:  require_once(/home2/cca92205/public_html/marketplus/ventas/../Funciones/conexion.php): Failed to open stream: No such file or directory in /home2/cca92205/public_html/marketplus/ventas/detalle_venta.php on line 2
+[28-Oct-2026 20:12:37 America/Santiago] PHP Fatal error:  Uncaught Error: Failed opening required '/home2/cca92205/public_html/marketplus/ventas/../Funciones/conexion.php' (include_path='.:/opt/alt/php84/usr/share/pear:/opt/alt/php84/usr/share/php:/usr/share/pear:/usr/share/php') in /home2/cca92205/public_html/marketplus/ventas/detalle_venta.php:2
+Stack trace:
+#0 {main}
+  thrown in /home2/cca92205/public_html/marketplus/ventas/detalle_venta.php on line 2
+[28-Oct-2026 20:39:15 America/Santiago] PHP Warning:  require_once(/home2/cca92205/public_html/marketplus/ventas/../Funciones/conexion.php): Failed to open stream: No such file or directory in /home2/cca92205/public_html/marketplus/ventas/consultar_ventas.php on line 2
+[28-Oct-2026 20:39:15 America/Santiago] PHP Fatal error:  Uncaught Error: Failed opening required '/home2/cca92205/public_html/marketplus/ventas/../Funciones/conexion.php' (include_path='.:/opt/alt/php84/usr/share/pear:/opt/alt/php84/usr/share/php:/usr/share/pear:/usr/share/php') in /home2/cca92205/public_html/marketplus/ventas/consultar_ventas.php:2
+Stack trace:
+#0 {main}
+  thrown in /home2/cca92205/public_html/marketplus/ventas/consultar_ventas.php on line 2
+[28-Oct-2026 20:39:27 America/Santiago] PHP Warning:  require_once(/home2/cca92205/public_html/marketplus/ventas/../Funciones/conexion.php): Failed to open stream: No such file or directory in /home2/cca92205/public_html/marketplus/ventas/consultar_ventas.php on line 2
+[28-Oct-2026 20:39:27 America/Santiago] PHP Fatal error:  Uncaught Error: Failed opening required '/home2/cca92205/public_html/marketplus/ventas/../Funciones/conexion.php' (include_path='.:/opt/alt/php84/usr/share/pear:/opt/alt/php84/usr/share/php:/usr/share/pear:/usr/share/php') in /home2/cca92205/public_html/marketplus/ventas/consultar_ventas.php:2
+Stack trace:
+#0 {main}
+  thrown in /home2/cca92205/public_html/marketplus/ventas/consultar_ventas.php on line 2
+[29-Oct-2026 19:32:19 America/Santiago] PHP Warning:  require_once(/home2/cca92205/public_html/marketplus/ventas/../Funciones/conexion.php): Failed to open stream: No such file or directory in /home2/cca92205/public_html/marketplus/ventas/detalle_venta.php on line 2
+[29-Oct-2026 19:32:19 America/Santiago] PHP Fatal error:  Uncaught Error: Failed opening required '/home2/cca92205/public_html/marketplus/ventas/../Funciones/conexion.php' (include_path='.:/opt/alt/php84/usr/share/pear:/opt/alt/php84/usr/share/php:/usr/share/pear:/usr/share/php') in /home2/cca92205/public_html/marketplus/ventas/detalle_venta.php:2
+Stack trace:
+#0 {main}
+  thrown in /home2/cca92205/public_html/marketplus/ventas/detalle_venta.php on line 2
+[29-Oct-2026 19:32:22 America/Santiago] PHP Warning:  require_once(/home2/cca92205/public_html/marketplus/ventas/../Funciones/conexion.php): Failed to open stream: No such file or directory in /home2/cca92205/public_html/marketplus/ventas/detalle_venta.php on line 2
+[29-Oct-2026 19:32:22 America/Santiago] PHP Fatal error:  Uncaught Error: Failed opening required '/home2/cca92205/public_html/marketplus/ventas/../Funciones/conexion.php' (include_path='.:/opt/alt/php84/usr/share/pear:/opt/alt/php84/usr/share/php:/usr/share/pear:/usr/share/php') in /home2/cca92205/public_html/marketplus/ventas/detalle_venta.php:2
+Stack trace:
+#0 {main}
+  thrown in /home2/cca92205/public_html/marketplus/ventas/detalle_venta.php on line 2
+[29-Oct-2026 19:32:22 America/Santiago] PHP Warning:  require_once(/home2/cca92205/public_html/marketplus/ventas/../Funciones/conexion.php): Failed to open stream: No such file or directory in /home2/cca92205/public_html/marketplus/ventas/detalle_venta.php on line 2
+[29-Oct-2026 19:32:22 America/Santiago] PHP Fatal error:  Uncaught Error: Failed opening required '/home2/cca92205/public_html/marketplus/ventas/../Funciones/conexion.php' (include_path='.:/opt/alt/php84/usr/share/pear:/opt/alt/php84/usr/share/php:/usr/share/pear:/usr/share/php') in /home2/cca92205/public_html/marketplus/ventas/detalle_venta.php:2
+Stack trace:
+#0 {main}
+  thrown in /home2/cca92205/public_html/marketplus/ventas/detalle_venta.php on line 2
+[29-Oct-2026 19:32:22 America/Santiago] PHP Warning:  require_once(/home2/cca92205/public_html/marketplus/ventas/../Funciones/conexion.php): Failed to open stream: No such file or directory in /home2/cca92205/public_html/marketplus/ventas/detalle_venta.php on line 2
+[29-Oct-2026 19:32:22 America/Santiago] PHP Fatal error:  Uncaught Error: Failed opening required '/home2/cca92205/public_html/marketplus/ventas/../Funciones/conexion.php' (include_path='.:/opt/alt/php84/usr/share/pear:/opt/alt/php84/usr/share/php:/usr/share/pear:/usr/share/php') in /home2/cca92205/public_html/marketplus/ventas/detalle_venta.php:2
+Stack trace:
+#0 {main}
+  thrown in /home2/cca92205/public_html/marketplus/ventas/detalle_venta.php on line 2
+[29-Oct-2026 19:32:22 America/Santiago] PHP Warning:  require_once(/home2/cca92205/public_html/marketplus/ventas/../Funciones/conexion.php): Failed to open stream: No such file or directory in /home2/cca92205/public_html/marketplus/ventas/detalle_venta.php on line 2
+[29-Oct-2026 19:32:22 America/Santiago] PHP Fatal error:  Uncaught Error: Failed opening required '/home2/cca92205/public_html/marketplus/ventas/../Funciones/conexion.php' (include_path='.:/opt/alt/php84/usr/share/pear:/opt/alt/php84/usr/share/php:/usr/share/pear:/usr/share/php') in /home2/cca92205/public_html/marketplus/ventas/detalle_venta.php:2
+Stack trace:
+#0 {main}
+  thrown in /home2/cca92205/public_html/marketplus/ventas/detalle_venta.php on line 2
+[29-Oct-2026 19:32:25 America/Santiago] PHP Warning:  require_once(/home2/cca92205/public_html/marketplus/ventas/../Funciones/conexion.php): Failed to open stream: No such file or directory in /home2/cca92205/public_html/marketplus/ventas/consultar_ventas.php on line 2
+[29-Oct-2026 19:32:25 America/Santiago] PHP Fatal error:  Uncaught Error: Failed opening required '/home2/cca92205/public_html/marketplus/ventas/../Funciones/conexion.php' (include_path='.:/opt/alt/php84/usr/share/pear:/opt/alt/php84/usr/share/php:/usr/share/pear:/usr/share/php') in /home2/cca92205/public_html/marketplus/ventas/consultar_ventas.php:2
+Stack trace:
+#0 {main}
+  thrown in /home2/cca92205/public_html/marketplus/ventas/consultar_ventas.php on line 2
+[29-Oct-2026 19:32:27 America/Santiago] PHP Warning:  require_once(/home2/cca92205/public_html/marketplus/ventas/../Funciones/conexion.php): Failed to open stream: No such file or directory in /home2/cca92205/public_html/marketplus/ventas/consultar_ventas.php on line 2
+[29-Oct-2026 19:32:27 America/Santiago] PHP Fatal error:  Uncaught Error: Failed opening required '/home2/cca92205/public_html/marketplus/ventas/../Funciones/conexion.php' (include_path='.:/opt/alt/php84/usr/share/pear:/opt/alt/php84/usr/share/php:/usr/share/pear:/usr/share/php') in /home2/cca92205/public_html/marketplus/ventas/consultar_ventas.php:2
+Stack trace:
+#0 {main}
+  thrown in /home2/cca92205/public_html/marketplus/ventas/consultar_ventas.php on line 2
+[29-Oct-2026 19:32:30 America/Santiago] PHP Warning:  require_once(/home2/cca92205/public_html/marketplus/ventas/../Funciones/conexion.php): Failed to open stream: No such file or directory in /home2/cca92205/public_html/marketplus/ventas/detalle_venta.php on line 2
+[29-Oct-2026 19:32:30 America/Santiago] PHP Fatal error:  Uncaught Error: Failed opening required '/home2/cca92205/public_html/marketplus/ventas/../Funciones/conexion.php' (include_path='.:/opt/alt/php84/usr/share/pear:/opt/alt/php84/usr/share/php:/usr/share/pear:/usr/share/php') in /home2/cca92205/public_html/marketplus/ventas/detalle_venta.php:2
+Stack trace:
+#0 {main}
+  thrown in /home2/cca92205/public_html/marketplus/ventas/detalle_venta.php on line 2
+[29-Oct-2026 22:11:06 America/Santiago] PHP Warning:  require_once(/home2/cca92205/public_html/marketplus/ventas/../Funciones/conexion.php): Failed to open stream: No such file or directory in /home2/cca92205/public_html/marketplus/ventas/consultar_ventas.php on line 2
+[29-Oct-2026 22:11:06 America/Santiago] PHP Fatal error:  Uncaught Error: Failed opening required '/home2/cca92205/public_html/marketplus/ventas/../Funciones/conexion.php' (include_path='.:/opt/alt/php84/usr/share/pear:/opt/alt/php84/usr/share/php:/usr/share/pear:/usr/share/php') in /home2/cca92205/public_html/marketplus/ventas/consultar_ventas.php:2
+Stack trace:
+#0 {main}
+  thrown in /home2/cca92205/public_html/marketplus/ventas/consultar_ventas.php on line 2
+[29-Oct-2026 22:13:40 America/Santiago] PHP Warning:  require_once(/home2/cca92205/public_html/marketplus/ventas/../Funciones/conexion.php): Failed to open stream: No such file or directory in /home2/cca92205/public_html/marketplus/ventas/consultar_ventas.php on line 2
+[29-Oct-2026 22:13:40 America/Santiago] PHP Fatal error:  Uncaught Error: Failed opening required '/home2/cca92205/public_html/marketplus/ventas/../Funciones/conexion.php' (include_path='.:/opt/alt/php84/usr/share/pear:/opt/alt/php84/usr/share/php:/usr/share/pear:/usr/share/php') in /home2/cca92205/public_html/marketplus/ventas/consultar_ventas.php:2
+Stack trace:
+#0 {main}
+  thrown in /home2/cca92205/public_html/marketplus/ventas/consultar_ventas.php on line 2
+[30-Oct-2026 10:54:07 America/Santiago] PHP Warning:  require_once(/home2/cca92205/public_html/marketplus/ventas/../Funciones/conexion.php): Failed to open stream: No such file or directory in /home2/cca92205/public_html/marketplus/ventas/consultar_ventas.php on line 2
+[30-Oct-2026 10:54:07 America/Santiago] PHP Fatal error:  Uncaught Error: Failed opening required '/home2/cca92205/public_html/marketplus/ventas/../Funciones/conexion.php' (include_path='.:/opt/alt/php84/usr/share/pear:/opt/alt/php84/usr/share/php:/usr/share/pear:/usr/share/php') in /home2/cca92205/public_html/marketplus/ventas/consultar_ventas.php:2
+Stack trace:
+#0 {main}
+  thrown in /home2/cca92205/public_html/marketplus/ventas/consultar_ventas.php on line 2
+[02-Nov-2026 20:03:10 America/Santiago] PHP Warning:  require_once(/home2/cca92205/public_html/marketplus/ventas/../Funciones/conexion.php): Failed to open stream: No such file or directory in /home2/cca92205/public_html/marketplus/ventas/consultar_ventas.php on line 2
+[02-Nov-2026 20:03:10 America/Santiago] PHP Fatal error:  Uncaught Error: Failed opening required '/home2/cca92205/public_html/marketplus/ventas/../Funciones/conexion.php' (include_path='.:/opt/alt/php84/usr/share/pear:/opt/alt/php84/usr/share/php:/usr/share/pear:/usr/share/php') in /home2/cca92205/public_html/marketplus/ventas/consultar_ventas.php:2
+Stack trace:
+#0 {main}
+  thrown in /home2/cca92205/public_html/marketplus/ventas/consultar_ventas.php on line 2
+[02-Nov-2026 20:07:12 America/Santiago] PHP Warning:  require_once(/home2/cca92205/public_html/marketplus/ventas/../Funciones/conexion.php): Failed to open stream: No such file or directory in /home2/cca92205/public_html/marketplus/ventas/consultar_ventas.php on line 2
+[02-Nov-2026 20:07:12 America/Santiago] PHP Fatal error:  Uncaught Error: Failed opening required '/home2/cca92205/public_html/marketplus/ventas/../Funciones/conexion.php' (include_path='.:/opt/alt/php84/usr/share/pear:/opt/alt/php84/usr/share/php:/usr/share/pear:/usr/share/php') in /home2/cca92205/public_html/marketplus/ventas/consultar_ventas.php:2
+Stack trace:
+#0 {main}
+  thrown in /home2/cca92205/public_html/marketplus/ventas/consultar_ventas.php on line 2
+[02-Nov-2026 22:42:39 America/Santiago] PHP Warning:  require_once(/home2/cca92205/public_html/marketplus/ventas/../Funciones/conexion.php): Failed to open stream: No such file or directory in /home2/cca92205/public_html/marketplus/ventas/consultar_ventas.php on line 2
+[02-Nov-2026 22:42:39 America/Santiago] PHP Fatal error:  Uncaught Error: Failed opening required '/home2/cca92205/public_html/marketplus/ventas/../Funciones/conexion.php' (include_path='.:/opt/alt/php84/usr/share/pear:/opt/alt/php84/usr/share/php:/usr/share/pear:/usr/share/php') in /home2/cca92205/public_html/marketplus/ventas/consultar_ventas.php:2
+Stack trace:
+#0 {main}
+  thrown in /home2/cca92205/public_html/marketplus/ventas/consultar_ventas.php on line 2
+[08-Nov-2026 20:51:19 America/Santiago] PHP Warning:  Undefined variable $pdo in /home2/cca92205/public_html/marketplus/ventas/reporte_ventas.php on line 10

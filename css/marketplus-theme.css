@@ -1,0 +1,257 @@
+:root {
+    --mp-primary: #1f5eff;
+    --mp-primary-dark: #173fbf;
+    --mp-secondary: #0f172a;
+    --mp-accent: #14b8a6;
+    --mp-background: #f3f7ff;
+    --mp-surface: #ffffff;
+    --mp-text: #0f172a;
+    --mp-muted: #64748b;
+    --mp-border: #e2e8f0;
+    --mp-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: var(--mp-background);
+    color: var(--mp-text);
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body.bg-light {
+    background: var(--mp-background) !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: var(--mp-secondary);
+    line-height: 1.25;
+}
+
+a {
+    transition: color 0.18s ease, background-color 0.18s ease, border-color 0.18s ease;
+}
+
+.container,
+.content,
+main.content,
+.export-content,
+.admin-layout {
+    width: min(1200px, calc(100% - 32px));
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.container {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.container-fluid {
+    width: min(100%, 1480px);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.card,
+.panel-card,
+.login-card,
+.module-card,
+.tarjeta-formulario,
+.card-container,
+.tabla-container,
+.export-card {
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    border-radius: 16px;
+    background-color: var(--mp-surface);
+    box-shadow: var(--mp-shadow);
+}
+
+.card,
+.panel-card {
+    overflow: hidden;
+}
+
+.header,
+.dashboard-header,
+.header-panel {
+    border: 1px solid rgba(31, 94, 255, 0.1);
+    border-radius: 16px;
+    background: linear-gradient(135deg, rgba(31, 94, 255, 0.08), rgba(20, 184, 166, 0.08));
+    box-shadow: var(--mp-shadow);
+}
+
+.header {
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.card-header,
+.panel-card .card-header {
+    color: var(--mp-secondary);
+}
+
+button,
+.btn,
+.btn-submit,
+.btn-primario,
+.mp-btn {
+    border-radius: 9px;
+    font-weight: 650;
+    transition: background-color 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+}
+
+.btn,
+.btn-submit,
+.btn-primario,
+.btn-primary,
+.mp-btn-primary {
+    background-color: var(--mp-primary);
+    border-color: var(--mp-primary);
+    color: #ffffff;
+}
+
+.btn:hover,
+.btn-submit:hover,
+.btn-primario:hover,
+.btn-primary:hover,
+.mp-btn-primary:hover {
+    background-color: var(--mp-primary-dark);
+    border-color: var(--mp-primary-dark);
+    color: #ffffff;
+}
+
+.btn:focus-visible,
+.btn-submit:focus-visible,
+.btn-primario:focus-visible,
+.mp-btn:focus-visible,
+button:focus-visible,
+a:focus-visible {
+    outline: 3px solid rgba(31, 94, 255, 0.35);
+    outline-offset: 2px;
+}
+
+input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]),
+select,
+textarea {
+    border: 1px solid #cbd5e1;
+    border-radius: 9px;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--mp-primary);
+    box-shadow: 0 0 0 3px rgba(31, 94, 255, 0.12);
+    outline: none;
+}
+
+table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+thead th {
+    background-color: #eaf0ff;
+    color: var(--mp-secondary);
+    font-weight: 700;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f8faff;
+}
+
+tbody tr:hover {
+    background-color: #eef4ff;
+}
+
+td,
+th {
+    border-color: var(--mp-border);
+}
+
+.table-wrap,
+.table-responsive,
+.table-scroll {
+    max-width: 100%;
+    overflow-x: auto;
+    border-radius: 12px;
+}
+
+.marketplus-nav-container {
+    flex-wrap: wrap;
+    gap: 12px;
+    border-bottom-color: var(--mp-border);
+}
+
+.mp-btn-primary {
+    text-decoration: none;
+}
+
+.mp-btn-outline {
+    border-color: var(--mp-primary);
+    color: var(--mp-primary);
+}
+
+.mp-btn-outline:hover {
+    background-color: var(--mp-primary);
+    color: #ffffff;
+}
+
+.quick-card,
+.module-card {
+    color: var(--mp-text);
+    text-decoration: none;
+}
+
+.quick-card:hover,
+.module-card:hover {
+    border-color: rgba(31, 94, 255, 0.35);
+    box-shadow: 0 16px 30px rgba(31, 94, 255, 0.12);
+}
+
+.alert,
+.alerta-exito,
+.alerta-error,
+.error-msg {
+    border-radius: 10px;
+}
+
+@media (max-width: 700px) {
+    .container,
+    .content,
+    main.content,
+    .export-content,
+    .admin-layout {
+        width: min(100% - 24px, 1200px);
+    }
+
+    .card {
+        padding: 20px;
+    }
+
+    .marketplus-nav-container {
+        padding: 12px;
+    }
+
+    .mp-nav-group {
+        flex-wrap: wrap;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+    }
+}
