@@ -119,7 +119,7 @@ $supervisores = $pdo->query(
                 <p class="text-uppercase text-primary fw-semibold mb-1 small">Panel administrativo</p>
                 <h1 class="h2 mb-0">Eliminar supervisor</h1>
             </div>
-            <a class="btn btn-outline-primary" href="dashboard_administrador.php">Volver al dashboard</a>
+            <a class="btn btn-outline-primary" href="index.php">Volver al dashboard</a>
         </div>
 
         <?php if ($mensaje !== ''): ?>

@@ -1,22 +1,22 @@
 <?php
-session_start();
-include '../conexion.php';
+require_once __DIR__ . '/../includes/auth.php';
+require_once __DIR__ . '/../funciones/conexion.php';
 
-if (!isset($_SESSION['id_rol'])) {
-    $_SESSION['id_rol'] = 1;
-}
+requerirRol(['administrador']);
+
+$pdo = conectar();
 
 $mensaje = '';
 $error = '';
 $producto = null;
 
-$lista_productos = $conn->query("SELECT id_producto, codigo, nombre, precio, stock, imagen FROM Productos ORDER BY id_producto DESC")->fetchAll(PDO::FETCH_ASSOC);
+$lista_productos = $pdo->query("SELECT id_producto, codigo, nombre, precio, stock, imagen FROM Productos ORDER BY id_producto DESC")->fetchAll(PDO::FETCH_ASSOC);
 
 $id_editar = trim($_GET['id'] ?? $_POST['id_producto_sel'] ?? '');
 $busqueda_realizada = $id_editar !== '';
 
 if ($busqueda_realizada) {
-    $stmt = $conn->prepare("SELECT * FROM Productos WHERE id_producto = ? OR codigo = ?");
+    $stmt = $pdo->prepare("SELECT * FROM Productos WHERE id_producto = ? OR codigo = ?");
     $stmt->execute([$id_editar, $id_editar]);
     $producto = $stmt->fetch(PDO::FETCH_ASSOC);
 }
@@ -65,12 +65,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['actualizar'])) {
                 }
             }
             
-            $stmtUp = $conn->prepare("UPDATE Productos SET codigo = ?, nombre = ?, descripcion = ?, precio = ?, stock = ?, imagen = ? WHERE id_producto = ?");
+            $stmtUp = $pdo->prepare("UPDATE Productos SET codigo = ?, nombre = ?, descripcion = ?, precio = ?, stock = ?, imagen = ? WHERE id_producto = ?");
             $stmtUp->execute([$codigo, $nombre, $descripcion, $precio, $stock, $imagen_path, $id_producto]);
 
             $mensaje = "¡Producto actualizado correctamente en el sistema!";
        
-            $stmt = $conn->prepare("SELECT * FROM Productos WHERE id_producto = ?");
+            $stmt = $pdo->prepare("SELECT * FROM Productos WHERE id_producto = ?");
             $stmt->execute([$id_producto]);
             $producto = $stmt->fetch(PDO::FETCH_ASSOC);
             $id_editar = $id_producto;
@@ -94,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['actualizar'])) {
     <header>
         <div class="logo-area">Market<span>Plus</span>Inventario</div>
         <div>
-            <a href="dashboard_administrador.php" style="background-color: #dc3545; color: white; padding: 8px 16px; text-decoration: none; border-radius: 6px; font-size: 14px; font-weight: 700;">Volver al Panel</a>
+            <a href="index.php" style="background-color: #dc3545; color: white; padding: 8px 16px; text-decoration: none; border-radius: 6px; font-size: 14px; font-weight: 700;">Volver al Panel</a>
         </div>
     </header>
 

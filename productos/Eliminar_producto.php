@@ -167,7 +167,7 @@ try {
 
     <header class="header" style="max-width: 1200px; margin: 0 auto 15px;">
         <div style="font-size: 22px; font-weight: bold; letter-spacing: 0.5px;">MarketPlus - Eliminar productos</div>
-        <a href="<?= htmlspecialchars(BASE_URL, ENT_QUOTES, 'UTF-8') ?>/administrador/dashboard_administrador.php" style="text-decoration: none;">Volver al dashboard</a>
+        <a href="<?= htmlspecialchars(BASE_URL, ENT_QUOTES, 'UTF-8') ?>/administrador/index.php" style="text-decoration: none;">Volver al dashboard</a>
     </header>
 
     <?php if ($mensaje !== ''): ?>

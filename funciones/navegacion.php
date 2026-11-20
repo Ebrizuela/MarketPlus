@@ -4,9 +4,9 @@ function renderNavegacion($url_listado = null, $url_inicio = '../index.php', $ur
     $rol = $_SESSION['usuario']['rol'] ?? '';
     $urlDashboard = null;
     if ($rol === 'administrador') {
-        $urlDashboard = BASE_URL . '/administrador/dashboard_administrador.php';
+        $urlDashboard = BASE_URL . '/administrador/index.php';
     } elseif ($rol === 'supervisor') {
-        $urlDashboard = BASE_URL . '/Supervisor/Dashboard_Supervisor.php';
+        $urlDashboard = BASE_URL . '/Supervisor/index.php';
     }
     ?>
     <nav class="marketplus-nav-container" aria-label="Navegación bidireccional">
