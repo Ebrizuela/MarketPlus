@@ -1,6 +1,6 @@
 <?php
     function conectar(){
-        $host = 'localhost';
+        $host = 'db';
         $db   = 'cca92205_marketplus_db';
         $user = 'cca92205_marketplus';
         $pass = 'V!mkkhcaYr49'; 

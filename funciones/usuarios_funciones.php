@@ -129,12 +129,17 @@ function obtenerRoles($pdo) {
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function obtenerSupervisores($pdo) {
+function obtenerSupervisores($pdo, $soloSupervisores = true) {
     $sql = "SELECT f.id_funcionario, f.nombre, f.apellido, f.correo, f.id_rol, r.nombre AS nombre_rol
             FROM funcionarios f
-            INNER JOIN Roles r ON f.id_rol = r.id_rol
-            WHERE r.nombre = 'Supervisor'
-            ORDER BY f.id_funcionario ASC";
+            LEFT JOIN Roles r ON f.id_rol = r.id_rol";
+
+    if ($soloSupervisores) {
+        $sql .= " WHERE r.nombre = 'Supervisor'";
+    }
+
+    $sql .= " ORDER BY f.id_funcionario ASC";
+
     return $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 }
 

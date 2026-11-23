@@ -1131,3 +1131,39 @@ tbody tr:hover {
     color: #94a3b8;
     padding: 20px;
 }
+.btn-eliminar {
+    display: inline-block;
+    padding: 6px 14px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.2;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    background-color: #0b69d8; /* Cambia a #dc3545 si prefieres rojo manteniendo la misma forma */
+    color: #ffffff;
+    vertical-align: middle;
+}
+
+.btn-eliminar:hover {
+    background-color: #0854b0;
+}
+.admin-users-page .acciones-grupo {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    white-space: nowrap !important;
+}
+
+.admin-users-page .acciones-grupo form {
+    display: inline-flex !important;
+    margin: 0 !important;
+}
+
+.admin-users-page .tabla-usuarios th,
+.admin-users-page .tabla-usuarios td {
+    vertical-align: middle !important;
+}
