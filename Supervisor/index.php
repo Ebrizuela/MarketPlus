@@ -147,6 +147,14 @@ if ($pdo) {
                     </a>
                 </div>
                 <div class="col-12 col-sm-6 col-lg-4">
+                    <a href="/supervisor/supervisor_productos.php" class="quick-card module-card card h-100">
+                        <div class="card-body d-flex align-items-start gap-3">
+                            <span class="module-icon"><i class="bi bi-box-seam"></i></span>
+                            <div><h6 class="card-title mb-1">Supervisión de productos</h6><p>Consultar categorías, precios y existencias del inventario.</p></div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-4">
                     <a href="historial_ventas.php" class="quick-card module-card card h-100">
                         <div class="card-body d-flex align-items-start gap-3">
                             <span class="module-icon"><i class="bi bi-clock-history"></i></span>
