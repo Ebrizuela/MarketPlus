@@ -1,5 +1,5 @@
-```php
 <?php
+require_once '../includes/verificar_sesion.php';
 session_start();
 if (!isset($_SESSION['id_funcionario'])) {
     header("Location: ../login.php");
@@ -69,7 +69,7 @@ $detalles = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <div class="logo">MarketPlus | Detalle de Ventas</div>
         <div class="user-info">
             <?php if(isset($_SESSION['id_rol']) && $_SESSION['id_rol'] == 1): ?>
-                <a href="../administrador/index.php" class="nav-link">Dashboard Admin</a>
+                <a href="../administrador/dashboard_administrador.php" class="nav-link">Dashboard Admin</a>
             <?php endif; ?>
             <span style="color: #666; font-size: 14px;">Vendedor ID: <?= $id_vendedor_actual ?></span>
         </div>
