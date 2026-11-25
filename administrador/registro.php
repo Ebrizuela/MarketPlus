@@ -20,28 +20,26 @@ $usuario_editar = null;
 
 if ($id_editar) {
     try {
-        $usuario_editar = obtenerSupervisorPorId($pdo, $id_editar, false);
+        $usuario_editar = obtenerSupervisorPorId($pdo, $id_editar);
         if (!$usuario_editar) {
-            $id_editar = null;
-            $mensaje = "<div class='alert alert-danger'>No se encontró el funcionario seleccionado. Es posible que haya sido eliminado.</div>";
+            http_response_code(404);
+            exit('El supervisor solicitado no existe.');
         }
     } catch (Exception $e) {
-        $id_editar = null;
-        $mensaje = "<div class='alert alert-danger'>No se pudieron cargar los datos del funcionario: " . htmlspecialchars($e->getMessage()) . "</div>";
+        $mensaje = "<div class='alert alert-danger'>Error al obtener usuario: " . htmlspecialchars($e->getMessage()) . "</div>";
     }
 }
 
 // Procesar Formulario
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (empty($_SESSION['csrf_registro_usuarios'])) {
-        $_SESSION['csrf_registro_usuarios'] = bin2hex(random_bytes(32));
-    }
-    $csrf = $_POST['csrf'] ?? '';
-    if (!is_string($csrf) || !hash_equals($_SESSION['csrf_registro_usuarios'], $csrf)) {
-        http_response_code(419);
-        exit('El formulario expiró. Recarga la página e inténtalo de nuevo.');
-    }
-
+        if (empty($_SESSION['csrf_registro_usuarios'])) {
+            $_SESSION['csrf_registro_usuarios'] = bin2hex(random_bytes(32));
+        }
+        $csrf = $_POST['csrf'] ?? '';
+        if (!is_string($csrf) || !hash_equals($_SESSION['csrf_registro_usuarios'], $csrf)) {
+            http_response_code(419);
+            exit('El formulario expiró. Recarga la página e inténtalo de nuevo.');
+        }
     $nombre   = trim($_POST['nombre'] ?? '');
     $apellido = trim($_POST['apellido'] ?? '');
     $correo   = normalizarCorreo($_POST['correo'] ?? '');
@@ -97,21 +95,11 @@ try {
 }
 
 try {
-    $lista_funcionarios = obtenerSupervisores($pdo, false);
+    $lista_funcionarios = obtenerSupervisores($pdo);
 } catch (Exception $e) {
     $mensaje .= "<div class='alert alert-danger'>Error al cargar la lista de funcionarios: " . htmlspecialchars($e->getMessage()) . "</div>";
 }
 
-// Paginación de la lista de funcionarios
-$por_pagina = 9;
-$total_registros = count($lista_funcionarios);
-$total_paginas = max(1, (int) ceil($total_registros / $por_pagina));
-$pagina_actual = filter_input(INPUT_GET, 'pagina', FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]) ?: 1;
-if ($pagina_actual > $total_paginas) {
-    $pagina_actual = $total_paginas;
-}
-$offset = ($pagina_actual - 1) * $por_pagina;
-$funcionarios_paginados = array_slice($lista_funcionarios, $offset, $por_pagina);
 ?>
 
 <!DOCTYPE html>
@@ -128,21 +116,17 @@ $funcionarios_paginados = array_slice($lista_funcionarios, $offset, $por_pagina)
 </head>
 <body class="admin-users-page">
 
+    <?php renderNavegacion(null, BASE_URL . '/index.php'); ?>
     <div class="brand-header">
-        <div class="brand-header-title">
-            <h1>Market<span>Plus</span></h1>
-            <p>Panel de Administración de Usuarios</p>
-        </div>
-        <div class="brand-header-nav">
-            <?php renderNavegacion(null, BASE_URL . '/index.php'); ?>
-        </div>
+        <h1>Market<span>Plus</span></h1>
+        <p>Panel de Administración de Usuarios</p>
     </div>
 
     <main class="admin-layout">
     <!-- Formulario de Registro / Edición -->
     <div class="card-container">
         <div class="card-top-bar"></div>
-        <form method="POST" action="registro.php<?php echo $id_editar ? '?editar_id=' . (int) $id_editar : ''; ?>" id="formRegistro">
+        <form method="POST" action="registro.php<?php echo $id_editar ? '?editar_id='.$id_editar : ''; ?>" id="formRegistro">
             
             <input type="hidden" name="csrf" value="<?php echo htmlspecialchars($_SESSION['csrf_registro_usuarios'] ??= bin2hex(random_bytes(32)), ENT_QUOTES, 'UTF-8'); ?>">
             <input type="hidden" name="action" value="<?php echo $id_editar ? 'actualizar' : 'crear'; ?>">
@@ -216,8 +200,8 @@ $funcionarios_paginados = array_slice($lista_funcionarios, $offset, $por_pagina)
                             $rol_id = $rol['id_rol'] ?? $rol['id'];
                             $selected = (($usuario_editar && $usuario_editar['id_rol'] == $rol_id) || (isset($_POST['id_rol']) && $_POST['id_rol'] == $rol_id)) ? 'selected' : '';
                         ?>
-                            <option value="<?php echo (int) $rol_id; ?>" <?php echo $selected; ?>>
-                                <?php echo htmlspecialchars(ucfirst($rol['nombre'])); ?>
+                            <option value="<?php echo $rol_id; ?>" <?php echo $selected; ?>>
+                                <?php echo ucfirst($rol['nombre']); ?>
                             </option>
                         <?php endforeach; ?>
                     </select>
@@ -230,7 +214,7 @@ $funcionarios_paginados = array_slice($lista_funcionarios, $offset, $por_pagina)
             </button>
 
             <?php if ($id_editar): ?>
-                <a href="registro.php" class="btn-submit" style="margin-top: 8px; text-decoration: none;">Modificar</a>
+                <a href="registro.php" class="btn-cancelar">Cancelar Edición</a>
             <?php endif; ?>
         </form>
     </div>
@@ -250,26 +234,17 @@ $funcionarios_paginados = array_slice($lista_funcionarios, $offset, $por_pagina)
                 </tr>
             </thead>
             <tbody>
-                <?php if (!empty($funcionarios_paginados)): ?>
-                    <?php foreach ($funcionarios_paginados as $f): ?>
+                <?php if (!empty($lista_funcionarios)): ?>
+                    <?php foreach ($lista_funcionarios as $f): ?>
                         <tr>
-                            <td><?php echo (int) $f['id_funcionario']; ?></td>
+                            <td><?php echo $f['id_funcionario']; ?></td>
                             <td><?php echo htmlspecialchars($f['nombre'] . ' ' . $f['apellido']); ?></td>
                             <td><?php echo htmlspecialchars($f['correo']); ?></td>
                             <td><span class="badge-rol"><?php echo htmlspecialchars($f['nombre_rol']); ?></span></td>
-                            <td class="celda-acciones">
-                                <div class="acciones-grupo">
-                                    <a href="registro.php?editar_id=<?php echo (int) $f['id_funcionario']; ?>" class="btn-editar">
-                                        Editar
-                                    </a>
-                                    <form method="POST" action="eliminar_supervisor.php" onsubmit="return confirm('¿Estás seguro de que deseas eliminar a este usuario?');">
-                                        <input type="hidden" name="csrf" value="<?php echo htmlspecialchars($_SESSION['csrf_eliminar_supervisor'] ??= bin2hex(random_bytes(32)), ENT_QUOTES, 'UTF-8'); ?>">
-                                        <input type="hidden" name="id_funcionario" value="<?php echo (int) $f['id_funcionario']; ?>">
-                                        <button type="submit" class="btn-eliminar">
-                                            Eliminar
-                                        </button>
-                                    </form>
-                                </div>
+                            <td>
+                                <a href="registro.php?editar_id=<?php echo $f['id_funcionario']; ?>" class="btn-editar">
+                                    Editar
+                                </a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -281,25 +256,6 @@ $funcionarios_paginados = array_slice($lista_funcionarios, $offset, $por_pagina)
             </tbody>
         </table>
         </div>
-
-        <?php if ($total_paginas > 1): ?>
-        <div class="paginacion-lista" style="margin-top: 12px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
-            <span>Página <?php echo (int) $pagina_actual; ?> de <?php echo (int) $total_paginas; ?> (<?php echo (int) $total_registros; ?> registros)</span>
-            <div style="display: flex; gap: 6px; flex-wrap: wrap;">
-                <?php for ($p = 1; $p <= $total_paginas; $p++):
-                    $queryParams = ['pagina' => $p];
-                    if ($id_editar) {
-                        $queryParams['editar_id'] = $id_editar;
-                    }
-                    $urlPagina = 'registro.php?' . http_build_query($queryParams);
-                ?>
-                    <a href="<?php echo htmlspecialchars($urlPagina, ENT_QUOTES, 'UTF-8'); ?>" class="btn-editar" style="<?php echo $p === $pagina_actual ? 'opacity: 0.65; pointer-events: none;' : ''; ?>">
-                        <?php echo (int) $p; ?>
-                    </a>
-                <?php endfor; ?>
-            </div>
-        </div>
-        <?php endif; ?>
     </div>
     </main>
 

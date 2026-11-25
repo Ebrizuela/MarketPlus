@@ -129,17 +129,12 @@ function obtenerRoles($pdo) {
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function obtenerSupervisores($pdo, $soloSupervisores = true) {
+function obtenerSupervisores($pdo) {
     $sql = "SELECT f.id_funcionario, f.nombre, f.apellido, f.correo, f.id_rol, r.nombre AS nombre_rol
             FROM funcionarios f
-            LEFT JOIN Roles r ON f.id_rol = r.id_rol";
-
-    if ($soloSupervisores) {
-        $sql .= " WHERE r.nombre = 'Supervisor'";
-    }
-
-    $sql .= " ORDER BY f.id_funcionario ASC";
-
+            INNER JOIN Roles r ON f.id_rol = r.id_rol
+            WHERE r.nombre = 'Supervisor'
+            ORDER BY f.id_funcionario ASC";
     return $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 }
 
@@ -149,17 +144,11 @@ function obtenerFuncionarioPorId($pdo, $id_funcionario) {
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
-function obtenerSupervisorPorId($pdo, $id_funcionario, $soloSupervisores = false) {
-    $sql = "SELECT f.*, r.nombre AS nombre_rol
-            FROM funcionarios f
-            LEFT JOIN Roles r ON f.id_rol = r.id_rol
-            WHERE f.id_funcionario = :id";
-
-    if ($soloSupervisores) {
-        $sql .= " AND r.nombre = 'Supervisor'";
-    }
-
-    $stmt = $pdo->prepare($sql);
+function obtenerSupervisorPorId($pdo, $id_funcionario) {
+    $stmt = $pdo->prepare("SELECT f.*, r.nombre AS nombre_rol
+                           FROM funcionarios f
+                           INNER JOIN Roles r ON f.id_rol = r.id_rol
+                           WHERE f.id_funcionario = :id AND r.nombre = 'Supervisor'");
     $stmt->execute([':id' => $id_funcionario]);
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
@@ -171,15 +160,15 @@ function actualizarFuncionario($pdo, $id_funcionario, $nombre, $apellido, $corre
     $id_rol = filter_var($id_rol, FILTER_VALIDATE_INT);
 
     if ($nombre === '' || $apellido === '' || $correo === '' || !$id_rol) {
-        throw new InvalidArgumentException("Todos los campos obligatorios deben ser completados.");
+        throw new Exception("Todos los campos obligatorios deben ser completados.");
     }
 
     if (!filter_var($correo, FILTER_VALIDATE_EMAIL)) {
-        throw new InvalidArgumentException("El formato del correo electrónico no es válido.");
+        throw new Exception("El formato del correo electrónico no es válido.");
     }
 
     if (strlen($correo) > 45) {
-        throw new InvalidArgumentException("El correo no puede superar los 45 caracteres permitidos por la base de datos.");
+        throw new Exception("El correo no puede superar los 45 caracteres permitidos por la base de datos.");
     }
 
     $rol = $pdo->prepare("SELECT nombre FROM Roles WHERE id_rol = :id AND estado = 'Activo'");
@@ -203,15 +192,15 @@ function actualizarFuncionario($pdo, $id_funcionario, $nombre, $apellido, $corre
 
         $pdo->beginTransaction();
         try {
-            $funcionarioStmt = $pdo->prepare("SELECT f.id_funcionario, f.nombre, f.apellido, f.correo, f.id_rol, r.nombre AS nombre_rol
-                                              FROM funcionarios f
-                                              LEFT JOIN Roles r ON f.id_rol = r.id_rol
-                                              WHERE f.id_funcionario = :id
-                                              FOR UPDATE");
-            $funcionarioStmt->execute([':id' => $id_funcionario]);
-            $funcionarioAnterior = $funcionarioStmt->fetch(PDO::FETCH_ASSOC);
-            if (!$funcionarioAnterior) {
-                throw new DomainException("El funcionario solicitado no existe.");
+            $supervisor = $pdo->prepare("SELECT f.id_funcionario, f.nombre, f.apellido, f.correo, f.id_rol, r.nombre AS nombre_rol
+                                         FROM funcionarios f
+                                         INNER JOIN Roles r ON f.id_rol = r.id_rol
+                                         WHERE f.id_funcionario = :id AND r.nombre = 'Supervisor'
+                                         FOR UPDATE");
+            $supervisor->execute([':id' => $id_funcionario]);
+            $supervisorAnterior = $supervisor->fetch(PDO::FETCH_ASSOC);
+            if (!$supervisorAnterior) {
+                throw new DomainException("Solo se pueden modificar funcionarios que actualmente tengan rol de Supervisor.");
             }
 
             $sql = "UPDATE funcionarios
@@ -231,13 +220,13 @@ function actualizarFuncionario($pdo, $id_funcionario, $nombre, $apellido, $corre
             ]);
 
             $detallesAuditoria = json_encode([
-                'funcionario_id' => (int) $id_funcionario,
+                'supervisor_id' => (int) $id_funcionario,
                 'anterior' => [
-                    'nombre' => $funcionarioAnterior['nombre'],
-                    'apellido' => $funcionarioAnterior['apellido'],
-                    'correo' => $funcionarioAnterior['correo'],
-                    'id_rol' => $funcionarioAnterior['id_rol'] !== null ? (int) $funcionarioAnterior['id_rol'] : null,
-                    'rol' => $funcionarioAnterior['nombre_rol'] ?? null,
+                    'nombre' => $supervisorAnterior['nombre'],
+                    'apellido' => $supervisorAnterior['apellido'],
+                    'correo' => $supervisorAnterior['correo'],
+                    'id_rol' => (int) $supervisorAnterior['id_rol'],
+                    'rol' => $supervisorAnterior['nombre_rol'],
                 ],
                 'nuevo' => [
                     'nombre' => $nombre,
@@ -252,7 +241,7 @@ function actualizarFuncionario($pdo, $id_funcionario, $nombre, $apellido, $corre
                                         VALUES (:usuario_id, :accion, :detalles, :ip, :user_agent)');
             $auditoria->execute([
                 ':usuario_id' => $_SESSION['usuario_id'] ?? null,
-                ':accion' => 'actualizar_funcionario',
+                ':accion' => 'actualizar_supervisor',
                 ':detalles' => $detallesAuditoria,
                 ':ip' => $_SERVER['REMOTE_ADDR'] ?? null,
                 ':user_agent' => isset($_SERVER['HTTP_USER_AGENT']) ? substr($_SERVER['HTTP_USER_AGENT'], 0, 255) : null,

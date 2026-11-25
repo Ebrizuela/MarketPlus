@@ -193,7 +193,7 @@ try {
                  FROM Productos p
                  INNER JOIN Categorias c ON p.id_categorias = c.id_categorias";
     $parametros = [];
-    $condiciones = ['p.stock > 0'];
+    $condiciones = [];
     if ($columnaEstadoExiste) {
         $condiciones[] = 'p.estado = 1';
     }
@@ -233,9 +233,9 @@ try {
         $columnasCarrusel .= ', p.imagen';
     }
 
-    $sqlCarrusel = "SELECT $columnasCarrusel FROM Productos p WHERE p.stock > 0";
+    $sqlCarrusel = "SELECT $columnasCarrusel FROM Productos p";
     if ($columnaEstadoExiste) {
-        $sqlCarrusel .= ' AND p.estado = 1';
+        $sqlCarrusel .= ' WHERE p.estado = 1';
     }
     $sqlCarrusel .= ' ORDER BY p.id_producto DESC';
     $stmtCarrusel = $pdo->query($sqlCarrusel);

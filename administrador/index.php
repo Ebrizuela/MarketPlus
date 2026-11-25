@@ -95,7 +95,7 @@ if ($pdo instanceof PDO) {
                         <a class="nav-link" href="Clientes.php"><i class="bi bi-person-badge"></i> 4. Clientes</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../ventas/reportes_ventas.php"><i class="bi bi-graph-up"></i> 5. Reportes</a>
+                        <a class="nav-link" href="Reportes.php"><i class="bi bi-graph-up"></i> 5. Reportes</a>
                     </li>
                 </ul>
                 <div class="d-flex align-items-center text-white me-3 gap-3">
