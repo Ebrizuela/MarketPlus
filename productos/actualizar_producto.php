@@ -6,7 +6,7 @@ require_once __DIR__ . '/../funciones/imagenes_productos.php';
 requerirRol(['administrador']);
 
 $conn = conectar();
-$panel_destino = '../administrador/dashboard_administrador.php';
+$panel_destino = '../administrador/index.php';
 
 $mensaje = '';
 $error = '';
@@ -102,7 +102,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['actualizar'])) {
     <header>
         <div class="logo-area">Market<span>Plus</span>Inventario</div>
         <div>
-            <a href="<?= $panel_destino ?>" style="background-color: #dc3545; color: white; padding: 8px 16px; text-decoration: none; border-radius: 6px; font-size: 14px; font-weight: 700;">Volver al Panel</a>
+            <?php if ($producto): ?>
+                <a href="actualizar_producto.php" style="background-color: #6c757d; color: white; padding: 8px 16px; text-decoration: none; border-radius: 6px; font-size: 14px; font-weight: 700;">← Volver al Catálogo</a>
+            <?php else: ?>
+                <a href="<?= $panel_destino ?>" style="background-color: #dc3545; color: white; padding: 8px 16px; text-decoration: none; border-radius: 6px; font-size: 14px; font-weight: 700;">Volver al Panel</a>
+            <?php endif; ?>
         </div>
     </header>
 
@@ -201,8 +205,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['actualizar'])) {
                 </div>
 
                 <div style="grid-column: 1 / -1; margin-top: 10px;">
-                    <button type="submit" name="actualizar" class="btn-submit" style="width: 100%; background: #004080; color: white; padding: 12px; border: none; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer;">Guardar Cambios y Actualizar</button>
-                </div>
+    <button type="submit" name="actualizar" class="btn-submit" style="width: 100%; background: #004080; color: white; padding: 12px; border: none; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer;">
+        Guardar Cambios y Actualizar
+    </button>
+</div>
             </form>
         <?php elseif ($busqueda_realizada): ?>
             <p style="color: #c82333; font-weight: bold; text-align: center; margin-bottom: 25px;">No se encontró ningún producto con el identificador seleccionado.</p>
