@@ -1,408 +1,122 @@
+/* ==========================================================================
+   src/css/reportes.css
+   Estilos principales del Panel Dashboard y Reportes
+   ========================================================================== */
+
 :root {
-    --bg-body: #F5F5F7;
-    --surface-white: #FFFFFF;
-    --surface-dark: #1E1E1E;
-    --accent-gray: #6B7280;
-    --text-main: #111827;
-    --border-light: #E5E7EB;
-    --surface-muted: #F9FAFB;
-    --surface-hover: #F3F4F6;
-    --line-soft: #F3F4F6;
-    --radius-card: 20px;
-    --transition-fast: 0.2s ease;
+    --card-radius: 12px;
+    --transition-fast: 0.2s ease-in-out;
 }
 
 body.reporte-ventas-body {
-    min-height: 100vh;
-    background: var(--bg-body);
-    color: var(--text-main);
-    font-family: "Plus Jakarta Sans", Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+    background-color: #f4f6f9 !important;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    color: #212529;
 }
 
-.reporte-ventas {
-    max-width: 1440px;
+/* Tarjetas y Contenedores */
+.reporte-ventas .card {
+    border: none;
+    border-radius: var(--card-radius);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    background-color: #ffffff;
 }
 
-.reporte-ventas .card,
-.reporte-ventas .report-card {
-    border: 1px solid rgba(17, 24, 39, 0.04);
-    border-radius: var(--radius-card);
-    background: var(--surface-white);
-    box-shadow: 0 8px 28px rgba(17, 24, 39, 0.035);
-}
-
-.sales-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1.5rem;
-    margin-bottom: 1.75rem;
-}
-
-.page-eyebrow {
-    margin: 0 0 0.45rem;
-    color: var(--accent-gray);
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-}
-
-.page-title {
-    margin: 0;
-    color: var(--text-main);
-    font-size: clamp(1.7rem, 3vw, 2.25rem);
-    font-weight: 700;
-    letter-spacing: -0.045em;
-}
-
-.page-subtitle {
-    margin: 0.45rem 0 0;
-    color: var(--accent-gray);
-    font-size: 0.9rem;
-}
-
-.sales-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.65rem;
-}
-
-.export-button,
-.filter-button,
-.clear-button {
-    min-height: 42px;
-    padding: 0.65rem 1.15rem;
-    font-size: 0.82rem;
+.reporte-ventas .card-header {
+    background-color: #ffffff;
+    border-bottom: 1px solid #edf2f7;
     font-weight: 600;
-    transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+    padding: 1rem 1.25rem;
+    border-top-left-radius: var(--card-radius) !important;
+    border-top-right-radius: var(--card-radius) !important;
 }
 
-.export-button:hover,
-.filter-button:hover,
-.clear-button:hover {
-    transform: translateY(-1px);
+/* Tarjetas KPI */
+.reporte-ventas .row .card {
+    border: none;
 }
 
-.export-button-primary,
-.filter-button {
-    border-color: var(--surface-dark);
-    background: var(--surface-dark);
-    color: var(--surface-white);
+.reporte-ventas .row .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
 }
 
-.export-button-primary:hover,
-.filter-button:hover {
-    border-color: #000000;
-    background: #000000;
-    color: var(--surface-white);
+.reporte-ventas .bg-success {
+    background: linear-gradient(135deg, #198754, #146c43) !important;
 }
 
-.export-button-secondary {
-    border: 1px solid var(--border-light);
-    background: var(--surface-white);
-    color: var(--text-main);
+.reporte-ventas .bg-info {
+    background: linear-gradient(135deg, #0dcaf0, #0aa2c0) !important;
 }
 
-.export-button-secondary:hover {
-    border-color: #D1D5DB;
-    background: var(--surface-muted);
-    color: var(--text-main);
+.reporte-ventas .bg-warning {
+    background: linear-gradient(135deg, #ffc107, #d39e00) !important;
 }
 
-.reporte-ventas .filter-panel {
-    border: 0;
-}
-
-.filter-panel > .card-body {
-    padding: 1.5rem;
-}
-
-.section-heading {
-    margin-bottom: 1.1rem;
-}
-
-.section-title {
-    margin: 0;
-    color: var(--text-main);
-    font-size: 1rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-}
-
-.section-description {
-    margin: 0.3rem 0 0;
-    color: var(--accent-gray);
-    font-size: 0.8rem;
-}
-
-.filter-panel .form-label {
-    margin-bottom: 0.45rem;
-    color: var(--accent-gray);
-    font-size: 0.75rem;
-    font-weight: 600;
-}
-
-.filter-panel .form-control,
-.filter-panel .form-select {
-    min-height: 44px;
-    border: 1px solid transparent;
-    border-radius: 12px;
-    background-color: var(--surface-muted);
-    color: var(--text-main);
-    font-size: 0.82rem;
-    box-shadow: none;
-}
-
-.filter-panel .form-control:focus,
-.filter-panel .form-select:focus {
-    border-color: #D1D5DB;
-    background-color: var(--surface-white);
-    box-shadow: 0 0 0 3px rgba(107, 114, 128, 0.1);
-}
-
-.filter-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 0.6rem;
-    padding-top: 0.35rem;
-}
-
-.clear-button {
-    border: 1px solid transparent;
-    background: var(--surface-hover);
-    color: var(--text-main);
-}
-
-.clear-button:hover {
-    background: #E5E7EB;
-    color: var(--text-main);
-}
-
-.report-error {
-    border: 0;
-    border-radius: 14px;
-}
-
-.reporte-ventas .kpi-card {
-    overflow: hidden;
-    border: 0;
-    border-radius: var(--radius-card);
-    background: var(--surface-white);
-    box-shadow: 0 8px 28px rgba(17, 24, 39, 0.035);
-}
-
-.kpi-card .card-body {
-    display: flex;
-    min-height: 170px;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: space-between;
-    padding: 1.35rem;
-}
-
-.reporte-ventas .kpi-card-primary {
-    background: var(--surface-dark);
-    color: var(--surface-white);
-}
-
-.kpi-heading {
-    display: flex;
-    width: 100%;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.5rem;
-}
-
-.kpi-label {
-    margin: 0;
-    color: var(--accent-gray);
-    font-size: 0.8rem;
-    font-weight: 600;
-}
-
-.kpi-card-primary .kpi-label {
-    color: rgba(255, 255, 255, 0.68);
-}
-
-.kpi-highlight {
-    border-radius: 50px;
-    background: rgba(74, 222, 128, 0.12);
-    color: #4ADE80;
-    font-size: 0.65rem;
-    font-weight: 700;
-    padding: 0.35rem 0.6rem;
-    white-space: nowrap;
-}
-
-.kpi-value {
-    width: 100%;
-    margin: 1.2rem 0 0.35rem;
-    color: var(--text-main);
-    font-size: clamp(1.65rem, 2.6vw, 2.1rem);
-    font-weight: 700;
-    letter-spacing: -0.055em;
-    line-height: 1.1;
-    overflow-wrap: anywhere;
-}
-
-.kpi-value-primary {
-    color: var(--surface-white);
-    font-size: clamp(1.8rem, 3vw, 2.4rem);
-}
-
-.kpi-footnote {
-    margin: auto 0 0;
-    color: var(--accent-gray);
-    font-size: 0.72rem;
-}
-
-.kpi-card-primary .kpi-footnote {
-    color: rgba(255, 255, 255, 0.58);
-}
-
-.report-card {
-    overflow: hidden;
-}
-
-.report-card-header {
-    border-bottom: 1px solid var(--line-soft);
-    background: var(--surface-white);
-    padding: 1.25rem 1.5rem;
-}
-
-.chart-body {
-    height: 330px;
-    padding: 1.25rem 1.5rem 1.5rem;
-}
-
-.table-card .report-card-header {
-    padding-top: 1.35rem;
-    padding-bottom: 1.35rem;
-}
-
-.table-responsive {
-    border-radius: 0 0 var(--radius-card) var(--radius-card);
-}
-
-.reporte-ventas .sales-table {
-    --bs-table-bg: var(--surface-white);
-    --bs-table-color: var(--text-main);
-    --bs-table-hover-bg: #FAFAFB;
-    width: 100%;
-    margin: 0;
-    border-collapse: separate;
-    border-spacing: 0;
+/* Tabla de Resultados */
+.reporte-ventas .table {
+    margin-bottom: 0;
     vertical-align: middle;
 }
 
-.reporte-ventas .sales-table > :not(caption) > * > * {
-    border-top: 0;
-    border-right: 0;
-    border-bottom: 1px solid var(--line-soft);
-    border-left: 0;
-    box-shadow: none;
-    padding: 16px 12px;
-}
-
-.reporte-ventas .sales-table thead th {
-    background: var(--surface-white);
-    color: var(--accent-gray);
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.07em;
+.reporte-ventas .table thead th {
+    background-color: #f8f9fa;
+    color: #495057;
+    font-size: 0.825rem;
     text-transform: uppercase;
-    white-space: nowrap;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid #dee2e6;
+    padding: 0.85rem;
 }
 
-.reporte-ventas .sales-table tbody td {
-    color: #374151;
-    font-size: 0.82rem;
+.reporte-ventas .table tbody td {
+    padding: 0.85rem;
+    color: #212529;
 }
 
-.reporte-ventas .sales-table tbody tr:last-child td {
-    border-bottom: 0;
+.reporte-ventas .table-hover tbody tr:hover {
+    background-color: #f1f5f9;
 }
 
-.reporte-ventas .sales-table tfoot td {
-    border-top: 1px solid var(--border-light);
-    border-bottom: 0;
-    background: var(--surface-white);
-    color: var(--text-main);
-    font-size: 0.82rem;
-    font-weight: 700;
-}
-
-.reporte-ventas .sales-table .table-total-label {
-    text-align: right;
-}
-
-.reporte-ventas .sales-table .table-total-units,
-.reporte-ventas .sales-table .table-total-amount {
-    text-align: left;
-}
-
-.reporte-ventas .sales-table tbody td:first-child[data-order] {
-    width: 1%;
-    border-radius: 50px;
-    background: #4B5563;
-    color: var(--surface-white);
-    font-size: 0.72rem;
+/* Formularios y Botones */
+.reporte-ventas .form-label {
     font-weight: 600;
-    padding: 4px 12px;
-    text-align: center;
-    white-space: nowrap;
+    font-size: 0.875rem;
+    color: #495057;
 }
 
-.reporte-ventas .sales-table tbody tr:hover > * {
-    background: #FAFAFB;
+.reporte-ventas .form-control, 
+.reporte-ventas .form-select {
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    padding: 0.5rem 0.75rem;
 }
 
-.reporte-ventas .dt-container .dt-search input,
-.reporte-ventas .dt-container .dt-length select {
-    min-height: 38px;
-    border: 1px solid var(--border-light);
-    border-radius: 50px;
-    background-color: var(--surface-white);
-    padding: 0.4rem 0.85rem;
-    color: var(--text-main);
-    box-shadow: none;
+.reporte-ventas .form-control:focus, 
+.reporte-ventas .form-select:focus {
+    border-color: #86b7fe;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
 }
 
-.reporte-ventas .dt-container .dt-search input:focus,
-.reporte-ventas .dt-container .dt-length select:focus {
-    border-color: #9CA3AF;
-    outline: 0;
-    box-shadow: 0 0 0 3px rgba(107, 114, 128, 0.1);
+.reporte-ventas .btn {
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all var(--transition-fast);
 }
 
-.reporte-ventas .dt-container .dt-paging .dt-paging-button,
-.reporte-ventas .dt-container .dt-paging .page-link {
-    min-width: 36px;
-    min-height: 36px;
-    border: 1px solid transparent;
-    border-radius: 50px;
-    background: transparent;
-    color: var(--accent-gray);
-    line-height: 1.4;
-}
-
-.reporte-ventas .dt-container .dt-paging .dt-paging-button.current,
-.reporte-ventas .dt-container .dt-paging .page-item.active .page-link {
-    border-color: var(--surface-dark);
-    background: var(--surface-dark);
-    color: var(--surface-white);
-}
-
-.reporte-ventas .dt-container .dt-paging .dt-paging-button:hover,
-.reporte-ventas .dt-container .dt-paging .page-link:hover {
-    border-color: var(--border-light);
-    background: var(--surface-hover);
-    color: var(--text-main);
+.reporte-ventas #contenedorGrafico .card-body {
+    height: 300px;
 }
 
 .reporte-ventas [hidden] {
-    display: none;
+    display: none !important;
 }
+
+/* ==========================================================================
+   src/css/excel.css
+   Estilos compatibles con Microsoft Excel en exportaciones HTML
+   ========================================================================== */
 
 body.excel-report {
     margin: 18px;
@@ -449,11 +163,11 @@ body.excel-report {
 }
 
 .excel-report .excel-table .monto {
-    text-align: right;
+    text-align: right; 
 }
 
 .excel-report .excel-table .centro {
-    text-align: center;
+    text-align: center; 
 }
 
 .excel-report .excel-table .total-row td {
@@ -465,37 +179,4 @@ body.excel-report {
 
 .excel-report .excel-table .total-row .monto {
     color: #146c43;
-}
-
-@media (max-width: 767.98px) {
-    .sales-header {
-        align-items: flex-start;
-        flex-direction: column;
-    }
-
-    .sales-actions {
-        width: 100%;
-    }
-
-    .sales-actions .export-button {
-        flex: 1;
-    }
-
-    .filter-panel > .card-body,
-    .report-card-header {
-        padding: 1.15rem;
-    }
-
-    .filter-actions {
-        justify-content: stretch;
-    }
-
-    .filter-actions .btn {
-        flex: 1;
-    }
-
-    .chart-body {
-        height: 280px;
-        padding: 1rem;
-    }
 }

@@ -1,5 +1,4 @@
-# Logs de servidor y archivos temporales
-error_log
-*.log
-.DS_Store
-Thumbs.db
+.env
+.env.*
+!.env.example
+/error_log

@@ -241,6 +241,22 @@ if ($pdo instanceof PDO) {
                     </div>
                 </a>
             </div>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                <a href="../vendedor/registro_vendedor.php" class="quick-card card text-center p-2">
+                    <div class="card-body">
+                        <i class="bi bi-person-plus fs-1 text-success"></i>
+                        <h6 class="card-title text-dark mt-2 mb-0">Registrar vendedor</h6>
+                    </div>
+                </a>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                <a href="../ventas/registrar_venta.php" class="quick-card card text-center p-2">
+                    <div class="card-body">
+                        <i class="bi bi-cart-plus fs-1 text-primary"></i>
+                        <h6 class="card-title text-dark mt-2 mb-0">Registrar nueva venta</h6>
+                    </div>
+                </a>
+            </div>
         </div>
 
         <div class="row g-4 mb-4">

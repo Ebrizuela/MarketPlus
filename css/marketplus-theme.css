@@ -255,33 +255,3 @@ th {
         animation-duration: 0.01ms !important;
     }
 }
-/* Integración armónica de los botones de navegación dentro de la barra azul */
-.admin-users-page .brand-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 12px;
-}
-
-.admin-users-page .brand-header-nav > * {
-    background: transparent !important;
-    box-shadow: none !important;
-    border: none !important;
-    padding: 0 !important;
-    margin: 0 !important;
-}
-.admin-users-page .brand-header-nav a {
-    background-color: #ffffff;
-    color: #0b69d8;
-    border: 1px solid #ffffff;
-    border-radius: 6px;
-    padding: 6px 12px;
-    font-weight: 600;
-    text-decoration: none;
-}
-
-.admin-users-page .brand-header-nav a:hover {
-    background-color: #eef5ff;
-    color: #084fa3;
-}
