@@ -147,14 +147,6 @@ if ($pdo) {
                     </a>
                 </div>
                 <div class="col-12 col-sm-6 col-lg-4">
-                    <a href="/supervisor/supervisor_productos.php" class="quick-card module-card card h-100">
-                        <div class="card-body d-flex align-items-start gap-3">
-                            <span class="module-icon"><i class="bi bi-box-seam"></i></span>
-                            <div><h6 class="card-title mb-1">Supervisión de productos</h6><p>Consultar categorías, precios y existencias del inventario.</p></div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-12 col-sm-6 col-lg-4">
                     <a href="historial_ventas.php" class="quick-card module-card card h-100">
                         <div class="card-body d-flex align-items-start gap-3">
                             <span class="module-icon"><i class="bi bi-clock-history"></i></span>
@@ -179,10 +171,10 @@ if ($pdo) {
                     </a>
                 </div>
                 <div class="col-12 col-sm-6 col-lg-4">
-                    <a href="../ventas/reportes_ventas.php" class="quick-card module-card card h-100">
+                    <a href="exportar_ventas.php" class="quick-card module-card card h-100">
                         <div class="card-body d-flex align-items-start gap-3">
                             <span class="module-icon"><i class="bi bi-file-earmark-spreadsheet"></i></span>
-                            <div><h6 class="card-title mb-1">Reportes de ventas</h6><p>Consultar y exportar reportes en PDF, Excel y HTML.</p></div>
+                            <div><h6 class="card-title mb-1">Exportar ventas</h6><p>Descargar el reporte de ventas en Excel.</p></div>
                         </div>
                     </a>
                 </div>
@@ -200,10 +192,10 @@ if ($pdo) {
                 </a>
             </div>
             <div class="col-12 col-sm-6 col-md-4 col-lg-2">
-                <a href="../productos/registrar_producto.php" class="quick-card card text-center p-2">
+                <a href="#productos" class="quick-card card text-center p-2">
                     <div class="card-body">
                         <i class="bi bi-box-seam fs-1 text-success"></i>
-                        <h6 class="card-title text-dark mt-2 mb-0">Nuevo producto</h6>
+                        <h6 class="card-title text-dark mt-2 mb-0">Productos</h6>
                     </div>
                 </a>
             </div>

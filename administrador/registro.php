@@ -55,6 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             try {
                 actualizarFuncionario($pdo, $id_editar, $nombre, $apellido, $correo, $id_rol);
                 $mensaje = "<div class='alert alert-success'>¡Datos del usuario actualizados correctamente!</div>";
+                $_POST = [];
                 $id_editar = null;
                 $usuario_editar = null;
             } catch (Exception $e) {
@@ -69,6 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             try {
                 registrarPersonaConConfirmacion($pdo, $nombre, $apellido, $correo, $contrasena, $id_rol);
                 $mensaje = "<div class='alert alert-success'>Usuario registrado y correo aceptado por el servidor de correo para <strong>" . htmlspecialchars($correo) . "</strong>.</div>";
+                $_POST = [];
             } catch (DomainException | InvalidArgumentException $e) {
                 $mensaje = "<div class='alert alert-danger'>" . htmlspecialchars($e->getMessage()) . "</div>";
             } catch (PDOException $e) {
@@ -230,14 +232,14 @@ $funcionarios_paginados = array_slice($lista_funcionarios, $offset, $por_pagina)
             </button>
 
             <?php if ($id_editar): ?>
-                <a href="registro.php" class="btn-submit" style="margin-top: 8px; text-decoration: none;">Modificar</a>
+                <a href="registro.php" class="btn-cancelar-edicion">Cancelar</a>
             <?php endif; ?>
         </form>
     </div>
 
     <!-- Tabla de Supervisores Registrados -->
     <div class="tabla-container">
-        <h3>Lista de Supervisores</h3>
+        <h3>Lista de Funcionarios</h3>
         <div class="table-scroll">
         <table class="tabla-usuarios">
             <thead>
@@ -254,7 +256,7 @@ $funcionarios_paginados = array_slice($lista_funcionarios, $offset, $por_pagina)
                     <?php foreach ($funcionarios_paginados as $f): ?>
                         <tr>
                             <td><?php echo (int) $f['id_funcionario']; ?></td>
-                            <td><?php echo htmlspecialchars($f['nombre'] . ' ' . $f['apellido']); ?></td>
+                            <td><?php echo htmlspecialchars(mb_convert_case(mb_strtolower(trim($f['nombre'] . ' ' . $f['apellido']), 'UTF-8'), MB_CASE_TITLE, 'UTF-8')); ?></td>
                             <td><?php echo htmlspecialchars($f['correo']); ?></td>
                             <td><span class="badge-rol"><?php echo htmlspecialchars($f['nombre_rol']); ?></span></td>
                             <td class="celda-acciones">

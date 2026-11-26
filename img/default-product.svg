@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300">
+  <rect width="100%" height="100%" fill="#f1f5f9"/>
+  <rect x="2" y="2" width="396" height="296" fill="none" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="6,6" rx="8"/>
+  <g transform="translate(160, 90)">
+    <circle cx="40" cy="40" r="38" fill="#e2e8f0"/>
+    <path d="M40 22 L24 31 L40 40 L56 31 Z" fill="#0071ce"/>
+    <path d="M24 35 L40 44 L40 60 L24 51 Z" fill="#0058a3"/>
+    <path d="M56 35 L40 44 L40 60 L56 51 Z" fill="#ffc220"/>
+  </g>
+  <text x="200" y="195" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="16" font-weight="bold" fill="#475569" text-anchor="middle">MarketPlus+</text>
+  <text x="200" y="220" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="12" fill="#94a3b8" text-anchor="middle">Sin imagen oficial adjunta</text>
+</svg>

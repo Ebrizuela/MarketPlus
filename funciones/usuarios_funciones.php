@@ -130,15 +130,25 @@ function obtenerRoles($pdo) {
 }
 
 function obtenerSupervisores($pdo, $soloSupervisores = true) {
+    $tieneActivo = $pdo->query("SHOW COLUMNS FROM funcionarios LIKE 'activo'")->rowCount() > 0;
+    $condiciones = [];
+
+    if ($tieneActivo) {
+        $condiciones[] = "(f.activo = 1 OR f.activo IS NULL)";
+    }
+    if ($soloSupervisores) {
+        $condiciones[] = "r.nombre = 'Supervisor'";
+    }
+
     $sql = "SELECT f.id_funcionario, f.nombre, f.apellido, f.correo, f.id_rol, r.nombre AS nombre_rol
             FROM funcionarios f
             LEFT JOIN Roles r ON f.id_rol = r.id_rol";
 
-    if ($soloSupervisores) {
-        $sql .= " WHERE r.nombre = 'Supervisor'";
+    if (!empty($condiciones)) {
+        $sql .= " WHERE " . implode(" AND ", $condiciones);
     }
 
-    $sql .= " ORDER BY f.id_funcionario ASC";
+    $sql .= " ORDER BY f.id_funcionario DESC";
 
     return $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 }
