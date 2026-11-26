@@ -5,6 +5,7 @@ require_once __DIR__ . '/funciones/conexion.php';
 require_once __DIR__ . '/includes/auth.php';
 require_once __DIR__ . '/funciones/usuarios_funciones.php';
 require_once __DIR__ . '/funciones/imagenes_productos.php';
+require_once __DIR__ . '/funciones/productos_funciones.php';
 
 try {
     $pdo = conectar();
@@ -51,6 +52,11 @@ try {
     }
 } catch (PDOException $e) {
     $columnaCodigoExiste = false;
+}
+
+// Refuerza la unicidad del código a nivel de BD (evita colisiones simultáneas).
+if ($columnaCodigoExiste) {
+    asegurarIndiceUnicoCodigoProducto($pdo);
 }
 
 try {
@@ -101,26 +107,29 @@ if ($esAdmin && $_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['crear_prod
     $id_categoria = isset($_POST['id_categorias']) ? (int)$_POST['id_categorias'] : 0;
     $stock = isset($_POST['stock']) ? (int)$_POST['stock'] : -1;
 
-    $codigoExiste = false;
-    if (!empty($codigo) && $columnaCodigoExiste) {
-        $stmtCheck = $pdo->prepare("SELECT COUNT(*) FROM Productos WHERE codigo = ?");
-        $stmtCheck->execute([$codigo]);
-        if ($stmtCheck->fetchColumn() > 0) $codigoExiste = true;
-    }
+    // Validación de unicidad (case-insensitive e incluyendo registros con soft delete).
+    $codigoExiste = ($columnaCodigoExiste && $codigo !== '') ? codigoProductoExiste($pdo, $codigo) : false;
 
     if (empty($codigo)) {
+        auditarIntentoProducto($pdo, $codigo, 'fallo', 'Código obligatorio vacío');
         $mensaje = "<div class='alert error'>Error: El código único del producto es obligatorio.</div>";
     } elseif ($codigoExiste) {
-        $mensaje = "<div class='alert error'>Error: El código '$codigo' ya pertenece a otro producto. Debe ser único.</div>";
+        auditarIntentoProducto($pdo, $codigo, 'duplicado', 'El código ya existe en el inventario');
+        $mensaje = "<div class='alert error'>El código ingresado ya existe. Ingrese un código único.</div>";
     } elseif (empty($nombre)) {
+        auditarIntentoProducto($pdo, $codigo, 'fallo', 'Nombre obligatorio vacío');
         $mensaje = "<div class='alert error'>Error: El nombre del producto es obligatorio.</div>";
     } elseif (empty($descripcion)) {
+        auditarIntentoProducto($pdo, $codigo, 'fallo', 'Descripción obligatoria vacía');
         $mensaje = "<div class='alert error'>Error: La descripción del producto es obligatoria.</div>";
     } elseif ($precio < 0) {
+        auditarIntentoProducto($pdo, $codigo, 'fallo', 'Precio inválido');
         $mensaje = "<div class='alert error'>Error: El precio ingresado no es válido.</div>";
     } elseif ($stock < 0) {
+        auditarIntentoProducto($pdo, $codigo, 'fallo', 'Stock inválido');
         $mensaje = "<div class='alert error'>Error: El stock ingresado no es válido.</div>";
     } elseif ($id_categoria <= 0) {
+        auditarIntentoProducto($pdo, $codigo, 'fallo', 'Categoría inválida');
         $mensaje = "<div class='alert error'>Error: Debes seleccionar una categoría válida.</div>";
     } else {
         try {
@@ -156,14 +165,23 @@ if ($esAdmin && $_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['crear_prod
                     }
                 }
 
-                $_SESSION['mensaje_flash'] = "<div class='alert success'>¡Producto registrado exitosamente!</div>";
+                auditarIntentoProducto($pdo, $codigo, 'exito', 'Producto creado con id ' . $nuevoId);
+                $_SESSION['mensaje_flash'] = "<div class='alert success'>Producto registrado correctamente.</div>";
                 header("Location: " . BASE_URL . "/index.php");
                 exit();
             } else {
+                auditarIntentoProducto($pdo, $codigo, 'fallo', 'No fue posible guardar el producto');
                 $mensaje = "<div class='alert error'>Error al guardar el producto.</div>";
             }
         } catch (PDOException $e) {
-            $mensaje = "<div class='alert error'>Error en la base de datos: " . htmlspecialchars($e->getMessage()) . "</div>";
+            // Colisión simultánea: otro usuario registró el mismo código primero.
+            if ($e->getCode() === '23000') {
+                auditarIntentoProducto($pdo, $codigo, 'duplicado', 'Colisión detectada por el índice único uq_productos_codigo');
+                $mensaje = "<div class='alert error'>El código ingresado ya existe. Ingrese un código único.</div>";
+            } else {
+                auditarIntentoProducto($pdo, $codigo, 'fallo', 'Error de base de datos: ' . $e->getMessage());
+                $mensaje = "<div class='alert error'>Error en la base de datos: " . htmlspecialchars($e->getMessage()) . "</div>";
+            }
         }
     }
 }
@@ -354,7 +372,12 @@ foreach ($_SESSION['carrito'] ?? [] as $itemCarrito) {
         <h3>Registrar Nuevo Producto</h3>
         <form action="" method="POST" enctype="multipart/form-data">
             <div class="form-flex-container">
-                <div class="field-col-6"><label>Código Único:</label><input type="text" name="codigo" required></div>
+                <div class="field-col-6">
+                    <label>Código Único:</label>
+                    <input type="text" name="codigo" id="codigo_producto" required autocomplete="off"
+                           data-endpoint="<?php echo BASE_URL; ?>/productos/verificar_codigo.php">
+                    <small id="codigo_producto_aviso" style="font-size:12px; display:block; margin-top:4px;" aria-live="polite"></small>
+                </div>
                 <div class="field-col-6"><label>Categoría:</label>
                     <select name="id_categorias" required>
                         <option value="">Seleccione una categoría</option>
@@ -370,7 +393,7 @@ foreach ($_SESSION['carrito'] ?? [] as $itemCarrito) {
                 <div class="field-col-6"><label>Imagen del Producto:</label><input type="file" name="imagen" accept="image/*"><small style="color:#64748b; font-size:12px; margin-top:4px;">Se guardará como uploads/{ID}.jpg</small></div>
                 <div class="field-col-12"><label>Descripción:</label><textarea name="descripcion" rows="3" required></textarea></div>
             </div>
-            <button type="submit" name="crear_producto" class="btn" style="margin-top: 15px;">Guardar Producto</button>
+            <button type="submit" name="crear_producto" id="btn_guardar_producto" class="btn" style="margin-top: 15px;">Guardar Producto</button>
         </form>
     </section>
     <?php endif; ?>
@@ -469,5 +492,6 @@ foreach ($_SESSION['carrito'] ?? [] as $itemCarrito) {
         }
     });
 </script>
+<script src="<?php echo BASE_URL; ?>/js/productos_validacion.js"></script>
 </body>
 </html>
