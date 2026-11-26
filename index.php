@@ -54,7 +54,6 @@ try {
     $columnaCodigoExiste = false;
 }
 
-// Refuerza la unicidad del código a nivel de BD (evita colisiones simultáneas).
 if ($columnaCodigoExiste) {
     asegurarIndiceUnicoCodigoProducto($pdo);
 }
@@ -98,7 +97,7 @@ function guardarImagenComoJPG($archivoTmp, $extension, $rutaDestino, $calidad = 
     return $exito;
 }
 
-// CREAR PRODUCTO
+
 if ($esAdmin && $_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['crear_producto'])) {
     $codigo = trim($_POST['codigo'] ?? '');
     $nombre = trim($_POST['nombre'] ?? '');
@@ -107,7 +106,7 @@ if ($esAdmin && $_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['crear_prod
     $id_categoria = isset($_POST['id_categorias']) ? (int)$_POST['id_categorias'] : 0;
     $stock = isset($_POST['stock']) ? (int)$_POST['stock'] : -1;
 
-    // Validación de unicidad (case-insensitive e incluyendo registros con soft delete).
+    
     $codigoExiste = ($columnaCodigoExiste && $codigo !== '') ? codigoProductoExiste($pdo, $codigo) : false;
 
     if (empty($codigo)) {
@@ -174,7 +173,7 @@ if ($esAdmin && $_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['crear_prod
                 $mensaje = "<div class='alert error'>Error al guardar el producto.</div>";
             }
         } catch (PDOException $e) {
-            // Colisión simultánea: otro usuario registró el mismo código primero.
+           
             if ($e->getCode() === '23000') {
                 auditarIntentoProducto($pdo, $codigo, 'duplicado', 'Colisión detectada por el índice único uq_productos_codigo');
                 $mensaje = "<div class='alert error'>El código ingresado ya existe. Ingrese un código único.</div>";

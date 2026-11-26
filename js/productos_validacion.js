@@ -1,12 +1,6 @@
-/**
- * js/productos_validacion.js
- * Validación inmediata (frontend) de unicidad del código de producto (HU-056).
- * Complementa la validación final del backend:
- *  - Consulta al endpoint de disponibilidad mientras el usuario escribe.
- *  - Muestra el mensaje de duplicado y bloquea el botón Guardar hasta corregir.
- */
 (function () {
     'use strict';
+
 
     document.addEventListener('DOMContentLoaded', function () {
         var input = document.getElementById('codigo_producto');
@@ -54,7 +48,7 @@
                     } else if (data.existe === false) {
                         permitir('Código disponible.');
                     } else {
-                        // Sin respuesta fiable: no bloquear; el backend validará al guardar.
+                        
                         permitir('');
                     }
                 })
@@ -69,7 +63,7 @@
         });
         input.addEventListener('blur', validar);
 
-        // Validación final antes de enviar: evita eludir el bloqueo con el teclado (Enter).
+    
         if (input.form) {
             input.form.addEventListener('submit', function (evento) {
                 if (boton.disabled || input.value.trim() === '') {
