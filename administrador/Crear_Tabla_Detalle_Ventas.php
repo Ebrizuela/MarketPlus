@@ -1,5 +1,5 @@
-```php
 <?php
+require_once '../includes/verificar_sesion.php';
 session_start();
 if (!isset($_SESSION['id_funcionario'])) {
     header("Location: ../login.php");

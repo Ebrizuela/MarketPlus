@@ -16,7 +16,7 @@ session_start();
             <div class="card-body">
                 <h2 class="mb-3">Productos</h2>
                 <p class="text-muted mb-4">Módulo en construcción.</p>
-                <a href="Dashboard_Supervisor.php" class="btn btn-primary">Volver al Dashboard</a>
+                <a href="index.php" class="btn btn-primary">Volver al Dashboard</a>
             </div>
         </div>
     </div>

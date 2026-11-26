@@ -4,6 +4,7 @@ session_start();
     
 require_once __DIR__ . '/../funciones/conexion.php';
 require_once __DIR__ . '/../includes/auth.php';
+require_once __DIR__ . '/../funciones/navegacion.php';
 
 // 🔒 Solo administradores
 requerirRol(['administrador']);
@@ -40,8 +41,11 @@ try {
     <title>MarketPlus - Inventario</title>
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/css/estilos.css?v=1">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/css/marketplus-theme.css?v=1">
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>/css/navegacion.css">
 </head>
 <body>
+
+<?php renderNavegacion(null, BASE_URL . '/index.php'); ?>
 
 <div class="container">
 

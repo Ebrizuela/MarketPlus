@@ -65,7 +65,7 @@ $ventas = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <div class="header">
         <div class="logo">MarketPlus | Mis Ventas</div>
         <div class="user-info">
-            <a href="../supervisor/Dashboard_Supervisor.php" class="nav-link">Volver al Dashboard</a>
+            <a href="../Supervisor/index.php" class="nav-link">Volver al Dashboard</a>
             <span style="color: #666; font-size: 14px;">Vendedor ID: <?= $id_vendedor_actual ?></span>
         </div>
     </div>

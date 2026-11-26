@@ -1,73 +1,104 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+require_once __DIR__ . '/../includes/auth.php';
 
-
-require_once '../funciones/conexion.php';
-
-header('Content-Type: application/json; charset=utf-8');
-
-try {
-
-    $fecha_inicio = $_GET['fecha_inicio'] ?? '';
-    $fecha_fin    = $_GET['fecha_fin'] ?? '';
-    $id_cliente   = !empty($_GET['id_cliente']) ? $_GET['id_cliente'] : null;
-    $id_producto  = !empty($_GET['id_producto']) ? $_GET['id_producto'] : null;
-
-
-    $where = ["1=1"];
-    $params = [];
-
-    if (!empty($fecha_inicio) && !empty($fecha_fin)) {
-    
-        $where[] = "v.fecha_hora BETWEEN :fecha_inicio AND :fecha_fin";
-        $params[':fecha_inicio'] = $fecha_inicio . ' 00:00:00';
-        $params[':fecha_fin']    = $fecha_fin . ' 23:59:59';
-    }
-
-    if (!empty($id_cliente)) {
-        $where[] = "v.id_cliente = :id_cliente";
-        $params[':id_cliente'] = $id_cliente;
-    }
-
-    if (!empty($id_producto)) {
-        $where[] = "dv.id_producto = :id_producto";
-        $params[':id_producto'] = $id_producto;
-    }
-
-    $whereSql = implode(" AND ", $where);
-
-    $sql = "SELECT 
-                v.id_ventas,
-                v.fecha_hora,
-                CONCAT(c.nombre, ' ', c.apellidos) AS cliente,
-                p.nombre AS producto,
-                dv.cantidad,
-                dv.precio_unitario,
-                dv.subtotal,
-                v.total_venta
-            FROM Ventas v
-            INNER JOIN Clientes c ON v.id_cliente = c.id_cliente
-            INNER JOIN Detalle_Ventas dv ON v.id_ventas = dv.id_ventas
-            INNER JOIN Productos p ON dv.id_producto = p.id_producto
-            WHERE $whereSql
-            ORDER BY v.fecha_hora DESC";
-
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute($params);
-    $reportes = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-
-    echo json_encode([
-        'status' => 'success',
-        'data' => $reportes
-    ], JSON_UNESCAPED_UNICODE);
-
-} catch (Throwable $e) {
-    http_response_code(500);
+if (!estaLogueado() || !in_array($_SESSION['usuario']['rol'] ?? '', ['administrador', 'supervisor'], true)) {
+    http_response_code(403);
+    header('Content-Type: application/json; charset=utf-8');
     echo json_encode([
         'status' => 'error',
-        'message' => 'Error al consultar datos: ' . $e->getMessage()
+        'message' => 'No tienes permisos para consultar este reporte.',
     ], JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
+require_once __DIR__ . '/../funciones/conexion.php';
+require_once __DIR__ . '/reporte_ventas_lib.php';
+require_once __DIR__ . '/reporte_ventas_exportadores.php';
+
+header('X-Content-Type-Options: nosniff');
+
+$formato = $_GET['formato'] ?? '';
+if (!is_string($formato) || !in_array($formato, ['', 'excel', 'pdf'], true)) {
+    http_response_code(400);
+    header('Content-Type: text/plain; charset=utf-8');
+    exit('Formato de reporte no válido.');
+}
+
+$bufferPdf = $formato === 'pdf';
+if ($bufferPdf) {
+    ini_set('display_errors', '0');
+    ob_start();
+}
+
+try {
+    $filtros = leerFiltrosReporte($_GET);
+    $reportes = consultarReporteVentas(conectar(), $filtros);
+
+    if ($formato === 'excel') {
+        $contenido = generarReporteExcel($reportes, calcularResumenReporte($reportes));
+        header('Content-Type: application/vnd.ms-excel; charset=utf-8');
+        header('Content-Disposition: attachment; filename="Reporte_Ventas_' . date('Y-m-d_H-i') . '.xls"');
+        header('Cache-Control: private, no-store, max-age=0');
+        echo "\xEF\xBB\xBF" . $contenido;
+        exit;
+    }
+
+    if ($formato === 'pdf') {
+        date_default_timezone_set('America/Santiago');
+        $resumen = calcularResumenReporte($reportes);
+        $pdf = PdfReporteVentas::generar(
+            $reportes,
+            $resumen['total'],
+            $resumen['promedio'],
+            (float) $resumen['unidades'],
+            $filtros
+        );
+        if ($bufferPdf && ob_get_level() > 0) {
+            ob_end_clean();
+            $bufferPdf = false;
+        }
+        header('Content-Type: application/pdf');
+        header('Content-Disposition: attachment; filename="reporte_ventas.pdf"');
+        header('Content-Length: ' . strlen($pdf));
+        header('Cache-Control: private, no-store, max-age=0');
+        echo $pdf;
+        exit;
+    }
+
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode([
+        'status' => 'success',
+        'data' => $reportes,
+    ], JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE);
+} catch (InvalidArgumentException $error) {
+    if ($bufferPdf && ob_get_level() > 0) {
+        ob_end_clean();
+    }
+    http_response_code(400);
+    if ($formato === '') {
+        header('Content-Type: application/json; charset=utf-8');
+        echo json_encode([
+            'status' => 'error',
+            'message' => $error->getMessage(),
+        ], JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE);
+    } else {
+        header('Content-Type: text/plain; charset=utf-8');
+        echo $error->getMessage();
+    }
+} catch (Throwable $error) {
+    if ($bufferPdf && ob_get_level() > 0) {
+        ob_end_clean();
+    }
+    error_log('Error al generar el reporte de ventas: ' . $error->getMessage());
+    http_response_code(500);
+    if ($formato === '') {
+        header('Content-Type: application/json; charset=utf-8');
+        echo json_encode([
+            'status' => 'error',
+            'message' => 'No fue posible consultar el reporte de ventas.',
+        ], JSON_UNESCAPED_UNICODE);
+    } else {
+        header('Content-Type: text/plain; charset=utf-8');
+        echo 'No fue posible generar el reporte de ventas.';
+    }
 }
