@@ -17,14 +17,14 @@ $mensaje = "";
 $id_editar = filter_var($_GET['id'] ?? null, FILTER_VALIDATE_INT);
 if (!$id_editar) {
     http_response_code(400);
-    exit('Falta un identificador de funcionario válido.');
+    exit('Falta un identificador de supervisor válido.');
 }
 
-$funcionario = obtenerFuncionarioPorId($pdo, $id_editar);
+$funcionario = obtenerSupervisorPorId($pdo, $id_editar);
 
 if (!$funcionario) {
     http_response_code(404);
-    exit('El funcionario solicitado no existe.');
+    exit('El supervisor solicitado no existe.');
 }
 
 if (empty($_SESSION['csrf_editar_supervisor'])) {
@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     try {
         actualizarFuncionario($pdo, $id_editar, $nombre, $apellido, $correo, $id_rol);
         $funcionario = obtenerFuncionarioPorId($pdo, $id_editar);
-        $mensaje = "<div class='alert alert-success'>¡Datos del funcionario actualizados y auditados correctamente!</div>";
+        $mensaje = "<div class='alert alert-success'>¡Datos del supervisor actualizados y auditados correctamente!</div>";
     } catch (DomainException | InvalidArgumentException $e) {
         $mensaje = "<div class='alert alert-danger'>" . htmlspecialchars($e->getMessage()) . "</div>";
     } catch (Throwable $e) {
@@ -63,7 +63,7 @@ $roles = obtenerRoles($pdo);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MarketPlus - Modificación de Funcionario</title>
+    <title>MarketPlus - Modificación de Supervisor</title>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/estilos.css">
     <link rel="stylesheet" href="../css/navegacion.css">
@@ -82,7 +82,7 @@ $roles = obtenerRoles($pdo);
         <form method="POST" action="editar_supervisor.php?id=<?php echo (int) $id_editar; ?>">
             <input type="hidden" name="csrf" value="<?php echo htmlspecialchars($_SESSION['csrf_editar_supervisor'], ENT_QUOTES, 'UTF-8'); ?>">
             <div class="form-title">
-                Modificar Datos de Funcionario
+                Modificar Datos de Supervisor
             </div>
 
             <?php echo $mensaje; ?>
