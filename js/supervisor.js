@@ -1,21 +1,28 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const btnLimpiar = document.getElementById('btn-limpiar');
-    if (btnLimpiar) {
-        btnLimpiar.addEventListener('click', () => {
-            window.location.href = 'supervisar_ventas.php';
+$(function () {
+    const tabla = $('#tabla-ventas');
+
+    if (tabla.length && $.fn.DataTable) {
+        tabla.DataTable({
+            language: {
+                search: 'Buscar:',
+                lengthMenu: 'Mostrar _MENU_ registros',
+                info: 'Mostrando _START_ a _END_ de _TOTAL_ registros',
+                infoEmpty: 'No hay registros disponibles',
+                infoFiltered: '(filtrado de _MAX_ registros)',
+                zeroRecords: 'No se encontraron coincidencias',
+                paginate: {
+                    first: 'Primero',
+                    previous: 'Anterior',
+                    next: 'Siguiente',
+                    last: 'Último'
+                }
+            },
+            pageLength: 10,
+            order: [[0, 'asc']],
+            columnDefs: [
+                { targets: [0, 5], className: 'text-center' },
+                { targets: [6, 7], className: 'text-end' }
+            ]
         });
     }
 });
-
-function exportarPDF() {
-   
-    const originalTitle = document.title;
-    const fechaActual = new Date().toISOString().slice(0, 10);
-    document.title = `Reporte_Ventas_MarketPlus_${fechaActual}`;
-
-    // Disparar diálogo nativo de impresión / Guardar como PDF
-    window.print();
-
-    // Restaurar título original
-    document.title = originalTitle;
-}
