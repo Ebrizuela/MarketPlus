@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__ . '/includes/auth.php';
-require_once __DIR__ . '/funciones/conexion.php';
+require_once _DIR_ . '/includes/auth.php';
+require_once _DIR_ . '/funciones/conexion.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: login.php');
@@ -61,12 +61,11 @@ if (!$claveValida) {
 }
 
 $rol = mapearRol($usuario['id_rol']);
-
 $destinos = [
     'administrador' => 'administrador/index.php',
     'supervisor' => 'Supervisor/index.php',
     'vendedor' => 'vendedor/dashboard.php',
-    'auditor' => 'auditor/validar_token.php',
+    'Auditor' => 'auditor/validar_token.php'
 ];
 
 if (!isset($destinos[$rol])) {
