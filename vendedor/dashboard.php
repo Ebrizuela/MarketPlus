@@ -2,12 +2,6 @@
 ob_start();
 session_start();
 
-if (!defined('BASE_URL')) {
-    $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http";
-    $host = $_SERVER['HTTP_HOST'];
-    define('BASE_URL', $protocol . '://' . $host);
-}
-
 require_once __DIR__ . '/../funciones/conexion.php';
 require_once __DIR__ . '/../includes/auth.php';
 $pdo = conectar();
