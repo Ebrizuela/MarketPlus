@@ -8,12 +8,12 @@ $idFuncionarioSesion = filter_var(
     FILTER_VALIDATE_INT,
     ['options' => ['min_range' => 1]]
 );
-$rolSesion = $_SESSION['rol'] ?? null;
+$rolSesion = is_string($_SESSION['rol'] ?? null) ? strtolower(trim($_SESSION['rol'])) : null;
 if (
     $idFuncionarioSesion === false
     || $idFuncionarioSesion === null
     || !is_string($rolSesion)
-    || !in_array($rolSesion, ['Administrador', 'Vendedor'], true)
+    || !in_array($rolSesion, ['administrador', 'vendedor'], true)
 ) {
     header('Location: ../login.php');
     exit;
@@ -56,6 +56,9 @@ try {
 
 <div class="container">
     <h2 class="page-title">Módulo de Ventas - Registrar Transacción</h2>
+    <?php if ($rolSesion === 'administrador'): ?>
+        <p><a class="btn btn-admin-home" href="/administrador/index.php">Volver al panel de administración</a></p>
+    <?php endif; ?>
     <?php if ($errorCarga !== ''): ?>
         <p class="page-error" role="alert"><?= htmlspecialchars($errorCarga, ENT_QUOTES, 'UTF-8') ?></p>
     <?php endif; ?>

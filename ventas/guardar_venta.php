@@ -23,12 +23,12 @@ $idFuncionarioSesion = filter_var(
     FILTER_VALIDATE_INT,
     ['options' => ['min_range' => 1]]
 );
-$rolSesion = $_SESSION['rol'] ?? null;
+$rolSesion = is_string($_SESSION['rol'] ?? null) ? strtolower(trim($_SESSION['rol'])) : null;
 if (
     $idFuncionarioSesion === false
     || $idFuncionarioSesion === null
     || !is_string($rolSesion)
-    || !in_array($rolSesion, ['Administrador', 'Vendedor'], true)
+    || !in_array($rolSesion, ['administrador', 'vendedor'], true)
 ) {
     responderNoAutorizado();
 }
@@ -192,6 +192,7 @@ try {
         $totalCentavos += $subtotalCentavos;
         $lineas[] = [
             'id_producto' => (int) $producto['id_producto'],
+            'nombre' => (string) $producto['nombre'],
             'cantidad' => $cantidad,
             'precio_unitario' => $precio,
             'subtotal_centavos' => $subtotalCentavos
@@ -240,6 +241,41 @@ try {
             throw new RuntimeException('El stock cambió durante el registro de la venta.');
         }
     }
+
+    $detallesAuditoria = [
+        'modulo' => 'ventas',
+        'id_venta' => $idVenta,
+        'id_cliente' => $idCliente,
+        'id_medio_pago' => $idMedioPago,
+        'total' => formatearCentavos($totalCentavos),
+        'productos' => array_map(
+            static function (array $linea): array {
+                return [
+                    'id_producto' => $linea['id_producto'],
+                    'nombre' => $linea['nombre'],
+                    'cantidad' => $linea['cantidad'],
+                    'precio_unitario' => $linea['precio_unitario'],
+                    'subtotal' => formatearCentavos($linea['subtotal_centavos'])
+                ];
+            },
+            $lineas
+        )
+    ];
+    $detallesAuditoriaJson = json_encode($detallesAuditoria, JSON_INVALID_UTF8_SUBSTITUTE);
+    if ($detallesAuditoriaJson === false) {
+        throw new RuntimeException('No fue posible preparar la auditoría de la venta.');
+    }
+
+    $stmtAuditoria = $pdo->prepare(
+        'INSERT INTO auditoria (usuario_id, accion, detalles, ip, fecha)
+         VALUES (:usuario, :accion, :detalles, :ip, NOW())'
+    );
+    $stmtAuditoria->execute([
+        ':usuario' => $idFuncionario,
+        ':accion' => 'registrar_venta',
+        ':detalles' => $detallesAuditoriaJson,
+        ':ip' => $ipOrigen
+    ]);
 
     $pdo->commit();
     responder([
