@@ -202,7 +202,7 @@ if ($pdo instanceof PDO) {
                 </a>
             </div>
             <div class="col-12 col-sm-6 col-md-4 col-lg-2">
-                <a href="../administrador/actualizar_producto.php" class="quick-card card text-center p-2">
+                <a href="../productos/actualizar_producto.php" class="quick-card card text-center p-2">
                     <div class="card-body">
                         <i class="bi bi-pencil-square fs-1 text-primary"></i>
                         <h6 class="card-title text-dark mt-2 mb-0">Actualizar producto</h6>
