@@ -60,6 +60,11 @@ try {
     <?php renderNavegacion(null, BASE_URL . '/index.php'); ?>
     <main class="content">
         <h1>Listado de ventas</h1>
+        <?php if ($_SESSION['usuario']['rol'] === 'vendedor'): ?>
+            <p>
+                <a class="mp-btn mp-btn-primary" href="../vendedor/visualizacion_productos.php">Visualización de Productos</a>
+            </p>
+        <?php endif; ?>
         <?php if ($error !== null): ?>
             <p class="alert"><?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?></p>
         <?php endif; ?>

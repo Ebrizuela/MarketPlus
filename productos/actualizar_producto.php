@@ -157,13 +157,13 @@ $escapar = static function ($valor): string {
 <main class="container pagina-actualizar">
     <header class="header">
         <h1><?= $editar ? 'Editar producto' : 'Actualizar producto' ?></h1>
-        <a class="btn" href="<?= $escapar(BASE_URL) ?>/administrador/dashboard_administrador.php">Volver al dashboard</a>
+        <a class="btn" href="<?= $escapar(BASE_URL) ?>/administrador/index.php">Volver al dashboard</a>
     </header>
 
     <?php if (!$editar): ?>
         <section class="card">
             <h2>Selecciona un producto</h2>
-            <?php if (!$productos): ?>
+            <?php if (!$productos): ?>S
                 <p>No hay productos registrados para actualizar.</p>
             <?php else: ?>
                 <div class="tabla-productos">

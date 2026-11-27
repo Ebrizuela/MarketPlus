@@ -1,0 +1,983 @@
+/**
+ * MarketPlus - Hoja de Estilos Oficial para Reportes Corporativos
+ * Mantiene la línea gráfica corporativa del sistema (Azul #1f5eff, Turquesa #14b8a6, Tipografías limpias).
+ * Plantilla única de estilos utilizada para visualización en pantalla, HTML descargable y exportación a PDF.
+ */
+
+:root {
+    --mp-primary: #1f5eff;
+    --mp-primary-dark: #173fbf;
+    --mp-primary-light: #eaf0ff;
+    --mp-secondary: #0f172a;
+    --mp-accent: #14b8a6;
+    --mp-accent-dark: #0d9488;
+    --mp-surface: #ffffff;
+    --mp-bg: #f3f7ff;
+    --mp-border: #cbd5e1;
+    --mp-border-light: #e2e8f0;
+    --mp-text-main: #1e293b;
+    --mp-text-muted: #64748b;
+    --mp-success: #16a34a;
+    --mp-success-bg: #dcfce7;
+    --mp-warning: #f59e0b;
+    --mp-warning-bg: #fef3c7;
+    --mp-danger: #ef4444;
+    --mp-shadow: 0 4px 12px rgba(31, 94, 255, 0.08);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body.report-body {
+    background-color: #f3f7ff;
+    background-color: var(--mp-bg);
+    color: #0f172a;
+    color: var(--mp-text-main);
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0;
+    padding: 0;
+}
+
+/* Contenedor Principal del Reporte */
+.report-container {
+    width: min(1200px, calc(100% - 32px));
+    margin: 24px auto 40px auto;
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    overflow: hidden;
+}
+
+/* Barra Superior (oculta para coincidir con el diseño de MarketPlus) */
+.report-top-bar {
+    display: none;
+}
+
+/* Encabezado estilo dashboard-header de MarketPlus */
+.report-header {
+    padding: 24px 30px 20px 30px;
+    border-bottom: 1px solid rgba(31, 94, 255, 0.12);
+    background: linear-gradient(135deg, rgba(31, 94, 255, 0.08), rgba(20, 184, 166, 0.08));
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.report-brand {
+    flex: 1;
+}
+
+.report-brand-title {
+    color: #1f5eff;
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    line-height: 1.1;
+}
+
+.report-brand-title span.accent {
+    color: #14b8a6;
+}
+
+.report-company-info {
+    margin-top: 6px;
+    font-size: 11.5px;
+    color: #475569;
+    line-height: 1.4;
+}
+
+.report-company-info strong {
+    color: #1e293b;
+}
+
+.report-meta-box {
+    text-align: right;
+    background: #f8fafc;
+    border: 1px solid var(--mp-border-light);
+    border-left: 4px solid #1f5eff;
+    padding: 12px 16px;
+    border-radius: 6px;
+    min-width: 260px;
+}
+
+.report-meta-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1f5eff;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+}
+
+.report-meta-item {
+    font-size: 11.5px;
+    color: #475569;
+    margin-top: 2px;
+}
+
+.report-meta-item strong {
+    color: #1e293b;
+}
+
+/* Barra de Filtros Aplicados */
+.report-filters-bar {
+    background: #f1f5f9;
+    padding: 10px 30px;
+    border-bottom: 1px solid var(--mp-border-light);
+    font-size: 12px;
+    color: #334155;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: center;
+}
+
+.filter-pill {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 20px;
+    padding: 2px 10px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #1f5eff;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* Tarjetas de Resumen KPI */
+.report-summary-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    padding: 20px 30px;
+    background: #ffffff;
+    border-bottom: 1px solid var(--mp-border-light);
+}
+
+.kpi-card {
+    background: #ffffff;
+    border: 1px solid var(--mp-border-light);
+    border-radius: 8px;
+    padding: 14px 18px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+    border-left: 4px solid #1f5eff;
+    transition: transform 0.2s ease;
+}
+
+.kpi-card.accent {
+    border-left-color: #14b8a6;
+}
+
+.kpi-card.success {
+    border-left-color: #16a34a;
+}
+
+.kpi-card.info {
+    border-left-color: #0284c7;
+}
+
+.kpi-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #64748b;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+}
+
+.kpi-value {
+    font-size: 22px;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.2;
+}
+
+.kpi-subtext {
+    font-size: 11px;
+    color: #94a3b8;
+    margin-top: 2px;
+}
+
+/* Contenido Principal y Tablas */
+.report-content {
+    padding: 24px 30px;
+}
+
+.table-responsive-report {
+    width: 100%;
+    overflow-x: auto;
+    margin-top: 10px;
+    border-radius: 6px;
+    border: 1px solid var(--mp-border-light);
+}
+
+table.report-table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    font-size: 12px;
+    text-align: left;
+    background-color: #ffffff;
+}
+
+/* Distribución Proporcional de Columnas (Suma = 100%) */
+.col-folio    { width: 7%; }
+.col-fecha    { width: 11%; }
+.col-cliente  { width: 16%; }
+.col-vendedor { width: 13%; }
+.col-pago     { width: 10%; }
+.col-detalle  { width: 22%; }
+.col-cantidad { width: 6%; }
+.col-total    { width: 10%; }
+.col-accion   { width: 5%; }
+
+table.report-table thead th {
+    background-color: #1f5eff;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 10px 8px;
+    border-bottom: 3px solid #14b8a6;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    vertical-align: middle;
+}
+
+table.report-table thead th.text-right,
+table.report-table tbody td.text-right {
+    text-align: right;
+}
+
+table.report-table thead th.text-center,
+table.report-table tbody td.text-center {
+    text-align: center;
+}
+
+table.report-table tbody tr {
+    border-bottom: 1px solid #e2e8f0;
+    transition: background-color 0.15s ease;
+}
+
+table.report-table tbody tr:nth-child(even) {
+    background-color: #f8fafc;
+}
+
+table.report-table tbody tr:hover {
+    background-color: #eaf3fb;
+}
+
+table.report-table tbody td {
+    padding: 8px 8px;
+    color: #1e293b;
+    vertical-align: middle;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+table.report-table tfoot tr {
+    background-color: #eaf0ff;
+    font-weight: 700;
+    border-top: 2px solid #1f5eff;
+    border-bottom: 2px solid #1f5eff;
+}
+
+table.report-table tfoot td {
+    padding: 10px 8px;
+    color: #173fbf;
+    font-size: 12px;
+}
+
+/* Badges de Medios de Pago y Estados */
+.badge-payment {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 10.5px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.badge-payment.efectivo {
+    background-color: #dcfce7;
+    color: #15803d;
+    border: 1px solid #bbf7d0;
+}
+
+.badge-payment.debito {
+    background-color: #e0f2fe;
+    color: #0369a1;
+    border: 1px solid #bae6fd;
+}
+
+.badge-payment.credito {
+    background-color: #fef3c7;
+    color: #b45309;
+    border: 1px solid #fde68a;
+}
+
+.badge-payment.transferencia {
+    background-color: #f3e8ff;
+    color: #7e22ce;
+    border: 1px solid #e9d5ff;
+}
+
+.badge-folio {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 700;
+    color: #1f5eff;
+    background: #eef6fc;
+    padding: 2px 6px;
+    border-radius: 4px;
+    border: 1px solid #cce4f7;
+}
+
+/* Pie de Página Corporativo */
+.report-footer {
+    background: #f8fafc;
+    border-top: 3px solid #14b8a6;
+    padding: 18px 30px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    font-size: 11px;
+    color: #64748b;
+}
+
+.report-footer-left {
+    flex: 1;
+    min-width: 250px;
+}
+
+.report-footer-company {
+    font-weight: 700;
+    color: #0f172a;
+    font-size: 12px;
+    margin-bottom: 2px;
+}
+
+.report-footer-center {
+    text-align: center;
+    flex: 1;
+    min-width: 220px;
+    font-style: italic;
+    color: #475569;
+}
+
+.report-footer-right {
+    text-align: right;
+    flex: 1;
+    min-width: 200px;
+}
+
+.report-footer-badge {
+    display: inline-block;
+    background: #e2e8f0;
+    color: #334155;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+    margin-top: 3px;
+}
+
+/* Barra de Botones de Exportación e Interacción */
+.report-actions-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.btn-report {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-report-pdf {
+    background-color: #dc2626;
+    color: #ffffff;
+}
+
+.btn-report-pdf:hover {
+    background-color: #b91c1c;
+    color: #ffffff;
+}
+
+.btn-report-excel {
+    background-color: #16a34a;
+    color: #ffffff;
+}
+
+.btn-report-excel:hover {
+    background-color: #15803d;
+    color: #ffffff;
+}
+
+.btn-report-html {
+    background-color: #1f5eff;
+    color: #ffffff;
+}
+
+.btn-report-html:hover {
+    background-color: #173fbf;
+    color: #ffffff;
+}
+
+.btn-report-secondary {
+    background-color: #e2e8f0;
+    color: #334155;
+}
+
+.btn-report-secondary:hover {
+    background-color: #cbd5e1;
+    color: #1e293b;
+}
+
+/* Estilos de Impresión y Paginación PDF */
+@page {
+    size: letter landscape;
+    margin: 8mm 10mm 18mm 10mm;
+}
+
+@media print {
+    body.report-body {
+        background: #ffffff !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+    }
+
+    .report-container {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 auto !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+        border: none !important;
+        border-radius: 0 !important;
+        overflow: visible !important;
+    }
+
+    .no-print,
+    th.no-print,
+    td.no-print {
+        display: none !important;
+    }
+
+    /* Layout horizontal compatible con navegadores e impresoras */
+    .report-header {
+        display: table !important;
+        width: 100% !important;
+        table-layout: fixed !important;
+        padding: 4px 0 10px 0 !important;
+        border-bottom: 2px solid #1f5eff !important;
+        margin-bottom: 8px !important;
+    }
+
+    .report-brand {
+        display: table-cell !important;
+        width: 62% !important;
+        vertical-align: top !important;
+        padding-right: 15px !important;
+    }
+
+    .report-meta-box {
+        display: table-cell !important;
+        width: 38% !important;
+        vertical-align: top !important;
+        text-align: right !important;
+        background: #f8fafc !important;
+        border: 1px solid #cbd5e1 !important;
+        border-left: 4px solid #1f5eff !important;
+        padding: 6px 10px !important;
+        border-radius: 4px !important;
+    }
+
+    .report-meta-title {
+        font-size: 14px !important;
+        margin-bottom: 2px !important;
+    }
+
+    .report-meta-item {
+        font-size: 10px !important;
+    }
+
+    /* Layout horizontal de tarjetas KPI */
+    .report-summary-cards {
+        display: table !important;
+        width: 100% !important;
+        table-layout: fixed !important;
+        padding: 0 !important;
+        border-bottom: 1px solid #e2e8f0 !important;
+        margin-bottom: 8px !important;
+    }
+
+    .kpi-card {
+        display: table-cell !important;
+        width: 33.33% !important;
+        vertical-align: top !important;
+        padding: 6px 10px !important;
+        background: #ffffff !important;
+        border: 1px solid #cbd5e1 !important;
+        border-left: 4px solid #1f5eff !important;
+        box-shadow: none !important;
+    }
+
+    .kpi-card.accent {
+        border-left-color: #14b8a6 !important;
+    }
+
+    .kpi-card.success {
+        border-left-color: #16a34a !important;
+    }
+
+    .kpi-label {
+        font-size: 9.5px !important;
+    }
+
+    .kpi-value {
+        font-size: 17px !important;
+    }
+
+    .kpi-subtext {
+        font-size: 9px !important;
+    }
+
+    .report-content {
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 4px 0 16mm 0 !important;
+    }
+
+    .table-responsive-report {
+        width: 100% !important;
+        overflow: visible !important;
+        margin: 4px 0 0 0 !important;
+        padding: 0 !important;
+        border: 1px solid #cbd5e1 !important;
+        border-radius: 4px !important;
+    }
+
+    table.report-table {
+        width: 100% !important;
+        table-layout: fixed !important;
+        border-collapse: collapse !important;
+        margin: 0 !important;
+    }
+
+    /* Proporciones exactas de columnas para impresión (8 columnas, suma = 100%) */
+    .col-folio    { width: 7% !important; }
+    .col-fecha    { width: 11% !important; }
+    .col-cliente  { width: 16% !important; }
+    .col-vendedor { width: 13% !important; }
+    .col-pago     { width: 11% !important; }
+    .col-detalle  { width: 24% !important; }
+    .col-cantidad { width: 7% !important; }
+    .col-total    { width: 11% !important; }
+    .col-accion   { display: none !important; width: 0 !important; }
+
+    table.report-table thead {
+        display: table-header-group !important;
+    }
+
+    table.report-table thead th {
+        font-size: 9.5px !important;
+        padding: 5px 3px !important;
+        letter-spacing: 0.2px !important;
+        white-space: normal !important;
+        word-wrap: normal !important;
+        overflow-wrap: normal !important;
+        word-break: normal !important;
+    }
+
+    table.report-table tbody tr {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+    }
+
+    table.report-table tbody td {
+        font-size: 9.5px !important;
+        padding: 4px 4px !important;
+        line-height: 1.25 !important;
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+        word-break: break-word !important;
+    }
+
+    table.report-table tfoot {
+        display: table-row-group !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+    }
+
+    table.report-table tfoot tr {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+    }
+
+    table.report-table tfoot td {
+        font-size: 10.5px !important;
+        padding: 6px 5px !important;
+    }
+
+    /* Layout horizontal del pie de página compatible con Dompdf */
+    .report-footer {
+        display: table !important;
+        width: 100% !important;
+        table-layout: fixed !important;
+        position: fixed !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        background: #ffffff !important;
+        border-top: 2px solid #14b8a6 !important;
+        padding: 4px 0 !important;
+        font-size: 9.5px !important;
+        margin: 0 !important;
+    }
+
+    .report-footer-left {
+        display: table-cell !important;
+        width: 38% !important;
+        vertical-align: middle !important;
+        text-align: left !important;
+    }
+
+    .report-footer-center {
+        display: table-cell !important;
+        width: 32% !important;
+        vertical-align: middle !important;
+        text-align: center !important;
+        font-style: italic !important;
+    }
+
+    .report-footer-right {
+        display: table-cell !important;
+        width: 30% !important;
+        vertical-align: middle !important;
+        text-align: right !important;
+    }
+}
+
+/* Reglas directas para renderizado PDF (garantiza compatibilidad incluso sin @media print) */
+body.is-pdf {
+    background: #ffffff !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+}
+
+body.is-pdf .report-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    overflow: visible !important;
+}
+
+body.is-pdf .no-print,
+body.is-pdf th.no-print,
+body.is-pdf td.no-print {
+    display: none !important;
+}
+
+body.is-pdf .report-header {
+    display: table !important;
+    width: 100% !important;
+    table-layout: fixed !important;
+    padding: 4px 0 10px 0 !important;
+    border-bottom: 2px solid #1f5eff !important;
+    margin-bottom: 8px !important;
+}
+
+body.is-pdf .report-brand {
+    display: table-cell !important;
+    width: 62% !important;
+    vertical-align: top !important;
+    padding-right: 15px !important;
+}
+
+body.is-pdf .report-meta-box {
+    display: table-cell !important;
+    width: 38% !important;
+    vertical-align: top !important;
+    text-align: right !important;
+    background: #f8fafc !important;
+    border: 1px solid #cbd5e1 !important;
+    border-left: 4px solid #1f5eff !important;
+    padding: 6px 10px !important;
+    border-radius: 4px !important;
+}
+
+body.is-pdf .report-meta-title {
+    font-size: 14px !important;
+    margin-bottom: 2px !important;
+}
+
+body.is-pdf .report-meta-item {
+    font-size: 10px !important;
+}
+
+body.is-pdf .report-summary-cards {
+    display: table !important;
+    width: 100% !important;
+    table-layout: fixed !important;
+    padding: 0 !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+    margin-bottom: 8px !important;
+}
+
+body.is-pdf .kpi-card {
+    display: table-cell !important;
+    width: 33.33% !important;
+    vertical-align: top !important;
+    padding: 6px 10px !important;
+    background: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
+    border-left: 4px solid #1f5eff !important;
+    box-shadow: none !important;
+}
+
+body.is-pdf .kpi-card.accent {
+    border-left-color: #14b8a6 !important;
+}
+
+body.is-pdf .kpi-card.success {
+    border-left-color: #16a34a !important;
+}
+
+body.is-pdf .kpi-label {
+    font-size: 9.5px !important;
+}
+
+body.is-pdf .kpi-value {
+    font-size: 17px !important;
+}
+
+body.is-pdf .kpi-subtext {
+    font-size: 9px !important;
+}
+
+body.is-pdf .report-content {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 4px 0 16mm 0 !important;
+}
+
+body.is-pdf .table-responsive-report {
+    width: 100% !important;
+    overflow: visible !important;
+    margin: 4px 0 0 0 !important;
+    padding: 0 !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 4px !important;
+}
+
+body.is-pdf table.report-table {
+    width: 100% !important;
+    table-layout: fixed !important;
+    border-collapse: collapse !important;
+    margin: 0 !important;
+}
+
+body.is-pdf .col-folio    { width: 7% !important; }
+body.is-pdf .col-fecha    { width: 11% !important; }
+body.is-pdf .col-cliente  { width: 16% !important; }
+body.is-pdf .col-vendedor { width: 13% !important; }
+body.is-pdf .col-pago     { width: 11% !important; }
+body.is-pdf .col-detalle  { width: 24% !important; }
+body.is-pdf .col-cantidad { width: 7% !important; }
+body.is-pdf .col-total    { width: 11% !important; }
+body.is-pdf .col-accion   { display: none !important; width: 0 !important; }
+
+body.is-pdf table.report-table thead {
+    display: table-header-group !important;
+}
+
+body.is-pdf table.report-table thead th {
+    font-size: 9.5px !important;
+    padding: 5px 3px !important;
+    letter-spacing: 0.2px !important;
+    white-space: normal !important;
+    word-wrap: normal !important;
+    overflow-wrap: normal !important;
+    word-break: normal !important;
+}
+
+body.is-pdf table.report-table tbody tr {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+}
+
+body.is-pdf table.report-table tbody td {
+    font-size: 9.5px !important;
+    padding: 4px 4px !important;
+    line-height: 1.25 !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+    word-break: break-word !important;
+}
+
+body.is-pdf table.report-table tfoot {
+    display: table-row-group !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+}
+
+body.is-pdf table.report-table tfoot tr {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+}
+
+body.is-pdf table.report-table tfoot td {
+    font-size: 10.5px !important;
+    padding: 6px 5px !important;
+}
+
+body.is-pdf .report-footer {
+    display: table !important;
+    width: 100% !important;
+    table-layout: fixed !important;
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    background: #ffffff !important;
+    border-top: 2px solid #14b8a6 !important;
+    padding: 4px 0 !important;
+    font-size: 9.5px !important;
+    margin: 0 !important;
+}
+
+body.is-pdf .report-footer-left {
+    display: table-cell !important;
+    width: 38% !important;
+    vertical-align: middle !important;
+    text-align: left !important;
+}
+
+body.is-pdf .report-footer-center {
+    display: table-cell !important;
+    width: 32% !important;
+    vertical-align: middle !important;
+    text-align: center !important;
+    font-style: italic !important;
+}
+
+body.is-pdf .report-footer-right {
+    display: table-cell !important;
+    width: 30% !important;
+    vertical-align: middle !important;
+    text-align: right !important;
+}
+
+
+/* Formulario de Filtros Interactivos (Vista Web) */
+.filtro-form-container {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 18px 24px;
+    margin-bottom: 22px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+}
+.filtro-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 14px;
+    align-items: end;
+}
+.filtro-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.filtro-group label {
+    font-size: 11.5px;
+    font-weight: 700;
+    color: #475569;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+.filtro-control {
+    padding: 8px 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 13px;
+    background-color: #fafafa;
+    color: #1e293b;
+    outline: none;
+    transition: all 0.2s ease;
+}
+.filtro-control:focus {
+    border-color: #1f5eff;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(31, 94, 255, 0.15);
+}
+.filtro-acciones {
+    display: flex;
+    gap: 8px;
+    grid-column: 1 / -1;
+    justify-content: flex-end;
+    margin-top: 6px;
+}
+.btn-filtro {
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+}
+.btn-filtro-submit {
+    background-color: #1f5eff;
+    color: #ffffff;
+}
+.btn-filtro-submit:hover {
+    background-color: #173fbf;
+}
+.btn-filtro-reset {
+    background-color: #e2e8f0;
+    color: #475569;
+    text-decoration: none;
+}
+.btn-filtro-reset:hover {
+    background-color: #cbd5e1;
+    color: #1e293b;
+}

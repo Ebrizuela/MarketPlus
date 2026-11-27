@@ -177,6 +177,7 @@ try {
 }
 
 $terminoBusqueda = trim($_GET['buscar'] ?? '');
+$idProductoSeleccionado = isset($_GET['producto']) ? (int) $_GET['producto'] : 0;
 $productos = [];
 $errorProductos = null;
 try {
@@ -209,6 +210,10 @@ try {
         }
         $condiciones[] = $busqueda . ')';
     }
+    if ($idProductoSeleccionado > 0) {
+        $condiciones[] = 'p.id_producto = :id_producto';
+        $parametros[':id_producto'] = $idProductoSeleccionado;
+    }
     if ($condiciones) {
         $sqlQuery .= ' WHERE ' . implode(' AND ', $condiciones);
     }
@@ -219,6 +224,24 @@ try {
 } catch (PDOException $e) {
     error_log('Error al consultar productos del catálogo: ' . $e->getMessage());
     $errorProductos = 'No fue posible cargar los productos. Inténtalo nuevamente más tarde.';
+}
+
+$productosCarrusel = [];
+try {
+    $columnasCarrusel = 'p.id_producto, p.nombre, p.descripcion, p.precio';
+    if ($columnaImagenExiste) {
+        $columnasCarrusel .= ', p.imagen';
+    }
+
+    $sqlCarrusel = "SELECT $columnasCarrusel FROM Productos p";
+    if ($columnaEstadoExiste) {
+        $sqlCarrusel .= ' WHERE p.estado = 1';
+    }
+    $sqlCarrusel .= ' ORDER BY p.id_producto DESC';
+    $stmtCarrusel = $pdo->query($sqlCarrusel);
+    $productosCarrusel = $stmtCarrusel->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    error_log('Error al cargar productos del carrusel: ' . $e->getMessage());
 }
 
 $cantidadCarrito = 0;
@@ -248,7 +271,7 @@ foreach ($_SESSION['carrito'] ?? [] as $itemCarrito) {
             <?php if ($esAdmin): ?>
                 <a class="mp-action-button" href="<?php echo BASE_URL; ?>/administrador/Productos_Inventory.php">← Volver a Productos e inventario</a>
             <?php elseif ($rolActual === 'supervisor'): ?>
-                <a class="mp-action-button" href="<?php echo BASE_URL; ?>/Supervisor/Dashboard_Supervisor.php">📊 Dashboard</a>
+                <a class="mp-action-button" href="<?php echo BASE_URL; ?>/Supervisor/index.php">📊 Dashboard</a>
             <?php elseif ($rolActual === 'vendedor'): ?>
                 <a class="mp-action-button" href="<?php echo BASE_URL; ?>/ventas/consultar_ventas.php">📋 Ventas</a>
             <?php endif; ?>
@@ -262,10 +285,69 @@ foreach ($_SESSION['carrito'] ?? [] as $itemCarrito) {
 
 <main>
     <div id="alerta-mensaje" class="home-alert"><?php echo $mensaje; ?></div>
-    <section class="hero-carousel" aria-labelledby="oferta-titulo">
-        <h1 id="oferta-titulo">¡Grandes Ofertas de la Semana!</h1>
-        <p>Aprovecha los mejores precios en Tecnología, Electrodomésticos y Hogar.</p>
-    </section>
+<div class="carousel-heading">
+    <span class="carousel-eyebrow">Ofertas destacadas</span>
+    <h1 id="ofertas-titulo">Grandes ofertas <span>para ti</span></h1>
+    <p>Elige tu producto favorito y descubre precios increíbles.</p>
+</div>
+<section class="hero-carousel" aria-labelledby="ofertas-titulo">
+    <div class="carousel-brand" aria-hidden="true">MarketPlus</div>
+    <?php
+    $primerSlide = true;
+    $haySlides = false;
+    $cantidadSlides = 0;
+
+    foreach ($productosCarrusel as $productoCarrusel):
+        $imagenCarrusel = obtenerImagenProducto($productoCarrusel, __DIR__);
+        if ($imagenCarrusel === null) {
+            continue;
+        }
+
+        $haySlides = true;
+        $cantidadSlides++;
+        $claseActiva = $primerSlide ? ' active' : '';
+        $primerSlide = false;
+
+        $urlCatalogo = BASE_URL . '/index.php?producto='
+            . (int) $productoCarrusel['id_producto'] . '#productos';
+    ?>
+        <a class="carousel-slide<?php echo $claseActiva; ?>"
+           href="<?php echo htmlspecialchars($urlCatalogo, ENT_QUOTES, 'UTF-8'); ?>">
+            <img src="<?php echo htmlspecialchars($imagenCarrusel, ENT_QUOTES, 'UTF-8'); ?>"
+                 alt="<?php echo htmlspecialchars($productoCarrusel['nombre'], ENT_QUOTES, 'UTF-8'); ?>">
+
+            <div class="carousel-info">
+                <h2><?php echo htmlspecialchars($productoCarrusel['nombre'], ENT_QUOTES, 'UTF-8'); ?></h2>
+                <p><?php echo htmlspecialchars($productoCarrusel['descripcion'] ?? '', ENT_QUOTES, 'UTF-8'); ?></p>
+                <strong>$<?php echo number_format((float) $productoCarrusel['precio'], 0, ',', '.'); ?></strong>
+            </div>
+        </a>
+    <?php endforeach; ?>
+
+    <?php if (!$haySlides): ?>
+        <div class="carousel-empty">No hay productos con imágenes para mostrar.</div>
+    <?php endif; ?>
+
+    <?php if ($cantidadSlides > 1): ?>
+        <button class="carousel-control carousel-prev" type="button" aria-label="Imagen anterior">
+            &#10094;
+        </button>
+        <button class="carousel-control carousel-next" type="button" aria-label="Imagen siguiente">
+            &#10095;
+        </button>
+        <div class="carousel-indicators" aria-label="Seleccionar imagen">
+            <?php for ($indicePunto = 0; $indicePunto < $cantidadSlides; $indicePunto++): ?>
+                <button
+                    class="carousel-dot<?php echo $indicePunto === 0 ? ' active' : ''; ?>"
+                    type="button"
+                    data-carousel-index="<?php echo $indicePunto; ?>"
+                    aria-label="Ir a la imagen <?php echo $indicePunto + 1; ?>"
+                    aria-current="<?php echo $indicePunto === 0 ? 'true' : 'false'; ?>">
+                </button>
+            <?php endfor; ?>
+        </div>
+    <?php endif; ?>
+</section>
 
     <?php if ($esAdmin): ?>
     <section class="card admin-product-form">
@@ -293,7 +375,7 @@ foreach ($_SESSION['carrito'] ?? [] as $itemCarrito) {
     </section>
     <?php endif; ?>
 
-    <section aria-labelledby="productos-titulo">
+<section id="productos" aria-labelledby="productos-titulo">
         <h2 class="section-title" id="productos-titulo"><?php echo $terminoBusqueda === '' ? 'Productos Destacados' : 'Resultados de búsqueda'; ?></h2>
         <?php if ($terminoBusqueda !== ''): ?>
             <p class="search-summary">Resultados para: <strong><?php echo htmlspecialchars($terminoBusqueda, ENT_QUOTES, 'UTF-8'); ?></strong></p>
@@ -341,6 +423,49 @@ foreach ($_SESSION['carrito'] ?? [] as $itemCarrito) {
                 alerta.style.opacity = "0";
                 setTimeout(() => { alerta.style.display = "none"; }, 600);
             }, 5000);
+        }
+        const slides = document.querySelectorAll('.carousel-slide');
+        const puntos = document.querySelectorAll('.carousel-dot');
+        const anterior = document.querySelector('.carousel-prev');
+        const siguiente = document.querySelector('.carousel-next');
+        let indiceSlide = 0;
+
+        if (slides.length > 1) {
+            const actualizarCarrusel = () => {
+                slides.forEach((slide) => {
+                    slide.classList.remove('active', 'is-current', 'is-prev', 'is-next');
+                });
+                puntos.forEach((punto, indice) => {
+                    const esActual = indice === indiceSlide;
+                    punto.classList.toggle('active', esActual);
+                    punto.setAttribute('aria-current', esActual ? 'true' : 'false');
+                });
+
+                slides[indiceSlide].classList.add('active', 'is-current');
+
+                if (slides.length === 2) {
+                    slides[(indiceSlide + 1) % slides.length].classList.add('is-next');
+                } else {
+                    slides[(indiceSlide - 1 + slides.length) % slides.length].classList.add('is-prev');
+                    slides[(indiceSlide + 1) % slides.length].classList.add('is-next');
+                }
+            };
+
+            const mostrarSlide = (nuevoIndice) => {
+                indiceSlide = (nuevoIndice + slides.length) % slides.length;
+                actualizarCarrusel();
+            };
+
+            actualizarCarrusel();
+            anterior.addEventListener('click', () => mostrarSlide(indiceSlide - 1));
+            siguiente.addEventListener('click', () => mostrarSlide(indiceSlide + 1));
+            puntos.forEach((punto, indice) => {
+                punto.addEventListener('click', () => mostrarSlide(indice));
+            });
+
+            window.setInterval(() => {
+                mostrarSlide(indiceSlide + 1);
+            }, 4000);
         }
     });
 </script>

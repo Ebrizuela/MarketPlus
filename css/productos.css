@@ -1,0 +1,176 @@
+/**
+ * MarketPlus - Estilos complementarios para Registro de Productos (HU-039)
+ * Construido sobre Bootstrap 5 + marketplus.css + marketplus-theme.css
+ */
+
+/* Barra de pestañas (Registrar producto / enlace a Eliminar productos) */
+.mp-tabs {
+    background: #ffffff;
+    border: 1px solid rgba(148, 163, 184, 0.22);
+    border-radius: 14px;
+    padding: 6px;
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
+    display: inline-flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.mp-tabs .nav-link {
+    border-radius: 10px;
+    font-weight: 600;
+    color: #334155 !important;
+    padding: 9px 18px;
+    text-decoration: none;
+    transition: all 0.18s ease;
+}
+
+.mp-tabs .nav-link:hover {
+    background: #eef4ff;
+    color: #1f5eff !important;
+}
+
+.mp-tabs .nav-link.active {
+    background: #1f5eff !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 12px rgba(31, 94, 255, 0.25);
+}
+
+.mp-tabs .nav-link.tab-eliminar:hover {
+    background: #fef2f2;
+    color: #dc2626 !important;
+}
+
+/* Zona de carga de imagen y vista previa */
+.image-upload-wrapper {
+    border: 2px dashed #cbd5e1;
+    border-radius: 14px;
+    padding: 26px 20px;
+    background: #f8fbff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.image-upload-wrapper:hover {
+    border-color: #1f5eff;
+    background: #eef4ff;
+    box-shadow: 0 6px 18px rgba(31, 94, 255, 0.08);
+}
+
+.image-upload-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: rgba(31, 94, 255, 0.10);
+    color: #1f5eff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.65rem;
+    margin-bottom: 10px;
+}
+
+.image-preview-box {
+    display: none;
+    margin-top: 14px;
+    max-width: 280px;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid rgba(148, 163, 184, 0.28);
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+    background: #ffffff;
+}
+
+.image-preview-box img {
+    width: 100%;
+    height: 185px;
+    object-fit: contain;
+    display: block;
+    background: #ffffff;
+    padding: 8px;
+}
+
+.image-preview-meta {
+    padding: 8px 12px;
+    font-size: 12px;
+    background: #f8fbff;
+    border-top: 1px solid #e2e8f0;
+    color: #64748b;
+    text-align: center;
+}
+
+.error-feedback {
+    font-size: 0.82rem;
+    color: #dc2626;
+    font-weight: 600;
+    margin-top: 4px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.form-help {
+    font-size: 0.78rem;
+    color: #64748b;
+    margin-top: 4px;
+    display: block;
+}
+
+.req {
+    color: #dc2626;
+}
+
+/* Pantalla 403 Forbidden (cuando se carga sin Bootstrap) */
+.error-card {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 40px;
+    max-width: 520px;
+    margin: 60px auto;
+    text-align: center;
+    border: 1px solid rgba(148, 163, 184, 0.22);
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.10);
+}
+
+.error-code {
+    font-size: 64px;
+    font-weight: 800;
+    color: #dc2626;
+    line-height: 1;
+    margin-bottom: 10px;
+}
+
+.error-title {
+    font-size: 21px;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 12px;
+}
+
+.error-msg {
+    font-size: 14px;
+    color: #64748b;
+    line-height: 1.6;
+    margin-bottom: 24px;
+}
+
+.btn-return {
+    display: inline-block;
+    padding: 10px 24px;
+    background: #1f5eff;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 14px;
+    transition: background-color 0.18s ease;
+}
+
+.btn-return:hover {
+    background: #173fbf;
+    color: #ffffff;
+}
