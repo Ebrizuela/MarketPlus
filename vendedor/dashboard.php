@@ -107,6 +107,12 @@ try {
             <h4 class="dashboard-vendedor__card-title">Historial de Ventas</h4>
             <p class="dashboard-vendedor__card-description">Revisar el listado de ventas realizadas.</p>
         </a>
+
+        <a href="<?php echo BASE_URL; ?>/ventas/registrar_venta.php" class="card dashboard-vendedor__link-card">
+            <div class="dashboard-vendedor__icon">🧾</div>
+            <h4 class="dashboard-vendedor__card-title">Registrar nueva venta</h4>
+            <p class="dashboard-vendedor__card-description">Ingresar una venta nueva al sistema.</p>
+        </a>
     </div>
 
     <section class="dashboard-vendedor__sales" aria-labelledby="ventas-recientes-title">
