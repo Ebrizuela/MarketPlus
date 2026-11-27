@@ -1,0 +1,274 @@
+ :root {
+     --bg-body: #f7fbff;
+            --card-bg: #ffffff;
+     --text-main: #172b4d;
+     --border-color: #dbe7f5;
+     --color-azul: #0057b8;
+     --color-azul-hover: #004494;
+     --color-amarillo: #ffd500;
+     --color-amarillo-suave: #fff6bf;
+            
+            /* Colores distintivos por tipo de información */
+     --color-codigo-bg: #e7f1ff;
+     --color-codigo-text: #0057b8;
+            
+     --color-nombre-text: #172b4d;
+            
+     --color-categoria-bg: #fff6bf;
+     --color-categoria-text: #604b00;
+            
+            --color-descripcion-text: #64748b;
+            
+     --color-precio-bg: #fff2a8;
+     --color-precio-text: #4f3d00;
+            
+     --color-stock-ok-bg: #e7f1ff;
+     --color-stock-ok-text: #0057b8;
+            
+            --color-stock-low-bg: #fef3c7;
+            --color-stock-low-text: #b45309;
+
+            --color-stock-out-bg: #ffe4e6;
+            --color-stock-out-text: #be123c;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1100px;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .header h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--color-azul);
+        }
+
+        .header p {
+            color: #64748b;
+            font-size: 0.95rem;
+            margin-top: 4px;
+        }
+
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--color-azul);
+            color: white;
+            border-bottom: 3px solid var(--color-amarillo);
+            border-radius: 8px;
+            padding: 10px 16px;
+            font-weight: 600;
+            text-decoration: none;
+            white-space: nowrap;
+            transition: background-color 0.2s;
+        }
+
+        .btn-back:hover {
+            background-color: var(--color-azul-hover);
+        }
+
+        /* Buscador */
+        .search-card {
+            background: var(--card-bg);
+            padding: 16px;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+            margin-bottom: 24px;
+        }
+
+        .search-form {
+            display: flex;
+            gap: 12px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 10px 16px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .search-input:focus {
+            border-color: var(--color-azul);
+            box-shadow: 0 0 0 3px rgba(0, 87, 184, 0.15);
+        }
+
+        .btn-search {
+            background-color: var(--color-azul);
+            color: white;
+            border: none;
+            border-bottom: 3px solid var(--color-amarillo);
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn-search:hover {
+            background-color: var(--color-azul-hover);
+        }
+
+        .btn-clear {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--color-amarillo-suave);
+            color: #604b00;
+            text-decoration: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: background 0.2s;
+        }
+
+        .btn-clear:hover {
+            background-color: var(--color-amarillo);
+        }
+
+        /* Tabla de productos */
+        .table-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f1f7ff;
+            padding: 14px 16px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #174b82;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        td {
+            padding: 16px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.95rem;
+            vertical-align: middle;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover {
+            background-color: #f7fbff;
+        }
+
+        /* Estilos específicos por columna/tipo de información */
+        .badge-codigo {
+            display: inline-block;
+            background-color: var(--color-codigo-bg);
+            color: var(--color-codigo-text);
+            font-family: monospace;
+            font-weight: 700;
+            font-size: 0.85rem;
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+
+        .text-nombre {
+            color: var(--color-nombre-text);
+            font-weight: 600;
+        }
+
+        .badge-categoria {
+            display: inline-block;
+            background-color: var(--color-categoria-bg);
+            color: var(--color-categoria-text);
+            font-size: 0.82rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+
+        .text-descripcion {
+            color: var(--color-descripcion-text);
+            font-size: 0.88rem;
+            max-width: 280px;
+            line-height: 1.4;
+        }
+
+        .badge-precio {
+            display: inline-block;
+            background-color: var(--color-precio-bg);
+            color: var(--color-precio-text);
+            font-weight: 700;
+            font-size: 0.95rem;
+            padding: 4px 10px;
+            border-radius: 6px;
+        }
+
+        /* Indicador de stock dinámico */
+        .stock-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+
+        .stock-ok {
+            background-color: var(--color-stock-ok-bg);
+            color: var(--color-stock-ok-text);
+        }
+
+        .stock-low {
+            background-color: var(--color-stock-low-bg);
+            color: var(--color-stock-low-text);
+        }
+
+        .stock-out {
+            background-color: var(--color-stock-out-bg);
+            color: var(--color-stock-out-text);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #94a3b8;
+        }
+

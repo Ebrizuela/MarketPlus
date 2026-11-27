@@ -32,11 +32,11 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Supervisión - Productos</title>
-    <link rel="stylesheet" href="/css/supervisor_productos.css?v=20261123">
+    <link rel="stylesheet" href="../css/supervisor_productos.css?v=20261123">
 </head>
 <body class="supervisor-page">
     <div class="container">
-        <a href="Dashboard_Supervisor.php" class="btn-back" aria-label="Volver al dashboard">
+        <a href="../Supervisor/index.php" class="btn-back" aria-label="Volver al dashboard">
             <span aria-hidden="true">&larr;</span> Volver
         </a>
         <header class="main-header">
