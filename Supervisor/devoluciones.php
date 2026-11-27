@@ -144,7 +144,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['registrar_devolucion'
 
             <div class="menu-hamburguesa-container">
                 <button class="btn-hamburguesa" aria-label="Abrir menú">☰ Menú</button>
-                <div class="menu-desplegable">
+                <div class="menu-desplegable"> 
                     <a href="<?php echo BASE_URL; ?>/index.php">Catálogo Principal</a>
                     <a href="<?php echo BASE_URL; ?>/public/carrito.php">Ver Carrito</a>
                     <a href="<?php echo BASE_URL; ?>/supervisor/devoluciones.php">Gestor de Devoluciones</a>

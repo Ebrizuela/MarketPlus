@@ -273,7 +273,7 @@ foreach ($_SESSION['carrito'] ?? [] as $itemCarrito) {
             <?php elseif ($rolActual === 'supervisor'): ?>
                 <a class="mp-action-button" href="<?php echo BASE_URL; ?>/Supervisor/index.php">📊 Dashboard</a>
             <?php elseif ($rolActual === 'vendedor'): ?>
-                <a class="mp-action-button" href="<?php echo BASE_URL; ?>/ventas/consultar_ventas.php">📋 Ventas</a>
+                <a class="mp-action-button" href="<?php echo BASE_URL; ?>/vendedor/dashboard.php">📋 Dashboard</a>
             <?php endif; ?>
             <a class="mp-action-button" href="<?php echo BASE_URL; ?>/includes/logout.php">Salir</a>
         <?php else: ?>
@@ -346,7 +346,7 @@ foreach ($_SESSION['carrito'] ?? [] as $itemCarrito) {
                 </button>
             <?php endfor; ?>
         </div>
-    <?php endif; ?>
+    <?php endif; ?> 
 </section>
 
     <?php if ($esAdmin): ?>
