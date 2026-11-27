@@ -80,7 +80,7 @@ if ($pdo) {
     <link rel="stylesheet" href="../css/marketplus-theme.css?v=1">
 </head>
 <body class="supervisor-dashboard">
-    <nav class="navbar navbar-expand-lg navbar-dark">
+    <nav class="navbar navbar-expand-xl navbar-dark">
         <div class="container-fluid">
             <a class="navbar-brand fw-bold" href="../index.php"><i class="bi bi-shield-lock me-2"></i> MarketPlus</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuSupervisor">
@@ -97,10 +97,10 @@ if ($pdo) {
                     <li class="nav-item"><a class="nav-link" href="#clientes"><i class="bi bi-person-badge me-1"></i>Clientes</a></li>
                     <li class="nav-item"><a class="nav-link" href="supervisar_ventas.php"><i class="bi bi-graph-up me-1"></i>Supervisar ventas</a></li>
                 </ul>
-                <div class="d-flex align-items-center text-white gap-3">
+                <div class="d-flex align-items-center text-white gap-3 supervisor-navbar-user">
                     <div class="d-flex align-items-center">
                         <i class="bi bi-person-circle fs-5 me-2"></i>
-                        <span><?= htmlspecialchars($_SESSION['usuario']['nombre'] ?? 'Supervisor'); ?></span>
+                        <span class="navbar-user-name"><?= htmlspecialchars($_SESSION['usuario']['nombre'] ?? 'Supervisor'); ?></span>
                     </div>
                     <a class="btn btn-outline-light btn-sm" href="../includes/logout.php" onclick="return confirm('¿Deseas cerrar sesión?');">
                         <i class="bi bi-box-arrow-right me-1"></i>Cerrar
@@ -125,6 +125,37 @@ if ($pdo) {
                 <h2 class="mb-0">Home Supervisor</h2>
             </div>
             <span class="badge bg-primary fs-6 px-3 py-2 rounded-pill">Rol: <?= htmlspecialchars($_SESSION['usuario']['rol'] ?? 'Supervisor'); ?></span>
+        </div>
+
+        <div class="row g-3 mb-4">
+            <div class="col-12">
+                <section class="card panel-card profile-card" aria-labelledby="perfil-supervisor-titulo">
+                    <div class="card-header d-flex align-items-center">
+                        <i class="bi bi-person-badge me-2"></i>
+                        <span id="perfil-supervisor-titulo">Información del Supervisor</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-12 col-md-6">
+                                <h6 class="text-muted small mb-1">Nombre Completo</h6>
+                                <p class="mb-0 profile-value"><strong><?= htmlspecialchars($_SESSION['usuario']['nombre'] ?? 'N/A') ?></strong></p>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <h6 class="text-muted small mb-1">RUT</h6>
+                                <p class="mb-0 profile-value"><strong><?= htmlspecialchars($_SESSION['usuario']['rut'] ?? 'N/A') ?></strong></p>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <h6 class="text-muted small mb-1">Correo Electrónico</h6>
+                                <p class="mb-0 profile-value"><strong><?= htmlspecialchars($_SESSION['usuario']['correo'] ?? 'N/A') ?></strong></p>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <h6 class="text-muted small mb-1">Rol del Sistema</h6>
+                                <p class="mb-0"><span class="badge supervisor-role-badge"><?= htmlspecialchars($_SESSION['usuario']['rol'] ?? 'supervisor') ?></span></p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
         </div>
 
         <section id="funciones" class="mb-4" aria-labelledby="funciones-titulo">
@@ -187,10 +218,18 @@ if ($pdo) {
                     </a>
                 </div>
                 <div class="col-12 col-sm-6 col-lg-4">
-                    <a href="../ventas/reporte_ventas.php" class="quick-card module-card card h-100">
+                    <a href="../ventas/reportes_ventas.php" class="quick-card module-card card h-100">
                         <div class="card-body d-flex align-items-start gap-3">
                             <span class="module-icon"><i class="bi bi-bar-chart-line"></i></span>
                             <div><h6 class="card-title mb-1">Reporte de Ventas</h6><p>Consultar el reporte detallado de ventas.</p></div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <a href="../productos/registrar_producto.php" class="quick-card module-card card h-100">
+                        <div class="card-body d-flex align-items-start gap-3">
+                            <span class="module-icon"><i class="bi bi-box-seam"></i></span>
+                            <div><h6 class="card-title mb-1">Nuevo producto</h6><p>Registrar un nuevo producto.</p></div>
                         </div>
                     </a>
                 </div>

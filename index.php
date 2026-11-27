@@ -6,6 +6,8 @@ require_once __DIR__ . '/includes/auth.php';
 require_once __DIR__ . '/funciones/usuarios_funciones.php';
 require_once __DIR__ . '/funciones/imagenes_productos.php';
 
+
+
 try {
     $pdo = conectar();
 } catch (PDOException $e) {

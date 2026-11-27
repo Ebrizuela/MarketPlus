@@ -65,10 +65,10 @@ if ($pdo instanceof PDO) {
     <link rel="stylesheet" href="../css/marketplus.css">
     <link rel="stylesheet" href="../css/marketplus-theme.css?v=1">
 </head>
-<body class="bg-light">
+<body class="admin-dashboard bg-light">
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-xl navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand fw-bold" href="index.php"><i class="bi bi-shield-lock"></i> MarketPlus</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal">
@@ -84,26 +84,27 @@ if ($pdo instanceof PDO) {
                         <a class="nav-link" href="../index.php"><i class="bi bi-shop"></i> Catálogo</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="registro.php"><i class="bi bi-people"></i> 1. Usuarios/Roles</a>
-                    </li>
-                    
+                        <a class="nav-link" href="registro.php"><i class="bi bi-people"></i> Usuarios/Roles</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../ventas/consultar_ventas.php"><i class="bi bi-cart-check"></i> 3. Ventas registradas</a>
+                        <a class="nav-link" href="../productos/registrar_producto.php"><i class="bi bi-box-seam"></i> Productos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="Clientes.php"><i class="bi bi-person-badge"></i> 4. Clientes</a>
+                        <a class="nav-link" href="../ventas/consultar_ventas.php"><i class="bi bi-cart-check"></i> Ventas registradas</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="Reportes.php"><i class="bi bi-graph-up"></i> 5. Reportes</a>
+                        <a class="nav-link" href="Clientes.php"><i class="bi bi-person-badge"></i>Clientes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../ventas/reportes_ventas.php"><i class="bi bi-graph-up"></i>  Reportes</a>
                     </li>
                 </ul>
                 <div class="d-flex align-items-center text-white me-3 gap-3">
                     <div class="d-flex align-items-center">
                         <i class="bi bi-person-circle fs-5 me-2"></i>
-                        <div>
+                        <div class="navbar-user-details">
                             <small class="d-block text-white-50">Administrador</small>
-                            <span><?= htmlspecialchars($_SESSION['usuario']['nombre_completo'] ?? $_SESSION['usuario']['nombre']) ?></span>
+                            <span class="navbar-user-name"><?= htmlspecialchars($_SESSION['usuario']['nombre_completo'] ?? $_SESSION['usuario']['nombre']) ?></span>
                         </div>
                     </div>
                     <a class="btn btn-outline-light btn-sm btn-logout" href="../includes/logout.php" onclick="return confirm('¿Seguro que deseas cerrar sesión?');">
@@ -134,29 +135,27 @@ if ($pdo instanceof PDO) {
         </div>
 
         <!-- Información del Administrador -->
-        <div class="row mb-4">
-            <div class="col-12 col-md-6">
-                <div class="card panel-card">
+        <div class="row g-3 mb-4">
+            <div class="col-12">
+                <div class="card panel-card profile-card">
                     <div class="card-header d-flex align-items-center">
                         <i class="bi bi-person-badge text-primary me-2"></i> Información del Administrador
                     </div>
                     <div class="card-body">
-                        <div class="row mb-3">
-                            <div class="col-sm-6">
+                        <div class="row g-3">
+                            <div class="col-12 col-md-6">
                                 <h6 class="text-muted small mb-1">Nombre Completo</h6>
-                                <p class="mb-0"><strong><?= htmlspecialchars($_SESSION['usuario']['nombre_completo'] ?? $_SESSION['usuario']['nombre']) ?></strong></p>
+                                <p class="mb-0 profile-value"><strong><?= htmlspecialchars($_SESSION['usuario']['nombre_completo'] ?? $_SESSION['usuario']['nombre']) ?></strong></p>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-12 col-md-6">
                                 <h6 class="text-muted small mb-1">RUT</h6>
-                                <p class="mb-0"><strong><?= htmlspecialchars($_SESSION['usuario']['rut'] ?? 'N/A') ?></strong></p>
+                                <p class="mb-0 profile-value"><strong><?= htmlspecialchars($_SESSION['usuario']['rut'] ?? 'N/A') ?></strong></p>
                             </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-sm-6">
+                            <div class="col-12 col-md-6">
                                 <h6 class="text-muted small mb-1">Correo Electrónico</h6>
-                                <p class="mb-0"><strong><?= htmlspecialchars($_SESSION['usuario']['correo'] ?? 'N/A') ?></strong></p>
+                                <p class="mb-0 profile-value"><strong><?= htmlspecialchars($_SESSION['usuario']['correo'] ?? 'N/A') ?></strong></p>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-12 col-md-6">
                                 <h6 class="text-muted small mb-1">Rol del Sistema</h6>
                                 <p class="mb-0"><span class="badge bg-success"><?= htmlspecialchars($_SESSION['usuario']['rol']) ?></span></p>
                             </div>
@@ -178,26 +177,10 @@ if ($pdo instanceof PDO) {
                 </a>
             </div>
             <div class="col-12 col-sm-6 col-md-4 col-lg-2">
-                <a href="eliminar_supervisor.php" class="quick-card card text-center p-2">
-                    <div class="card-body">
-                        <i class="bi bi-person-x fs-1 text-danger"></i>
-                        <h6 class="card-title text-dark mt-2 mb-0">Eliminar supervisor</h6>
-                    </div>
-                </a>
-            </div>
-            <div class="col-12 col-sm-6 col-md-4 col-lg-2">
                 <a href="../productos/registrar_producto.php" class="quick-card card text-center p-2">
                     <div class="card-body">
                         <i class="bi bi-box-seam fs-1 text-success"></i>
                         <h6 class="card-title text-dark mt-2 mb-0">Nuevo producto</h6>
-                    </div>
-                </a>
-            </div>
-            <div class="col-12 col-sm-6 col-md-4 col-lg-2">
-                <a href="../productos/Eliminar_producto.php" class="quick-card card text-center p-2">
-                    <div class="card-body">
-                        <i class="bi bi-trash fs-1 text-danger"></i>
-                        <h6 class="card-title text-dark mt-2 mb-0">Eliminar productos</h6>
                     </div>
                 </a>
             </div>
@@ -222,6 +205,14 @@ if ($pdo instanceof PDO) {
                     <div class="card-body">
                         <i class="bi bi-receipt fs-1 text-primary"></i>
                         <h6 class="card-title text-dark mt-2 mb-0">Ventas registradas</h6>
+                    </div>
+                </a>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-2">
+                <a href="../ventas/reportes_ventas.php" class="quick-card card text-center p-2">
+                    <div class="card-body">
+                        <i class="bi bi-bar-chart-line fs-1 text-danger"></i>
+                        <h6 class="card-title text-dark mt-2 mb-0">Reportes de ventas</h6>
                     </div>
                 </a>
             </div>
