@@ -61,10 +61,12 @@ if (!$claveValida) {
 }
 
 $rol = mapearRol($usuario['id_rol']);
+
 $destinos = [
     'administrador' => 'administrador/index.php',
     'supervisor' => 'Supervisor/index.php',
     'vendedor' => 'vendedor/dashboard.php',
+    'auditor' => 'auditor/validar_token.php',
 ];
 
 if (!isset($destinos[$rol])) {

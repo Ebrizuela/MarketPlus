@@ -1,0 +1,7 @@
+body { margin: 0; background: #f2f5f7; font-family: Arial, sans-serif; }
+.content { max-width: 1200px; margin: 24px auto; padding: 0 20px; }
+.table-wrap { overflow-x: auto; background: #fff; border-radius: 10px; }
+table { width: 100%; border-collapse: collapse; }
+th, td { border-bottom: 1px solid #e2e8f0; padding: 10px; text-align: left; white-space: nowrap; }
+th { background-color: #edf2f7; }
+.alert { padding: 12px; border-radius: 8px; background: #fee2e2; color: #991b1b; }
