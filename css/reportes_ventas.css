@@ -1,122 +1,496 @@
-/* ==========================================================================
-   src/css/reportes.css
-   Estilos principales del Panel Dashboard y Reportes
-   ========================================================================== */
-
 :root {
-    --card-radius: 12px;
-    --transition-fast: 0.2s ease-in-out;
+    --bg-body: #F3F6F5;
+    --surface-white: #FFFFFF;
+    --surface-dark: #102A43;
+    --accent-blue: #2457E6;
+    --accent-gray: #65758B;
+    --text-main: #1B293B;
+    --border-light: #DCE5ED;
+    --surface-muted: #F6F8FA;
+    --surface-hover: #EEF3F7;
+    --line-soft: #E8EEF3;
+    --radius-card: 26px;
+    --transition-fast: 0.2s ease;
 }
 
 body.reporte-ventas-body {
-    background-color: #f4f6f9 !important;
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-    color: #212529;
+    min-height: 100vh;
+    background: var(--bg-body);
+    color: var(--text-main);
+    font-family: "Plus Jakarta Sans", Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
-/* Tarjetas y Contenedores */
-.reporte-ventas .card {
-    border: none;
-    border-radius: var(--card-radius);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
-    background-color: #ffffff;
+.reporte-ventas {
+    max-width: 1440px;
 }
 
-.reporte-ventas .card-header {
-    background-color: #ffffff;
-    border-bottom: 1px solid #edf2f7;
+.reporte-ventas .card,
+.reporte-ventas .report-card {
+    border: 1px solid rgba(16, 42, 67, 0.035);
+    border-radius: var(--radius-card);
+    background: var(--surface-white);
+    box-shadow: 0 10px 28px rgba(16, 42, 67, 0.035);
+}
+
+.sales-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.page-eyebrow {
+    margin: 0 0 0.55rem;
+    color: var(--accent-blue);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.13em;
+}
+
+.page-title {
+    margin: 0;
+    color: var(--text-main);
+    font-size: clamp(1.8rem, 3.2vw, 2.55rem);
+    font-weight: 800;
+    letter-spacing: -0.055em;
+}
+
+.page-subtitle {
+    margin: 0.45rem 0 0;
+    color: var(--accent-gray);
+    font-size: 0.92rem;
+}
+
+.sales-header-actions {
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+    gap: 0.65rem;
+}
+
+.sales-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.6rem;
+}
+
+.report-timestamp {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin: 0;
+    color: var(--accent-gray);
+    font-size: 0.78rem;
+}
+
+.report-timestamp svg {
+    width: 15px;
+    height: 15px;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.6;
+}
+
+.export-button,
+.filter-button,
+.clear-button {
+    min-height: 42px;
+    padding: 0.65rem 1.15rem;
+    font-size: 0.82rem;
     font-weight: 600;
-    padding: 1rem 1.25rem;
-    border-top-left-radius: var(--card-radius) !important;
-    border-top-right-radius: var(--card-radius) !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
 }
 
-/* Tarjetas KPI */
-.reporte-ventas .row .card {
-    border: none;
+.export-button:hover,
+.filter-button:hover,
+.clear-button:hover {
+    transform: translateY(-1px);
 }
 
-.reporte-ventas .row .card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+.export-button-primary,
+.filter-button {
+    border-color: var(--surface-dark);
+    background: var(--surface-dark);
+    color: var(--surface-white);
 }
 
-.reporte-ventas .bg-success {
-    background: linear-gradient(135deg, #198754, #146c43) !important;
+.export-button-primary:hover,
+.filter-button:hover {
+    border-color: #0B2034;
+    background: #0B2034;
+    color: var(--surface-white);
 }
 
-.reporte-ventas .bg-info {
-    background: linear-gradient(135deg, #0dcaf0, #0aa2c0) !important;
+.export-button svg,
+.filter-button svg,
+.clear-button svg {
+    width: 15px;
+    height: 15px;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.8;
 }
 
-.reporte-ventas .bg-warning {
-    background: linear-gradient(135deg, #ffc107, #d39e00) !important;
+.filter-button svg {
+    fill: currentColor;
+    stroke: currentColor;
 }
 
-/* Tabla de Resultados */
-.reporte-ventas .table {
-    margin-bottom: 0;
+.export-button-secondary {
+    border: 1px solid var(--border-light);
+    background: transparent;
+    color: var(--accent-blue);
+}
+
+.export-button-secondary:hover {
+    border-color: #C7D6E6;
+    background: #FFFFFF;
+    color: var(--accent-blue);
+}
+
+.reporte-ventas .filter-panel {
+    border: 0;
+}
+
+.filter-panel > .card-body {
+    padding: 1.85rem 2rem;
+}
+
+.section-heading {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    margin-bottom: 1.1rem;
+}
+
+.section-icon,
+.kpi-icon {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 17px;
+    background: #E7F0FA;
+    color: var(--surface-dark);
+}
+
+.section-icon svg {
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.8;
+}
+
+.section-title {
+    margin: 0;
+    color: var(--text-main);
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.section-description {
+    margin: 0.3rem 0 0;
+    color: var(--accent-gray);
+    font-size: 0.8rem;
+}
+
+.filter-panel .form-label {
+    margin-bottom: 0.45rem;
+    color: #43546A;
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+.filter-panel .form-control,
+.filter-panel .form-select {
+    min-height: 50px;
+    border: 1px solid transparent;
+    border-radius: 14px;
+    background-color: var(--surface-muted);
+    color: var(--text-main);
+    font-size: 0.88rem;
+    box-shadow: none;
+}
+
+.filter-panel .form-control:focus,
+.filter-panel .form-select:focus {
+    border-color: #B5C9DD;
+    background-color: var(--surface-white);
+    box-shadow: 0 0 0 3px rgba(36, 87, 230, 0.08);
+}
+
+.filter-actions {
+    display: flex;
+    justify-content: flex-start;
+    gap: 0.6rem;
+    padding-top: 0.1rem;
+}
+
+.clear-button {
+    border: 1px solid transparent;
+    background: var(--surface-hover);
+    color: #43546A;
+}
+
+.clear-button:hover {
+    background: #E4EBF1;
+    color: var(--text-main);
+}
+
+.report-error {
+    border: 0;
+    border-radius: 14px;
+}
+
+.reporte-ventas .kpi-card {
+    overflow: hidden;
+    border: 0;
+    border-radius: var(--radius-card);
+    background: var(--surface-white);
+    box-shadow: 0 10px 28px rgba(16, 42, 67, 0.035);
+}
+
+.kpi-card .card-body {
+    display: flex;
+    min-height: 182px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.8rem 2rem;
+}
+
+.kpi-copy {
+    min-width: 0;
+}
+
+.reporte-ventas .kpi-card-primary {
+    background: var(--surface-dark);
+    color: var(--surface-white);
+}
+
+.kpi-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+
+.kpi-icon svg {
+    width: 23px;
+    height: 23px;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.8;
+}
+
+.kpi-icon-primary {
+    background: rgba(255, 255, 255, 0.16);
+    color: #FFFFFF;
+}
+
+.kpi-label {
+    margin: 0 0 0.65rem;
+    color: var(--accent-gray);
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.kpi-card-primary .kpi-label {
+    color: rgba(255, 255, 255, 0.68);
+}
+
+.kpi-value {
+    width: 100%;
+    margin: 0 0 0.45rem;
+    color: var(--text-main);
+    font-size: clamp(1.4rem, 1.8vw, 1.65rem);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1.1;
+    white-space: nowrap;
+}
+
+.kpi-value-primary {
+    color: var(--surface-white);
+}
+
+.kpi-footnote {
+    margin: auto 0 0;
+    color: var(--accent-gray);
+    font-size: 0.72rem;
+}
+
+.kpi-card-primary .kpi-footnote {
+    color: rgba(255, 255, 255, 0.72);
+}
+
+.report-card {
+    overflow: hidden;
+}
+
+.report-card-header {
+    border-bottom: 1px solid var(--line-soft);
+    background: var(--surface-white);
+    padding: 1.4rem 1.8rem;
+}
+
+.chart-body {
+    height: 330px;
+    padding: 1.25rem 1.8rem 1.8rem;
+}
+
+.table-card .report-card-header {
+    padding-top: 1.35rem;
+    padding-bottom: 1.35rem;
+}
+
+.table-responsive {
+    border-radius: 0 0 var(--radius-card) var(--radius-card);
+}
+
+.reporte-ventas .sales-table {
+    --bs-table-bg: var(--surface-white);
+    --bs-table-color: var(--text-main);
+    --bs-table-hover-bg: #FAFAFB;
+    width: 100%;
+    margin: 0;
+    border-collapse: separate;
+    border-spacing: 0;
     vertical-align: middle;
 }
 
-.reporte-ventas .table thead th {
-    background-color: #f8f9fa;
-    color: #495057;
-    font-size: 0.825rem;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    border-bottom: 2px solid #dee2e6;
-    padding: 0.85rem;
+.reporte-ventas .sales-table > :not(caption) > * > * {
+    border-top: 0;
+    border-right: 0;
+    border-bottom: 1px solid var(--line-soft);
+    border-left: 0;
+    box-shadow: none;
+    padding: 16px 12px;
 }
 
-.reporte-ventas .table tbody td {
-    padding: 0.85rem;
-    color: #212529;
+.reporte-ventas .sales-table thead th {
+    background: var(--surface-white);
+    color: #53647A;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
 }
 
-.reporte-ventas .table-hover tbody tr:hover {
-    background-color: #f1f5f9;
+.reporte-ventas .sales-table tbody td {
+    color: #36465A;
+    font-size: 0.82rem;
 }
 
-/* Formularios y Botones */
-.reporte-ventas .form-label {
+.reporte-ventas .sales-table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.reporte-ventas .sales-table tfoot td {
+    border-top: 1px solid var(--border-light);
+    border-bottom: 0;
+    background: var(--surface-white);
+    color: var(--text-main);
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+.reporte-ventas .sales-table .table-total-label {
+    text-align: right;
+}
+
+.reporte-ventas .sales-table .table-total-units,
+.reporte-ventas .sales-table .table-total-amount {
+    text-align: left;
+}
+
+.reporte-ventas .sales-table tbody td:first-child[data-order] {
+    width: 1%;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.sale-id-badge {
+    display: inline-flex;
+    min-width: 32px;
+    height: 32px;
+    align-items: center;
+    justify-content: center;
+    padding: 0 0.55rem;
+    border-radius: 50px;
+    background: #E8F0F8;
+    color: var(--surface-dark);
+    font-size: 0.72rem;
     font-weight: 600;
-    font-size: 0.875rem;
-    color: #495057;
+    line-height: 1;
 }
 
-.reporte-ventas .form-control, 
-.reporte-ventas .form-select {
-    border-radius: 8px;
-    border: 1px solid #ced4da;
-    padding: 0.5rem 0.75rem;
+.reporte-ventas .sales-table tbody tr:hover > * {
+    background: #F8FAFC;
 }
 
-.reporte-ventas .form-control:focus, 
-.reporte-ventas .form-select:focus {
-    border-color: #86b7fe;
-    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
+.reporte-ventas .dt-container .dt-search input,
+.reporte-ventas .dt-container .dt-length select {
+    min-height: 38px;
+    border: 1px solid var(--border-light);
+    border-radius: 50px;
+    background-color: var(--surface-white);
+    padding: 0.4rem 0.85rem;
+    color: var(--text-main);
+    box-shadow: none;
 }
 
-.reporte-ventas .btn {
-    border-radius: 8px;
-    font-weight: 500;
-    transition: all var(--transition-fast);
+.reporte-ventas .dt-container .dt-search input:focus,
+.reporte-ventas .dt-container .dt-length select:focus {
+    border-color: #A8BBD0;
+    outline: 0;
+    box-shadow: 0 0 0 3px rgba(36, 87, 230, 0.08);
 }
 
-.reporte-ventas #contenedorGrafico .card-body {
-    height: 300px;
+.reporte-ventas .dt-container .dt-paging .dt-paging-button,
+.reporte-ventas .dt-container .dt-paging .page-link {
+    min-width: 36px;
+    min-height: 36px;
+    border: 1px solid transparent;
+    border-radius: 50px;
+    background: transparent;
+    color: var(--accent-gray);
+    line-height: 1.4;
+}
+
+.reporte-ventas .dt-container .dt-paging .dt-paging-button.current,
+.reporte-ventas .dt-container .dt-paging .page-item.active .page-link {
+    border-color: var(--surface-dark);
+    background: var(--surface-dark);
+    color: var(--surface-white);
+}
+
+.reporte-ventas .dt-container .dt-paging .dt-paging-button:hover,
+.reporte-ventas .dt-container .dt-paging .page-link:hover {
+    border-color: var(--border-light);
+    background: var(--surface-hover);
+    color: var(--text-main);
 }
 
 .reporte-ventas [hidden] {
-    display: none !important;
+    display: none;
 }
-
-/* ==========================================================================
-   src/css/excel.css
-   Estilos compatibles con Microsoft Excel en exportaciones HTML
-   ========================================================================== */
 
 body.excel-report {
     margin: 18px;
@@ -163,11 +537,11 @@ body.excel-report {
 }
 
 .excel-report .excel-table .monto {
-    text-align: right; 
+    text-align: right;
 }
 
 .excel-report .excel-table .centro {
-    text-align: center; 
+    text-align: center;
 }
 
 .excel-report .excel-table .total-row td {
@@ -179,4 +553,47 @@ body.excel-report {
 
 .excel-report .excel-table .total-row .monto {
     color: #146c43;
+}
+
+@media (max-width: 767.98px) {
+    .sales-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .sales-actions {
+        width: 100%;
+    }
+
+    .sales-header-actions {
+        align-items: flex-start;
+        width: 100%;
+    }
+
+    .sales-actions .export-button {
+        flex: 1;
+    }
+
+    .filter-panel > .card-body,
+    .report-card-header {
+        padding: 1.15rem;
+    }
+
+    .filter-actions {
+        justify-content: flex-start;
+    }
+
+    .filter-actions .btn {
+        flex: 1;
+    }
+
+    .chart-body {
+        height: 280px;
+        padding: 1rem;
+    }
+
+    .kpi-card .card-body {
+        min-height: 155px;
+        padding: 1.35rem;
+    }
 }
