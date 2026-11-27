@@ -197,6 +197,23 @@ body {
     background-color: #475569;
 }
 
+.btn-admin-home {
+    background-color: var(--primary);
+    color: #ffffff;
+    text-decoration: none;
+    box-shadow: 0 2px 6px rgba(44, 62, 80, 0.18);
+}
+
+.btn-admin-home:hover {
+    background-color: var(--primary-hover);
+    box-shadow: 0 4px 10px rgba(44, 62, 80, 0.25);
+}
+
+.btn-admin-home:focus-visible {
+    outline: 3px solid var(--accent-blue);
+    outline-offset: 2px;
+}
+
 .btn-primary {
     background-color: var(--accent-blue);
     color: #ffffff;

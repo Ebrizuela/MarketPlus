@@ -8,12 +8,12 @@ $idFuncionarioSesion = filter_var(
     FILTER_VALIDATE_INT,
     ['options' => ['min_range' => 1]]
 );
-$rolSesion = $_SESSION['rol'] ?? null;
+$rolSesion = is_string($_SESSION['rol'] ?? null) ? strtolower(trim($_SESSION['rol'])) : null;
 if (
     $idFuncionarioSesion === false
     || $idFuncionarioSesion === null
     || !is_string($rolSesion)
-    || !in_array($rolSesion, ['Administrador', 'Vendedor'], true)
+    || !in_array($rolSesion, ['administrador', 'vendedor'], true)
 ) {
     session_unset();
     session_destroy();

@@ -46,12 +46,12 @@ $idFuncionario = filter_var(
     FILTER_VALIDATE_INT,
     ['options' => ['min_range' => 1]]
 );
-$rol = $_SESSION['rol'] ?? null;
+$rol = is_string($_SESSION['rol'] ?? null) ? strtolower(trim($_SESSION['rol'])) : null;
 if (
     $idFuncionario === false
     || $idFuncionario === null
     || !is_string($rol)
-    || !in_array($rol, ['Administrador', 'Vendedor'], true)
+    || !in_array($rol, ['administrador', 'vendedor'], true)
 ) {
     responderNoAutorizado();
 }
