@@ -78,6 +78,7 @@ function mapearRol($idRol) {
         case 1: return 'administrador';
         case 2: return 'supervisor';
         case 3: return 'vendedor';
+        case 4: return 'Auditor';
         default: return 'desconocido';
     }
 }

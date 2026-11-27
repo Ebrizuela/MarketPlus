@@ -1,0 +1,16 @@
+body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f2f5f7; margin: 0; padding: 30px; }
+.container { max-width: 1050px; margin: auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #f0f0f0; padding-bottom: 15px; margin-bottom: 25px; }
+.logo { color: #0071ce; font-size: 24px; font-weight: bold; }
+.user-info { display: flex; align-items: center; gap: 15px; }
+.nav-link { color: #0071ce; text-decoration: none; font-size: 14px; font-weight: bold; padding: 8px 12px; border-radius: 6px; background-color: #e6f0fa; }
+.nav-link:hover { background-color: #d0e4f7; }
+.search-box { display: flex; gap: 10px; margin-bottom: 25px; }
+.search-box input { flex: 1; padding: 12px; border: 1px solid #ccc; border-radius: 8px; font-size: 14px; }
+.btn-search { background-color: #0071ce; color: white; border: none; padding: 12px 24px; border-radius: 20px; font-weight: bold; cursor: pointer; }
+.btn-clear { background-color: #e0e0e0; color: #333; border: none; padding: 12px 20px; border-radius: 20px; text-decoration: none; font-size: 14px; font-weight: bold; display: flex; align-items: center; }
+table { width: 100%; border-collapse: collapse; text-align: left; }
+th { background-color: #f8f9fa; color: #4a4a4a; padding: 14px; border-bottom: 2px solid #e0e0e0; font-size: 14px; }
+td { padding: 14px; border-bottom: 1px solid #eeeeee; font-size: 14px; color: #333; }
+.total-badge { font-weight: bold; color: #0071ce; }
+.empty-state { text-align: center; padding: 30px; color: #777; }
