@@ -10,7 +10,6 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 $correo = $_POST['correo'] ?? '';
 $password = $_POST['password'] ?? '';
 
-
 if (!is_string($correo) || !is_string($password) || $correo === '' || $password === '') {
     header('Location: login.php?error=1');
     exit;
@@ -65,6 +64,7 @@ $destinos = [
     'administrador' => 'administrador/index.php',
     'supervisor' => 'Supervisor/index.php',
     'vendedor' => 'vendedor/dashboard.php',
+    'Auditor' => 'auditor/validar_token.php',
 ];
 
 if (!isset($destinos[$rol])) {

@@ -2,12 +2,6 @@
 ob_start();
 session_start();
 
-if (!defined('BASE_URL')) {
-    $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http";
-    $host = $_SERVER['HTTP_HOST'];
-    define('BASE_URL', $protocol . '://' . $host);
-}
-
 require_once __DIR__ . '/../funciones/conexion.php';
 require_once __DIR__ . '/../includes/auth.php';
 $pdo = conectar();
@@ -112,6 +106,12 @@ try {
             <div class="dashboard-vendedor__icon">📊</div>
             <h4 class="dashboard-vendedor__card-title">Historial de Ventas</h4>
             <p class="dashboard-vendedor__card-description">Revisar el listado de ventas realizadas.</p>
+        </a>
+
+        <a href="<?php echo BASE_URL; ?>/ventas/registrar_venta.php" class="card dashboard-vendedor__link-card">
+            <div class="dashboard-vendedor__icon">🧾</div>
+            <h4 class="dashboard-vendedor__card-title">Registrar nueva venta</h4>
+            <p class="dashboard-vendedor__card-description">Ingresar una venta nueva al sistema.</p>
         </a>
     </div>
 

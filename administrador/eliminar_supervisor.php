@@ -22,6 +22,12 @@ $pdo->exec("CREATE TABLE IF NOT EXISTS auditoria_usuarios (
     detalles VARCHAR(255)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
 
+$columnaIdAuditoria = $pdo->query("SHOW COLUMNS FROM auditoria_usuarios LIKE 'id_auditoria'")
+    ->fetch(PDO::FETCH_ASSOC);
+if ($columnaIdAuditoria && stripos($columnaIdAuditoria['Extra'], 'auto_increment') === false) {
+    $pdo->exec('ALTER TABLE auditoria_usuarios MODIFY id_auditoria INT NOT NULL AUTO_INCREMENT');
+}
+
 if (empty($_SESSION['csrf_eliminar_supervisor'])) {
     $_SESSION['csrf_eliminar_supervisor'] = bin2hex(random_bytes(32));
 }
@@ -62,16 +68,45 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         );
         $actualizar->execute([':id' => $idFuncionario]);
 
+        $ventasHistoricas = $pdo->prepare(
+            'SELECT COUNT(*) FROM Ventas WHERE id_funcionario = :id'
+        );
+        $ventasHistoricas->execute([':id' => $idFuncionario]);
+        $cantidadVentasHistoricas = (int) $ventasHistoricas->fetchColumn();
+
+        $usuarioAdministrador = $_SESSION['usuario'];
+        $idAdministrador = filter_var($usuarioAdministrador['id'] ?? null, FILTER_VALIDATE_INT);
+        $correoAdministrador = trim((string) ($usuarioAdministrador['correo'] ?? ''));
+        $nombreAdministrador = trim((string) ($usuarioAdministrador['nombre'] ?? ''));
+        $realizadoPor = $correoAdministrador !== ''
+            ? $correoAdministrador
+            : ($nombreAdministrador !== '' ? $nombreAdministrador : 'Administrador');
+        if ($idAdministrador !== false && $idAdministrador > 0) {
+            $realizadoPor = substr($realizadoPor . ' (ID ' . $idAdministrador . ')', 0, 100);
+        }
+
+        $nombreCompletoSupervisor = trim(
+            (string) ($supervisor['nombre'] ?? '') . ' '
+            . (string) ($supervisor['apellido'] ?? '')
+        );
+        $detallesAuditoria = sprintf(
+            'Supervisor #%d %s; administrador #%s; ventas históricas conservadas: %d',
+            $idFuncionario,
+            $nombreCompletoSupervisor,
+            ($idAdministrador !== false && $idAdministrador > 0) ? (string) $idAdministrador : 'desconocido',
+            $cantidadVentasHistoricas
+        );
+
         $auditar = $pdo->prepare(
             "INSERT INTO auditoria_usuarios
-                (id_usuario_afectado, accion, realizado_por, detalles)
+                (id_usuario_afectado, accion, realizado_por, fecha_hora, detalles)
              VALUES
-                (:id, 'ELIMINACION_LOGICA', :admin, :detalles)"
+                (:id, 'ELIMINACION_LOGICA', :admin, NOW(), :detalles)"
         );
         $auditar->execute([
             ':id' => $idFuncionario,
-            ':admin' => $_SESSION['usuario']['correo'] ?? $_SESSION['usuario']['nombre'] ?? 'Administrador',
-            ':detalles' => 'Baja lógica de supervisor; se conserva el historial de ventas.',
+            ':admin' => $realizadoPor,
+            ':detalles' => substr($detallesAuditoria, 0, 255),
         ]);
 
         $pdo->commit();
@@ -145,7 +180,8 @@ $supervisores = $pdo->query(
                                 <?php foreach ($supervisores as $supervisor): ?>
                                     <?php
                                     $nombreCompleto = $supervisor['nombre'] . ' ' . $supervisor['apellido'];
-                                    $confirmacion = '¿Está seguro de eliminar al supervisor ' . $nombreCompleto . '?';
+                                    $confirmacion = '¿Confirma eliminar al supervisor ' . $nombreCompleto
+                                        . '? Se dará de baja y sus ventas históricas se conservarán.';
                                     ?>
                                     <tr>
                                         <td>#<?= (int) $supervisor['id_funcionario'] ?></td>
@@ -156,7 +192,7 @@ $supervisores = $pdo->query(
                                             <form method="POST" action="eliminar_supervisor.php" onsubmit="return confirm(<?= htmlspecialchars(json_encode($confirmacion), ENT_QUOTES, 'UTF-8') ?>)">
                                                 <input type="hidden" name="csrf" value="<?= htmlspecialchars($_SESSION['csrf_eliminar_supervisor'], ENT_QUOTES, 'UTF-8') ?>">
                                                 <input type="hidden" name="id_funcionario" value="<?= (int) $supervisor['id_funcionario'] ?>">
-                                                <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                                                <button type="submit" class="btn btn-danger btn-sm">Dar de baja</button>
                                             </form>
                                         </td>
                                     </tr>

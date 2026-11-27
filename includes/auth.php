@@ -17,6 +17,24 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+if (isset($_SESSION['usuario']) && is_array($_SESSION['usuario'])) {
+    $idFuncionario = filter_var(
+        $_SESSION['usuario']['id'] ?? null,
+        FILTER_VALIDATE_INT,
+        ['options' => ['min_range' => 1]]
+    );
+    $rolUsuario = $_SESSION['usuario']['rol'] ?? null;
+    if (
+        $idFuncionario !== false
+        && $idFuncionario !== null
+        && is_string($rolUsuario)
+        && in_array($rolUsuario, ['administrador', 'vendedor'], true)
+    ) {
+        $_SESSION['id_funcionario'] = (int) $idFuncionario;
+        $_SESSION['rol'] = ucfirst($rolUsuario);
+    }
+}
+
 if (!defined('BASE_URL')) {
     $directoriosAplicacion = [
         'auth', 'administrador', 'supervisor', 'ventas', 'vendedor',
@@ -78,6 +96,7 @@ function mapearRol($idRol) {
         case 1: return 'administrador';
         case 2: return 'supervisor';
         case 3: return 'vendedor';
+        case 4: return 'Auditor';
         default: return 'desconocido';
     }
 }
