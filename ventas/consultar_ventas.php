@@ -66,7 +66,7 @@ try {
             </p>
         <?php endif; ?>
         <?php if ($error !== null): ?>
-            <p class="alert"><?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?></p>
+            <p class="alert"><?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?></p> 
         <?php endif; ?>
         <div class="table-wrap">
             <table>

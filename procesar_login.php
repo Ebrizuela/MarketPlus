@@ -64,7 +64,7 @@ $rol = mapearRol($usuario['id_rol']);
 $destinos = [
     'administrador' => 'administrador/index.php',
     'supervisor' => 'Supervisor/index.php',
-    'vendedor' => 'ventas/consultar_ventas.php',
+    'vendedor' => 'vendedor/dashboard.php',
 ];
 
 if (!isset($destinos[$rol])) {
