@@ -11,10 +11,17 @@ if (empty($_SESSION['csrf_eliminar_producto'])) {
 
 $mensaje = '';
 $errorAccion = '';
+$eliminado = false;
 
 try {
     $pdo = conectar();
-    $columnaEstado = $pdo->query("SHOW COLUMNS FROM Productos LIKE 'estado'")->fetch(PDO::FETCH_ASSOC) !== false;
+    $columnasEstado = [];
+    foreach (['estado', 'activo'] as $columna) {
+        $checkColumna = $pdo->query("SHOW COLUMNS FROM Productos LIKE " . $pdo->quote($columna));
+        if ($checkColumna->fetch(PDO::FETCH_ASSOC) !== false) {
+            $columnasEstado[] = $columna;
+        }
+    }
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_producto'])) {
         $csrf = $_POST['csrf'] ?? '';
@@ -29,21 +36,87 @@ try {
             exit('El producto seleccionado no es válido.');
         }
 
-        if ($columnaEstado) {
-            $stmt = $pdo->prepare('UPDATE Productos SET estado = 0 WHERE id_producto = :id AND estado = 1');
-            $stmt->execute([':id' => $id]);
-            $eliminado = $stmt->rowCount() > 0;
+        if (!$columnasEstado) {
+            http_response_code(409);
+            $errorAccion = 'No se puede dar de baja el producto porque la tabla no tiene una columna de estado.';
         } else {
-            $stmtHistorial = $pdo->prepare('SELECT COUNT(*) FROM Detalle_Ventas WHERE id_producto = :id');
-            $stmtHistorial->execute([':id' => $id]);
-            if ((int) $stmtHistorial->fetchColumn() > 0) {
-                http_response_code(409);
-                $errorAccion = 'No se puede eliminar este producto porque aparece en ventas registradas.';
-                $eliminado = false;
-            } else {
-                $stmt = $pdo->prepare('DELETE FROM Productos WHERE id_producto = :id');
-                $stmt->execute([':id' => $id]);
-                $eliminado = $stmt->rowCount() > 0;
+            try {
+                $pdo->beginTransaction();
+                $buscarProducto = $pdo->prepare(
+                    'SELECT id_producto, nombre FROM Productos WHERE id_producto = :id FOR UPDATE'
+                );
+                $buscarProducto->execute([':id' => $id]);
+                $producto = $buscarProducto->fetch(PDO::FETCH_ASSOC);
+
+                if (!$producto) {
+                    $pdo->rollBack();
+                    http_response_code(404);
+                    $errorAccion = 'El producto no existe o ya fue eliminado.';
+                } else {
+                    $asignacionesEstado = array_map(
+                        static fn(string $columna): string => $columna . ' = 0',
+                        $columnasEstado
+                    );
+                    $condicionesActivo = array_map(
+                        static fn(string $columna): string => $columna . ' = 1',
+                        $columnasEstado
+                    );
+
+                    $actualizar = $pdo->prepare(
+                        'UPDATE Productos SET ' . implode(', ', $asignacionesEstado)
+                        . ' WHERE id_producto = :id AND ' . implode(' AND ', $condicionesActivo)
+                    );
+                    $actualizar->execute([':id' => $id]);
+
+                    if ($actualizar->rowCount() === 0) {
+                        $pdo->rollBack();
+                        http_response_code(409);
+                        $errorAccion = 'El producto ya fue dado de baja.';
+                    } else {
+                        $usuario = $_SESSION['usuario'] ?? [];
+                        $usuarioId = filter_var($usuario['id'] ?? null, FILTER_VALIDATE_INT);
+                        $correoAdministrador = trim((string) ($usuario['correo'] ?? ''));
+                        $nombreAdministrador = trim((string) ($usuario['nombre'] ?? ''));
+                        $realizadoPor = $correoAdministrador !== ''
+                            ? $correoAdministrador
+                            : ($nombreAdministrador !== '' ? $nombreAdministrador : 'Administrador');
+
+                        $ventasHistoricas = $pdo->prepare(
+                            'SELECT COUNT(*) FROM Detalle_Ventas WHERE id_producto = :id'
+                        );
+                        $ventasHistoricas->execute([':id' => $id]);
+                        $cantidadVentasHistoricas = (int) $ventasHistoricas->fetchColumn();
+
+                        $detalles = json_encode([
+                            'producto_id' => (int) $producto['id_producto'],
+                            'producto' => $producto['nombre'],
+                            'realizado_por' => $realizadoPor,
+                            'historial_ventas_conservado' => true,
+                            'ventas_historicas_conservadas' => $cantidadVentasHistoricas,
+                        ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR);
+
+                        $auditoria = $pdo->prepare(
+                            'INSERT INTO auditoria (usuario_id, accion, detalles, ip, user_agent, fecha)
+                             VALUES (:usuario_id, :accion, :detalles, :ip, :user_agent, NOW())'
+                        );
+                        $auditoria->execute([
+                            ':usuario_id' => $usuarioId === false ? null : $usuarioId,
+                            ':accion' => 'eliminar_producto',
+                            ':detalles' => $detalles,
+                            ':ip' => $_SERVER['REMOTE_ADDR'] ?? null,
+                            ':user_agent' => isset($_SERVER['HTTP_USER_AGENT'])
+                                ? substr($_SERVER['HTTP_USER_AGENT'], 0, 255)
+                                : null,
+                        ]);
+                        $pdo->commit();
+                        $eliminado = true;
+                    }
+                }
+            } catch (Throwable $e) {
+                if ($pdo->inTransaction()) {
+                    $pdo->rollBack();
+                }
+                throw $e;
             }
         }
 
@@ -58,12 +131,16 @@ try {
     }
 
     if (($_GET['msg'] ?? '') === 'eliminado') {
-        $mensaje = '¡Producto eliminado del catálogo con éxito!';
+        $mensaje = 'Producto dado de baja del catálogo; el historial de ventas se conservó.';
     }
 
     $sqlProductos = 'SELECT * FROM Productos';
-    if ($columnaEstado) {
-        $sqlProductos .= ' WHERE estado = 1';
+    if ($columnasEstado) {
+        $condicionesActivo = [];
+        foreach ($columnasEstado as $columna) {
+            $condicionesActivo[] = $columna . ' = 1';
+        }
+        $sqlProductos .= ' WHERE ' . implode(' AND ', $condicionesActivo);
     }
     $productos = $pdo->query($sqlProductos . ' ORDER BY id_producto ASC')->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
@@ -167,7 +244,7 @@ try {
 
     <header class="header" style="max-width: 1200px; margin: 0 auto 15px;">
         <div style="font-size: 22px; font-weight: bold; letter-spacing: 0.5px;">MarketPlus - Eliminar productos</div>
-        <a href="<?= htmlspecialchars(BASE_URL, ENT_QUOTES, 'UTF-8') ?>/administrador/index.php" style="text-decoration: none;">Volver al dashboard</a>
+        <a href="<?= htmlspecialchars(BASE_URL, ENT_QUOTES, 'UTF-8') ?>/administrador/dashboard_administrador.php" style="text-decoration: none;">Volver al dashboard</a>
     </header>
 
     <?php if ($mensaje !== ''): ?>
@@ -207,10 +284,10 @@ try {
             <div style="padding: 15px;">
                 <h3 style="margin: 0; font-size: 16px; height: 40px; overflow: hidden;"><?= $nombreSeguro ?></h3>
                 <p style="font-size: 18px; font-weight: bold; color: #2563eb;">$ <?= $precio ?></p>
-                <form method="POST" onsubmit="return confirm(<?= htmlspecialchars(json_encode('¿Deseas eliminar ' . $nombre . ' del catálogo?', JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_TAG | JSON_HEX_AMP), ENT_QUOTES, 'UTF-8') ?>);">
+                <form method="POST" onsubmit="return confirm(<?= htmlspecialchars(json_encode('¿Deseas dar de baja ' . $nombre . ' del catálogo? Sus ventas históricas se conservarán.', JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_TAG | JSON_HEX_AMP), ENT_QUOTES, 'UTF-8') ?>);">
                     <input type="hidden" name="id_producto" value="<?= $id ?>">
                     <input type="hidden" name="csrf" value="<?= htmlspecialchars($_SESSION['csrf_eliminar_producto'], ENT_QUOTES, 'UTF-8') ?>">
-                    <button type="submit" style="width: 100%; background: #ef4444; color: white; border: none; padding: 10px; border-radius: 8px; cursor: pointer; font-weight: bold;">Eliminar</button>
+                    <button type="submit" style="width: 100%; background: #ef4444; color: white; border: none; padding: 10px; border-radius: 8px; cursor: pointer; font-weight: bold;">Dar de baja</button>
                 </form>
             </div>
         </article>

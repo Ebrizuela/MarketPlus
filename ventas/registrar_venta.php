@@ -1,7 +1,5 @@
 <?php
-if (session_status() !== PHP_SESSION_ACTIVE) {
-    session_start();
-}
+require_once __DIR__ . '/../includes/auth.php';
 
 $idFuncionarioSesion = filter_var(
     $_SESSION['id_funcionario'] ?? null,
