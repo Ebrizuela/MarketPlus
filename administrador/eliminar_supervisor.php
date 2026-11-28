@@ -75,27 +75,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $cantidadVentasHistoricas = (int) $ventasHistoricas->fetchColumn();
 
         $usuarioAdministrador = $_SESSION['usuario'];
-        $idAdministrador = filter_var($usuarioAdministrador['id'] ?? null, FILTER_VALIDATE_INT);
         $correoAdministrador = trim((string) ($usuarioAdministrador['correo'] ?? ''));
         $nombreAdministrador = trim((string) ($usuarioAdministrador['nombre'] ?? ''));
-        $realizadoPor = $correoAdministrador !== ''
-            ? $correoAdministrador
-            : ($nombreAdministrador !== '' ? $nombreAdministrador : 'Administrador');
-        if ($idAdministrador !== false && $idAdministrador > 0) {
-            $realizadoPor = substr($realizadoPor . ' (ID ' . $idAdministrador . ')', 0, 100);
-        }
-
-        $nombreCompletoSupervisor = trim(
-            (string) ($supervisor['nombre'] ?? '') . ' '
-            . (string) ($supervisor['apellido'] ?? '')
-        );
-        $detallesAuditoria = sprintf(
-            'Supervisor #%d %s; administrador #%s; ventas históricas conservadas: %d',
-            $idFuncionario,
-            $nombreCompletoSupervisor,
-            ($idAdministrador !== false && $idAdministrador > 0) ? (string) $idAdministrador : 'desconocido',
-            $cantidadVentasHistoricas
-        );
+        $realizadoPor = $correoAdministrador !== '' ? $correoAdministrador : ($nombreAdministrador !== '' ? $nombreAdministrador : 'Administrador');
 
         $auditar = $pdo->prepare(
             "INSERT INTO auditoria_usuarios
@@ -106,7 +88,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $auditar->execute([
             ':id' => $idFuncionario,
             ':admin' => $realizadoPor,
-            ':detalles' => substr($detallesAuditoria, 0, 255),
+            ':detalles' => 'Baja lógica realizada por administrador; '
+                . $cantidadVentasHistoricas . ' ventas históricas conservadas.',
         ]);
 
         $pdo->commit();
