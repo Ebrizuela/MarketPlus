@@ -30,6 +30,34 @@ body {
     color: rgba(255, 255, 255, 0.95) !important;
 }
 
+.admin-dashboard .profile-card {
+    border-top: 3px solid var(--primary);
+    padding: 0;
+}
+
+.admin-dashboard .card {
+    padding: 0;
+}
+
+.admin-dashboard .profile-card .card-header {
+    background: linear-gradient(135deg, rgba(31, 94, 255, 0.08), #fff);
+}
+
+.admin-dashboard .profile-value {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.admin-dashboard .navbar-user-details {
+    min-width: 0;
+}
+
+.admin-dashboard .navbar-user-name {
+    display: block;
+    max-width: 14rem;
+    overflow-wrap: anywhere;
+}
+
 .nav-link.active {
     background: rgba(31, 94, 255, 0.18);
     border-radius: 10px;
@@ -127,5 +155,11 @@ body {
 
     .dashboard-header h2 {
         font-size: 1.4rem;
+    }
+}
+
+@media (max-width: 1199.98px) {
+    .admin-dashboard .navbar-user-name {
+        max-width: 100%;
     }
 }
