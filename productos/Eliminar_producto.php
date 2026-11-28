@@ -3,7 +3,7 @@ require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../funciones/conexion.php';
 require_once __DIR__ . '/../funciones/imagenes_productos.php';
 
-requerirRol(['administrador']);git revert --abort
+requerirRol(['administrador']);
 
 if (empty($_SESSION['csrf_eliminar_producto'])) {
     $_SESSION['csrf_eliminar_producto'] = bin2hex(random_bytes(32));
