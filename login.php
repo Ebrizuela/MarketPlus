@@ -1,7 +1,7 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+require_once __DIR__ . '/funciones/sesion_segura.php';
+iniciarSesionSegura();
+
 if (isset($_SESSION['usuario']['rol'])) {
     $destinos = [
         'administrador' => 'administrador/index.php',
@@ -9,12 +9,12 @@ if (isset($_SESSION['usuario']['rol'])) {
         'vendedor' => 'vendedor/dashboard.php',
     ];
     $rol = $_SESSION['usuario']['rol'];
-    if (isset($destinos[$rol])) {
+    if (isset($destinos[$rol]) && verificarInactividadSesion()) {
         header('Location: ' . $destinos[$rol]);
         exit;
     }
 }
-require_once 'funciones/conexion.php';
+require_once __DIR__ . '/funciones/conexion.php';
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -28,8 +28,10 @@ require_once 'funciones/conexion.php';
 <div class="login-card">
     <div class="logo">MarketPlus</div>
 
-    <?php if(isset($_GET['error']) && $_GET['error'] == 1): ?>
+    <?php if (isset($_GET['error']) && $_GET['error'] == 1): ?>
         <div class="error-message">Credenciales incorrectas</div>
+    <?php elseif (isset($_GET['expirada']) && $_GET['expirada'] == 1): ?>
+        <div class="error-message">Tu sesión expiró por inactividad. Inicia sesión nuevamente.</div>
     <?php endif; ?>
 
     <form action="procesar_login.php" method="POST" autocomplete="off">

@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__ . '/funciones/sesion_segura.php';
+iniciarSesionSegura();
 require_once __DIR__ . '/includes/auth.php';
 require_once __DIR__ . '/funciones/conexion.php';
 
@@ -73,5 +75,10 @@ if (!isset($destinos[$rol])) {
 }
 
 iniciarSesionUsuario($usuario, $rol);
+
+if (in_array($rol, ['administrador', 'supervisor', 'vendedor'], true)) {
+    regenerarTokenInicioSesion();
+}
+
 header('Location: ' . $destinos[$rol]);
 exit;
