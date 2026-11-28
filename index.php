@@ -6,6 +6,8 @@ require_once __DIR__ . '/includes/auth.php';
 require_once __DIR__ . '/funciones/usuarios_funciones.php';
 require_once __DIR__ . '/funciones/imagenes_productos.php';
 
+
+
 try {
     $pdo = conectar();
 } catch (PDOException $e) {
@@ -69,112 +71,6 @@ $nombresSimples = [
     'Seguridad y Vigilancia' => 'Seguridad',
     'Insumos de Aseo y Limpieza' => 'Aseo y Limpieza'
 ];
-
-function guardarImagenComoJPG($archivoTmp, $extension, $rutaDestino, $calidad = 85) {
-    if (!extension_loaded('gd')) {
-        return move_uploaded_file($archivoTmp, $rutaDestino);
-    }
-    $imagen = null;
-    switch ($extension) {
-        case 'jpg': case 'jpeg': $imagen = @imagecreatefromjpeg($archivoTmp); break;
-        case 'png': $imagen = @imagecreatefrompng($archivoTmp); break;
-        case 'gif': $imagen = @imagecreatefromgif($archivoTmp); break;
-        case 'webp': if (function_exists('imagecreatefromwebp')) $imagen = @imagecreatefromwebp($archivoTmp); break;
-    }
-    if (!$imagen) return move_uploaded_file($archivoTmp, $rutaDestino);
-    $ancho = imagesx($imagen); $alto = imagesy($imagen);
-    $lienzo = imagecreatetruecolor($ancho, $alto);
-    $blanco = imagecolorallocate($lienzo, 255, 255, 255);
-    imagefill($lienzo, 0, 0, $blanco);
-    imagecopy($lienzo, $imagen, 0, 0, 0, 0, $ancho, $alto);
-    $exito = imagejpeg($lienzo, $rutaDestino, $calidad);
-    imagedestroy($imagen); imagedestroy($lienzo);
-    return $exito;
-}
-
-// CREAR PRODUCTO
-if ($esAdmin && $_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['crear_producto'])) {
-    $codigo = trim($_POST['codigo'] ?? '');
-    $nombre = trim($_POST['nombre'] ?? '');
-    $descripcion = trim($_POST['descripcion'] ?? '');
-    $precio = isset($_POST['precio']) ? (int)$_POST['precio'] : -1;
-    $id_categoria = isset($_POST['id_categorias']) ? (int)$_POST['id_categorias'] : 0;
-    $stock = isset($_POST['stock']) ? (int)$_POST['stock'] : -1;
-
-    $codigoExiste = false;
-    if (!empty($codigo) && $columnaCodigoExiste) {
-        $stmtCheck = $pdo->prepare("SELECT COUNT(*) FROM Productos WHERE codigo = ?");
-        $stmtCheck->execute([$codigo]);
-        if ($stmtCheck->fetchColumn() > 0) $codigoExiste = true;
-    }
-
-    if (empty($codigo)) {
-        $mensaje = "<div class='alert error'>Error: El código único del producto es obligatorio.</div>";
-    } elseif ($codigoExiste) {
-        $mensaje = "<div class='alert error'>Error: El código '$codigo' ya pertenece a otro producto. Debe ser único.</div>";
-    } elseif (empty($nombre)) {
-        $mensaje = "<div class='alert error'>Error: El nombre del producto es obligatorio.</div>";
-    } elseif (empty($descripcion)) {
-        $mensaje = "<div class='alert error'>Error: La descripción del producto es obligatoria.</div>";
-    } elseif ($precio < 0) {
-        $mensaje = "<div class='alert error'>Error: El precio ingresado no es válido.</div>";
-    } elseif ($stock < 0) {
-        $mensaje = "<div class='alert error'>Error: El stock ingresado no es válido.</div>";
-    } elseif ($id_categoria <= 0) {
-        $mensaje = "<div class='alert error'>Error: Debes seleccionar una categoría válida.</div>";
-    } else {
-        try {
-            if ($columnaCodigoExiste) {
-                $sql = "INSERT INTO Productos (id_categorias, codigo, nombre, descripcion, precio, stock) VALUES (?, ?, ?, ?, ?, ?)";
-                $stmtInsert = $pdo->prepare($sql);
-                $ejecutado = $stmtInsert->execute([$id_categoria, $codigo, $nombre, $descripcion, $precio, $stock]);
-            } else {
-                $sql = "INSERT INTO Productos (id_categorias, nombre, descripcion, precio, stock) VALUES (?, ?, ?, ?, ?)";
-                $stmtInsert = $pdo->prepare($sql);
-                $ejecutado = $stmtInsert->execute([$id_categoria, $nombre, $descripcion, $precio, $stock]);
-            }
-
-            if ($ejecutado) {
-                $nuevoId = (int)$pdo->lastInsertId();
-
-                if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
-                    $fileTmpPath = $_FILES['imagen']['tmp_name'];
-                    $fileName = $_FILES['imagen']['name'];
-                    $fileExtension = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
-                    $extensionesPermitidas = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
-                    
-                    if (in_array($fileExtension, $extensionesPermitidas)) {
-                        $imgDir = __DIR__ . '/uploads/';
-                        if (!is_dir($imgDir)) mkdir($imgDir, 0755, true);
-                        $rutaDestino = $imgDir . $nuevoId . '.jpg';
-                        
-                        if (guardarImagenComoJPG($fileTmpPath, $fileExtension, $rutaDestino)) {
-                            $rutaEnBD = 'uploads/' . $nuevoId . '.jpg';
-                            $stmtUpd = $pdo->prepare("UPDATE Productos SET imagen = ? WHERE id_producto = ?");
-                            $stmtUpd->execute([$rutaEnBD, $nuevoId]);
-                        }
-                    }
-                }
-
-                $_SESSION['mensaje_flash'] = "<div class='alert success'>¡Producto registrado exitosamente!</div>";
-                header("Location: " . BASE_URL . "/index.php");
-                exit();
-            } else {
-                $mensaje = "<div class='alert error'>Error al guardar el producto.</div>";
-            }
-        } catch (PDOException $e) {
-            $mensaje = "<div class='alert error'>Error en la base de datos: " . htmlspecialchars($e->getMessage()) . "</div>";
-        }
-    }
-}
-
-$categoriasList = [];
-try {
-    $stmtCat = $pdo->query("SELECT id_categorias, nombre FROM Categorias ORDER BY id_categorias ASC");
-    $categoriasList = $stmtCat->fetchAll(PDO::FETCH_ASSOC);
-} catch (PDOException $e) {
-    error_log('Error al cargar categorías del catálogo: ' . $e->getMessage());
-}
 
 $terminoBusqueda = trim($_GET['buscar'] ?? '');
 $idProductoSeleccionado = isset($_GET['producto']) ? (int) $_GET['producto'] : 0;
@@ -269,11 +165,11 @@ foreach ($_SESSION['carrito'] ?? [] as $itemCarrito) {
     <nav class="mp-user-actions" aria-label="Accesos de usuario">
         <?php if ($estaLogueado): ?>
             <?php if ($esAdmin): ?>
-                <a class="mp-action-button" href="<?php echo BASE_URL; ?>/administrador/Productos_Inventory.php">← Volver a Productos e inventario</a>
+                <a class="mp-action-button" href="<?php echo BASE_URL; ?>/administrador/index.php">← Dashboard del administrador</a>
             <?php elseif ($rolActual === 'supervisor'): ?>
                 <a class="mp-action-button" href="<?php echo BASE_URL; ?>/Supervisor/index.php">📊 Dashboard</a>
             <?php elseif ($rolActual === 'vendedor'): ?>
-                <a class="mp-action-button" href="<?php echo BASE_URL; ?>/ventas/consultar_ventas.php">📋 Ventas</a>
+                <a class="mp-action-button" href="<?php echo BASE_URL; ?>/vendedor/dashboard.php">📋 Dashboard</a>
             <?php endif; ?>
             <a class="mp-action-button" href="<?php echo BASE_URL; ?>/includes/logout.php">Salir</a>
         <?php else: ?>
@@ -346,34 +242,8 @@ foreach ($_SESSION['carrito'] ?? [] as $itemCarrito) {
                 </button>
             <?php endfor; ?>
         </div>
-    <?php endif; ?>
+    <?php endif; ?> 
 </section>
-
-    <?php if ($esAdmin): ?>
-    <section class="card admin-product-form">
-        <h3>Registrar Nuevo Producto</h3>
-        <form action="" method="POST" enctype="multipart/form-data">
-            <div class="form-flex-container">
-                <div class="field-col-6"><label>Código Único:</label><input type="text" name="codigo" required></div>
-                <div class="field-col-6"><label>Categoría:</label>
-                    <select name="id_categorias" required>
-                        <option value="">Seleccione una categoría</option>
-                        <?php foreach ($categoriasList as $cat): 
-                            $nombreMostrar = $nombresSimples[$cat['nombre']] ?? $cat['nombre']; ?>
-                            <option value="<?php echo $cat['id_categorias']; ?>"><?php echo htmlspecialchars($nombreMostrar); ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-                <div class="field-col-6"><label>Precio:</label><input type="number" min="0" name="precio" required></div>
-                <div class="field-col-6"><label>Nombre del producto:</label><input type="text" name="nombre" required></div>
-                <div class="field-col-6"><label>Stock:</label><input type="number" min="0" name="stock" required></div>
-                <div class="field-col-6"><label>Imagen del Producto:</label><input type="file" name="imagen" accept="image/*"><small style="color:#64748b; font-size:12px; margin-top:4px;">Se guardará como uploads/{ID}.jpg</small></div>
-                <div class="field-col-12"><label>Descripción:</label><textarea name="descripcion" rows="3" required></textarea></div>
-            </div>
-            <button type="submit" name="crear_producto" class="btn" style="margin-top: 15px;">Guardar Producto</button>
-        </form>
-    </section>
-    <?php endif; ?>
 
 <section id="productos" aria-labelledby="productos-titulo">
         <h2 class="section-title" id="productos-titulo"><?php echo $terminoBusqueda === '' ? 'Productos Destacados' : 'Resultados de búsqueda'; ?></h2>

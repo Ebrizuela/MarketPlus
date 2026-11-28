@@ -44,11 +44,45 @@ body.supervisor-dashboard {
 
 .supervisor-dashboard .quick-card:hover {
     transform: translateY(-3px);
-    box-shadow: 0 18px 28px rgba(59, 130, 246, 0.12);
+    border-color: rgba(20, 184, 166, 0.42);
+    box-shadow: 0 18px 28px rgba(20, 184, 166, 0.14);
 }
 
 .supervisor-dashboard .quick-card .card-body {
     padding: 1.05rem 0.9rem;
+}
+
+.supervisor-dashboard .profile-card {
+    border-top: 3px solid #14b8a6;
+    padding: 0;
+}
+
+.supervisor-dashboard .card {
+    padding: 0;
+}
+
+.supervisor-dashboard .profile-card .card-header {
+    background: linear-gradient(135deg, rgba(20, 184, 166, 0.1), #fff);
+}
+
+.supervisor-dashboard .profile-value {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.supervisor-dashboard .navbar-user-name {
+    display: block;
+    max-width: 14rem;
+    overflow-wrap: anywhere;
+}
+
+.supervisor-dashboard .module-card .card-body > div {
+    min-width: 0;
+}
+
+.supervisor-dashboard .module-card h6,
+.supervisor-dashboard .module-card p {
+    overflow-wrap: anywhere;
 }
 
 .supervisor-dashboard .metric-card {
@@ -86,8 +120,8 @@ body.supervisor-dashboard {
     align-items: center;
     justify-content: center;
     border-radius: 14px;
-    background: rgba(59, 130, 246, 0.1);
-    color: #2563eb;
+    background: rgba(20, 184, 166, 0.12);
+    color: #0f766e;
     font-size: 1.5rem;
 }
 
@@ -112,6 +146,10 @@ body.supervisor-dashboard {
 }
 
 @media (max-width: 576px) {
+    .supervisor-dashboard .navbar-user-name {
+        max-width: 100%;
+    }
+
     .supervisor-dashboard .header-panel {
         padding: 1rem;
     }

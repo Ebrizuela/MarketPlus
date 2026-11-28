@@ -19,7 +19,7 @@ if (isset($_SESSION['mensaje_flash'])) {
 }
 
 // VACIAR CARRITO
-if (isset($_POST['vaciar_carrito'])) {
+if (isset($_POST['vaciar_carrito'])) { 
     unset($_SESSION['carrito']);
     $_SESSION['mensaje_flash'] = "<div class='alert success'>Se ha vaciado el carrito de compras.</div>";
     header("Location: " . BASE_URL . "/public/carrito.php");

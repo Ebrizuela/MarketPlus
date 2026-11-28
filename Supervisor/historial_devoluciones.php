@@ -65,7 +65,7 @@ try {
                     <a href="<?php echo BASE_URL; ?>/public/carrito.php">Ver Carrito</a>
                     <a href="<?php echo BASE_URL; ?>/supervisor/devoluciones.php">Registrar Devolución</a>
                     <a href="<?php echo BASE_URL; ?>/supervisor/historial_devoluciones.php">Historial de Devoluciones</a>
-                    <div class="menu-divider"></div>
+                    <div class="menu-divider"></div> 
                     <a href="<?php echo BASE_URL; ?>/includes/logout.php" class="item-logout">Cerrar Sesión</a>
                 </div>
             </div>

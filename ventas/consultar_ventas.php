@@ -45,15 +45,7 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Consultar Ventas - MarketPlus</title>
     <link rel="stylesheet" href="../css/navegacion.css">
-    <style>
-        body { margin: 0; background: #f2f5f7; font-family: Arial, sans-serif; }
-        .content { max-width: 1200px; margin: 24px auto; padding: 0 20px; }
-        .table-wrap { overflow-x: auto; background: #fff; border-radius: 10px; }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { border-bottom: 1px solid #e2e8f0; padding: 10px; text-align: left; white-space: nowrap; }
-        th { background-color: #edf2f7; }
-        .alert { padding: 12px; border-radius: 8px; background: #fee2e2; color: #991b1b; }
-    </style>
+    <link rel="stylesheet" href="../css/consultar_ventas.css">
     <link rel="stylesheet" href="../css/marketplus-theme.css?v=1">
 </head>
 <body>
@@ -66,7 +58,7 @@ try {
             </p>
         <?php endif; ?>
         <?php if ($error !== null): ?>
-            <p class="alert"><?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?></p>
+            <p class="alert"><?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?></p> 
         <?php endif; ?>
         <div class="table-wrap">
             <table>

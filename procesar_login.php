@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__ . '/funciones/sesion_segura.php';
+iniciarSesionSegura();
 require_once __DIR__ . '/includes/auth.php';
 require_once __DIR__ . '/funciones/conexion.php';
 
@@ -9,7 +11,6 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 $correo = $_POST['correo'] ?? '';
 $password = $_POST['password'] ?? '';
-
 
 if (!is_string($correo) || !is_string($password) || $correo === '' || $password === '') {
     header('Location: login.php?error=1');
@@ -64,7 +65,8 @@ $rol = mapearRol($usuario['id_rol']);
 $destinos = [
     'administrador' => 'administrador/index.php',
     'supervisor' => 'Supervisor/index.php',
-    'vendedor' => 'ventas/consultar_ventas.php',
+    'vendedor' => 'vendedor/dashboard.php',
+    'Auditor' => 'auditor/validar_token.php',
 ];
 
 if (!isset($destinos[$rol])) {
@@ -73,5 +75,10 @@ if (!isset($destinos[$rol])) {
 }
 
 iniciarSesionUsuario($usuario, $rol);
+
+if (in_array($rol, ['administrador', 'supervisor', 'vendedor'], true)) {
+    regenerarTokenInicioSesion();
+}
+
 header('Location: ' . $destinos[$rol]);
 exit;
