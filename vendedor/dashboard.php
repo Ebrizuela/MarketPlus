@@ -1,10 +1,8 @@
 <?php
 ob_start();
-session_start();
 
-require_once __DIR__ . '/../funciones/conexion.php';
 require_once __DIR__ . '/../includes/auth.php';
-$pdo = conectar();
+require_once __DIR__ . '/../funciones/conexion.php';
 
 requerirRol(['vendedor', 'administrador']);
 
@@ -16,39 +14,49 @@ $rolActual = $usuario['rol'] ?? 'vendedor';
 $ventasHoy = 0;
 $ventasRecientes = [];
 $errorVentas = null;
+$pdo = null;
 try {
-    $filtroFuncionario = '';
-    $parametrosVentas = [];
-    if ($rolActual === 'vendedor') {
-        $filtroFuncionario = ' AND v.id_funcionario = :id_funcionario';
-        $parametrosVentas[':id_funcionario'] = (int) $usuario['id'];
-    }
-
-    $stmt = $pdo->prepare(
-        'SELECT COUNT(*) FROM Ventas v
-         WHERE DATE(v.fecha_hora) = CURDATE()' . $filtroFuncionario
-    );
-    $stmt->execute($parametrosVentas);
-    $ventasHoy = (int) $stmt->fetchColumn();
-
-    $stmt = $pdo->prepare(
-        "SELECT v.id_ventas, v.total_venta, v.fecha_hora,
-                COALESCE(NULLIF(CONCAT_WS(' ', c.nombre, c.apellidos), ''), 'Cliente general') AS cliente_nombre,
-                COALESCE(NULLIF(CONCAT_WS(' ', f.nombre, f.apellido), ''), 'No identificado') AS funcionario_nombre,
-                COALESCE(mp.nombre_medio, 'No registrado') AS medio_pago
-         FROM Ventas v
-         LEFT JOIN Clientes c ON v.id_cliente = c.id_cliente
-         LEFT JOIN funcionarios f ON v.id_funcionario = f.id_funcionario
-         LEFT JOIN Medio_pago mp ON v.id_medio_pago = mp.id_medio_pago
-         WHERE 1 = 1" . $filtroFuncionario . '
-         ORDER BY v.fecha_hora DESC
-         LIMIT 5'
-    );
-    $stmt->execute($parametrosVentas);
-    $ventasRecientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $pdo = conectar();
 } catch (PDOException $e) {
-    error_log('Error al cargar las ventas del dashboard: ' . $e->getMessage());
-    $errorVentas = 'No fue posible cargar la información de ventas. Intenta nuevamente más tarde.';
+    error_log('Error de conexión en el dashboard de vendedor: ' . $e->getMessage());
+    $errorVentas = 'No se pudo conectar con la base de datos.';
+}
+
+if ($pdo instanceof PDO) {
+    try {
+        $filtroFuncionario = '';
+        $parametrosVentas = [];
+        if ($rolActual === 'vendedor') {
+            $filtroFuncionario = ' AND v.id_funcionario = :id_funcionario';
+            $parametrosVentas[':id_funcionario'] = (int) $usuario['id'];
+        }
+
+        $stmt = $pdo->prepare(
+            'SELECT COUNT(*) FROM Ventas v
+             WHERE DATE(v.fecha_hora) = CURDATE()' . $filtroFuncionario
+        );
+        $stmt->execute($parametrosVentas);
+        $ventasHoy = (int) $stmt->fetchColumn();
+
+        $stmt = $pdo->prepare(
+            "SELECT v.id_ventas, v.total_venta, v.fecha_hora,
+                    COALESCE(NULLIF(CONCAT_WS(' ', c.nombre, c.apellidos), ''), 'Cliente general') AS cliente_nombre,
+                    COALESCE(NULLIF(CONCAT_WS(' ', f.nombre, f.apellido), ''), 'No identificado') AS funcionario_nombre,
+                    COALESCE(mp.nombre_medio, 'No registrado') AS medio_pago
+             FROM Ventas v
+             LEFT JOIN Clientes c ON v.id_cliente = c.id_cliente
+             LEFT JOIN funcionarios f ON v.id_funcionario = f.id_funcionario
+             LEFT JOIN Medio_pago mp ON v.id_medio_pago = mp.id_medio_pago
+             WHERE 1 = 1" . $filtroFuncionario . '
+             ORDER BY v.fecha_hora DESC
+             LIMIT 5'
+        );
+        $stmt->execute($parametrosVentas);
+        $ventasRecientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        error_log('Error al cargar las ventas del dashboard: ' . $e->getMessage());
+        $errorVentas = 'No fue posible cargar la información de ventas. Intenta nuevamente más tarde.';
+    }
 }
 ?>
 <!DOCTYPE html>
